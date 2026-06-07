@@ -1,94 +1,48 @@
-# [WebShell | Terminal Portfolio Website](https://webshellx.vercel.app/)
+# WebShell
 
-<div align="center">
-  <img alt="banner" src="https://raw.githubusercontent.com/nasan016/webshell/main/res/banner.png">
-</div>
+WebShell is my terminal-style portfolio, built to present work, background, and contact details through a shell-like interface instead of a traditional landing page.
 
-![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
-![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+Live site: https://webshellx.vercel.app/
 
-Create your own terminal styled website! Check out [term.nasan.dev](https://term.nasan.dev/) for an example.
+## About
 
-## Features
-* **[Tab]** for auto completion.
-* **[Esc]** to clear the input line.
-* **[↑][↓]** to scroll through your command history.
+The design blends a NixOS, macOS, and oh-my-posh-inspired shell aesthetic: clean prompts, soft terminal contrast, and a polished command-line feel. It is meant to feel like a personal workstation turned into a portfolio.
 
-## ???
-<div align="center">
-  <img alt="banner" src="https://raw.githubusercontent.com/nasan016/webshell/main/res/secret.png">
-</div>
-How did we get here?
+## What You Can Explore
 
-## Configuration
+- A short introduction and contact links.
+- Selected projects and experience.
+- Browser/device details through `whoami`.
+- Theme switching with `dark`, `light`, and `system`.
 
-Most of the configuration is done in the `config.json` file.
+## Commands
 
-```json
-{
-  "ascii": [
-    "██████╗ ██╗   ██╗ ██████╗",
-    "██╔══██╗██║   ██║██╔════╝",
-    "██║  ██║██║   ██║██║  ███╗",
-    "██║  ██║██║   ██║██║   ██║",
-    "██████╔╝╚██████╔╝╚██████╔╝",
-    "╚═════╝  ╚═════╝  ╚═════╝",
-  ],
-  "title": "Dug's Terminal",
-  "username": "guest",
-  "hostname": "dug.dev",
-  "password": "squirrel",
-  "repoLink": "https://github.com/nasan016/webshell",
-  "social": {
-    "email": "dug@pixar.com",
-    "github": "dugfromup",
-    "linkedin": "dugthedog"
-  },
-  "aboutGreeting": "My name is Dug. I have just met you.",
-  "projects": [
-    [
-      "Project Name",
-      "Project Description",
-      "Project Link"
-    ],
-    [
-      "Another Project Name",
-      "Another Project Description",
-      "Another Project Link"
-    ]
-  ],
-  "colors": {
-      ...
-  }
-}
-```
+- `help` or `ls` - list available commands.
+- `about` - view the introduction.
+- `projects` - browse selected work.
+- `experience` or `ex` - see background and experience.
+- `whoami` - inspect browser/device details.
+- `contact` - open email.
+- `repo` - open the repository.
+- `dark`, `light`, `system` - switch themes.
+- `clear` - clear the terminal.
 
-## Run the Project Locally:
+## Tech
 
-Clone the repository
-```shell
-git clone https://github.com/nasan016/webshell.git
-```
-Go to the project directory
-```shell
-cd webshell
-```
-Install the dependencies
-```shell
+- Vite
+- TypeScript
+- HTML and CSS
+- Bun
+
+## Local Development
+
+```bash
 bun install
-```
-Start the server
-```shell
 bun run dev
 ```
-Build for production
-```shell
+
+Build for production:
+
+```bash
 bun run build
-```
-Preview the production build
-```shell
-bun run preview
 ```
