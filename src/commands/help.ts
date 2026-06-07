@@ -5,8 +5,16 @@ const helpObj = {
     "Who made this website?",
     ],
     [
+      "'experience'",
+      "Where has Hugh worked?"
+    ],
+    [
       "'projects'",
       "Maybe there's something interesting."
+    ],
+    [
+      "'ls'",
+      "List available commands."
     ],
     [
       "'whoami'",

@@ -11,46 +11,54 @@
   "username": "visitor",
   "hostname": "webshell",
   "password": "050823",
-  "repoLink": "https://github.com/nasan016/webshell",
+  "repoLink": "https://github.com/HughScott2002",
   "social": {
-    "email": "your@email.com",
-    "github": "yourgithub",
-    "linkedin": "you"
+    "email": "hughscott2002@gmail.com",
+    "github": "https://github.com/HughScott2002",
+    "linkedin": "https://www.linkedin.com/in/hugh-scott-3912421a5/"
   },
-  "aboutGreeting": "Hi stranger. Welcome to WebShell.",
+  "aboutGreeting": "Hi stranger. I'm Hugh. Welcome!",
   "projects": [
-    [
-      "GofeR",
-      "Vue.js reactivity in Go.",
-      "https://github.com/nasan016/gofer"
-    ],
+    ["GofeR", "Vue.js reactivity in Go.", "https://github.com/nasan016/gofer"],
     [
       "WebShell",
       "Terminal styled website.",
       "https://github.com/nasan016/webshell"
     ]
   ],
+  "experience": [
+    [
+      "Portfolio",
+      "Building focused web experiences with TypeScript, Vite, and terminal-inspired interfaces.",
+      "2026"
+    ],
+    [
+      "Open Source",
+      "Exploring developer tooling, Linux workflows, and polished frontend systems.",
+      "Current"
+    ]
+  ],
   "colors": {
-    "background": "#0C0623",
-    "foreground": "#F8DDE5",
-    "banner": "#FF9951",
+    "background": "#fbf7ef",
+    "foreground": "#24313f",
+    "banner": "#2f6f9f",
     "border": {
       "visible": true,
-      "color": "#FFADE2"
+      "color": "#7e7ebf"
     },
     "prompt": {
-      "default": "#A5A7A7",
-      "user": "#FE6BC9",
-      "host": "#70FDFF",
-      "input": "#FF7685"
+      "default": "#6f5f42",
+      "user": "#1f7a5c",
+      "host": "#7a4e9d",
+      "input": "#1f2937"
     },
     "link": {
-      "text": "#B6AAEE",
-      "highlightColor": "#FFADE2",
-      "highlightText": "#0C0623"
+      "text": "#1d5f8f",
+      "highlightColor": "#f0d38a",
+      "highlightText": "#1f2937"
     },
     "commands": {
-      "textColor": "#FD9BDB"
+      "textColor": "#b14f2a"
     }
   }
 }

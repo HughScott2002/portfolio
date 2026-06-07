@@ -18,8 +18,13 @@ const createBanner = () : string[] => {
     banner.push(eleToPush);
   });  
   banner.push("<br>");
-  banner.push("Welcome to WebShell v1.0.0");
-  banner.push("Type <span class='command'>'help'</span> for a list of all available commands.");
+  banner.push(command.aboutGreeting);
+  banner.push("<br>");
+  banner.push(`&nbsp;&nbsp;&nbsp;<i class='fa-solid fa-envelope'></i> Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='mailto:${command.social.email}'>${command.social.email}</a>`);
+  banner.push(`&nbsp;&nbsp;&nbsp;<i class='fa-brands fa-github'></i> Github&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='https://github.com/${command.social.github}'>github/${command.social.github}</a>`);
+  banner.push(`&nbsp;&nbsp;&nbsp;<i class='fa-brands fa-linkedin'></i> Linkedin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='https://www.linkedin.com/in/${command.social.linkedin}'>linkedin/${command.social.linkedin}</a>`);
+  banner.push("<br>");
+  banner.push("Type <span class='command'>'help'</span> or <span class='command'>'ls'</span> for a list of all available commands.");
   banner.push(`Type <span class='command'>'repo'</span> to view the GitHub repository or click <a href='${command.repoLink}' target='_blank'>here</a>.`);
   banner.push("<br>");
   return banner;

@@ -3,6 +3,7 @@ import { HELP } from "./commands/help";
 import { BANNER } from "./commands/banner";
 import { ABOUT } from "./commands/about"
 import { DEFAULT } from "./commands/default";
+import { EXPERIENCE } from "./commands/experience";
 import { PROJECTS } from "./commands/projects";
 import { createWhoami } from "./commands/whoami";
 
@@ -28,7 +29,7 @@ const PRE_USER = document.getElementById("pre-user");
 const HOST = document.getElementById("host");
 const USER = document.getElementById("user");
 const PROMPT = document.getElementById("prompt");
-const COMMANDS = ["help", "about", "projects", "whoami", "repo", "banner", "clear"];
+const COMMANDS = ["help", "ls", "about", "experience", "projects", "whoami", "repo", "banner", "clear"];
 const HISTORY : string[] = [];
 const SUDO_PASSWORD = command.password;
 const REPO_LINK = command.repoLink;
@@ -203,6 +204,13 @@ function commandHandler(input : string) {
       }
       writeLines(HELP);
       break;
+    case 'ls':
+      if(bareMode) {
+        writeLines(["maybe restarting your browser will fix this.", "<br>"])
+        break;
+      }
+      writeLines(HELP);
+      break;
     case 'whoami':      
       if(bareMode) {
         writeLines([`${command.username}`, "<br>"])
@@ -216,6 +224,13 @@ function commandHandler(input : string) {
         break;
       }
       writeLines(ABOUT);
+      break;
+    case 'experience':
+      if(bareMode) {
+        writeLines(["Nothing to see here.", "<br>"])
+        break;
+      }
+      writeLines(EXPERIENCE);
       break;
     case 'projects':
       if(bareMode) {
@@ -266,18 +281,6 @@ function commandHandler(input : string) {
         PASSWORD_INPUT.focus();
       }, 100);
 
-      break;
-    case 'ls':
-      if(bareMode) {
-        writeLines(["", "<br>"])
-        break;
-      }
-
-      if (isSudo) {
-        writeLines(["src", "<br>"]);
-      } else {
-        writeLines(["Permission not granted.", "<br>"]);
-      }
       break;
     default:
       if(bareMode) {

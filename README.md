@@ -78,9 +78,17 @@ cd webshell
 ```
 Install the dependencies
 ```shell
-npm install
+bun install
 ```
 Start the server
 ```shell
-npm run dev
+bun run dev
+```
+Build for production
+```shell
+bun run build
+```
+Preview the production build
+```shell
+bun run preview
 ```
