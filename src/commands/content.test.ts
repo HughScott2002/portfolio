@@ -10,12 +10,15 @@ describe("command content", () => {
   it("keeps visible terminal output conventions for configured content", () => {
     expect(BANNER.some((line) => line.startsWith("<pre"))).toBe(true);
     expect(BANNER.some((line) => line.includes("<span class='command-hint-commands'><span class='command'>'dark'</span>, <span class='command'>'light'</span>, or <span class='command'>'system'</span></span>"))).toBe(true);
+    expect(BANNER.some((line) => line.includes("to view my Github or click <a target='_blank'"))).toBe(true);
+    expect(BANNER.some((line) => line.includes("<span class='command'>'git'</span>"))).toBe(true);
+    expect(BANNER.some((line) => line.includes("<span class='command'>'repo'</span>"))).toBe(false);
     expect(ABOUT.some((line) => line.includes("mailto:"))).toBe(true);
     expect(PROJECTS).toContain("2 File(s)");
     expect(EXPERIENCE).toContain("2 File(s)");
     expect(DEFAULT).toContain("Type <span class='command'>'help'</span> to get started.");
 
-    expect(createWhoami({
+    const whoami = createWhoami({
       device: "mac",
       theme: "dark",
       resolvedTheme: "dark",
@@ -25,6 +28,9 @@ describe("command content", () => {
       cpuThreads: "8 threads",
       memory: "not shared",
       online: "online",
-    })).toContain("&nbsp;&nbsp;<span class='command'>theme</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dark (dark)");
+    });
+
+    expect(whoami).toContain("Plot twist: this terminal runs on your side. Here's what your browser says:");
+    expect(whoami).toContain("&nbsp;&nbsp;<span class='command'>theme</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dark (dark)");
   });
 });

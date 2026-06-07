@@ -33,6 +33,10 @@ describe("command runner", () => {
       lines: [],
       effect: { type: "enterBareMode" },
     });
+    expect(runCommand("git", context)).toEqual({
+      lines: ["Redirecting to github.com...", "<br>"],
+      effect: { type: "open", url: context.repoLink },
+    });
     expect(runCommand("whatever", { ...context, bareMode: true }).lines).toEqual(["type 'help'", "<br>"]);
   });
 });

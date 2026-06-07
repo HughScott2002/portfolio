@@ -17,7 +17,7 @@ const createBanner = (): string[] => {
   banner.push(commandHint(`${commandToken("'help'")} or ${commandToken("'ls'")}`, " for a list of all available commands."));
   banner.push(commandHint(`${commandToken("'dark'")}, ${commandToken("'light'")}, or ${commandToken("'system'")}`, " to change the theme."));
   banner.push(commandHint(commandToken("'contact'"), " to start an email."));
-  banner.push(commandHint(commandToken("'repo'"), ` to view the GitHub repository or click ${link("here", command.repoLink)}.`));
+  banner.push(commandHint(commandToken("'git'"), ` to view my Github or click ${link("here", command.repoLink)}`));
   banner.push("<br>");
   return banner;
 }

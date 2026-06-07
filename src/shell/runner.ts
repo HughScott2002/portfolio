@@ -74,7 +74,7 @@ export function runCommand(input: string, context: CommandRunContext): CommandRu
       return { lines: context.bareMode ? ["Nothing to see here.", "<br>"] : EXPERIENCE };
     case "projects":
       return { lines: context.bareMode ? ["I don't want you to break the other projects.", "<br>"] : PROJECTS };
-    case "repo":
+    case "git":
       return { lines: ["Redirecting to github.com...", "<br>"], effect: { type: "open", url: context.repoLink } };
     case "contact":
       return context.bareMode

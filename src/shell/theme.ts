@@ -74,15 +74,26 @@ export function getSystemTheme() {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
+function getPlatformDeviceLabel(platform: string) {
+  if (/iphone|ipad|ipod|ios/.test(platform)) return "ios";
+  if (platform.includes("android")) return "android";
+  if (platform.includes("mac")) return "mac";
+  if (platform.includes("win")) return "win";
+  if (platform.includes("linux")) return "lin";
+  return "";
+}
+
 export function getDeviceLabel(nav: Navigator & { userAgentData?: { platform?: string } } = navigator) {
   const platform = `${nav.userAgentData?.platform || nav.platform || ""}`.toLowerCase();
   const userAgent = nav.userAgent.toLowerCase();
+  const platformLabel = getPlatformDeviceLabel(platform);
 
+  if (platformLabel) return platformLabel;
+  if (userAgent.includes("android")) return "android";
   if (/iphone|ipad|ipod/.test(userAgent)) return "ios";
-  if (platform.includes("android") || userAgent.includes("android")) return "android";
-  if (platform.includes("mac")) return "mac";
-  if (platform.includes("win")) return "win";
-  if (platform.includes("linux") || userAgent.includes("linux")) return "lin";
+  if (userAgent.includes("macintosh") || userAgent.includes("mac os x")) return "mac";
+  if (userAgent.includes("windows")) return "win";
+  if (userAgent.includes("linux")) return "lin";
   return "web";
 }
 

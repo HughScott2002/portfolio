@@ -22,7 +22,7 @@ The design blends a NixOS, macOS, and oh-my-posh-inspired shell aesthetic: clean
 - `ex` - see background and experience.
 - `whoami` - inspect browser/device details.
 - `contact` - open email.
-- `repo` - open the repository.
+- `git` - open the repository.
 - `dark`, `light`, `system` - switch themes.
 - `clear` - clear the terminal.
 

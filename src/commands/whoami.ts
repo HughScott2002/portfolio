@@ -12,10 +12,11 @@ type DeviceInfo = {
   online: string;
 }
 
-export const createWhoami = (info : DeviceInfo) : string[] => {
+export const createWhoami = (info: DeviceInfo): string[] => {
   return [
-    "<br>",
-    "Whoami? I still cannot see your name, but your browser left a few terminal crumbs:",
+    "Whoami Im Hugh you saw that already!",
+    "\n\nHere's the plot twist, this terminal runs on your side.",
+    "So here's what your browser says:",
     row(commandToken("device"), info.device, 13, "device".length),
     row(commandToken("theme"), `${info.theme} (${info.resolvedTheme})`, 13, "theme".length),
     row(commandToken("language"), info.language, 13, "language".length),
