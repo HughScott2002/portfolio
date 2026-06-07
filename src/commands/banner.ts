@@ -25,6 +25,7 @@ const createBanner = () : string[] => {
   banner.push(`&nbsp;&nbsp;&nbsp;<i class='fa-brands fa-linkedin'></i> Linkedin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='https://www.linkedin.com/in/${command.social.linkedin}'>linkedin/${command.social.linkedin}</a>`);
   banner.push("<br>");
   banner.push("Type <span class='command'>'help'</span> or <span class='command'>'ls'</span> for a list of all available commands.");
+  banner.push("Type <span class='command'>'contact'</span> to start an email.");
   banner.push(`Type <span class='command'>'repo'</span> to view the GitHub repository or click <a href='${command.repoLink}' target='_blank'>here</a>.`);
   banner.push("<br>");
   return banner;
