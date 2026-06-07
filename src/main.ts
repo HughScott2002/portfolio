@@ -12,6 +12,7 @@ let historyIdx = 0
 let tempInput = ""
 let userInput : string;
 let shellMode = createInitialShellMode();
+let asciiMeasureContext: CanvasRenderingContext2D | null = null;
 
 //WRITELINESCOPY is used to during the "clear" command
 const WRITELINESCOPY = mutWriteLines;
@@ -21,6 +22,7 @@ const PASSWORD = document.getElementById("password-input");
 const PASSWORD_INPUT = document.getElementById("password-field") as HTMLInputElement;
 const PROMPT = document.getElementById("prompt-template");
 const ACTIVE_PROMPT = document.getElementById("active-prompt");
+let asciiFitFrame = 0;
 
 if (PROMPT && ACTIVE_PROMPT) {
   renderPromptUi({ promptTemplate: PROMPT, activePrompt: ACTIVE_PROMPT });
@@ -51,6 +53,82 @@ const scrollToBottom = () => {
   if(!MAIN) return
 
   MAIN.scrollTop = MAIN.scrollHeight;
+}
+
+function fitAsciiArt() {
+  const MAIN = document.getElementById("main");
+  const TERMINAL_CONTENT = document.getElementById("terminal");
+  if (!MAIN || !TERMINAL_CONTENT) return;
+
+  const artBlocks = Array.from(TERMINAL_CONTENT.querySelectorAll<HTMLPreElement>("pre.ascii-art"));
+  if (artBlocks.length === 0) return;
+
+  MAIN.style.removeProperty("--ascii-fit-size");
+  MAIN.classList.add("is-measuring-ascii");
+
+  try {
+    const styles = getComputedStyle(artBlocks[0]);
+    const inlineBleed = parseFloat(styles.getPropertyValue("--ascii-inline-bleed")) || 0;
+    const horizontalScale = Math.max(parseFloat(styles.getPropertyValue("--ascii-horizontal-scale")) || 1, 0.5);
+    const availableWidth = TERMINAL_CONTENT.getBoundingClientRect().width + inlineBleed * 2;
+    const maxSize = parseFloat(styles.fontSize);
+    const fontFamily = styles.fontFamily;
+    const fontWeight = styles.fontWeight;
+    const fontStyle = styles.fontStyle;
+
+    asciiMeasureContext = asciiMeasureContext ?? document.createElement("canvas").getContext("2d");
+
+    if (!asciiMeasureContext) return;
+
+    asciiMeasureContext.font = `${fontStyle} ${fontWeight} ${maxSize}px ${fontFamily}`;
+    const widestLine = Math.max(...artBlocks.map((block) => {
+      const measuredLineWidth = (block.textContent ?? "").split("\n").reduce((widest, line) => {
+        return Math.max(widest, asciiMeasureContext?.measureText(line).width ?? 0);
+      }, 0);
+
+      return Math.max(block.scrollWidth, measuredLineWidth);
+    }));
+
+    if (!availableWidth || !widestLine || !maxSize) return;
+
+    const fittedSize = Math.min(maxSize, (maxSize * availableWidth * 0.998) / (widestLine * horizontalScale));
+    MAIN.style.setProperty("--ascii-fit-size", `${Math.floor(fittedSize * 100) / 100}px`);
+  } finally {
+    MAIN.classList.remove("is-measuring-ascii");
+  }
+}
+
+function fitBannerContacts() {
+  const lists = Array.from(document.querySelectorAll<HTMLElement>(".banner-contact-list"));
+  const terminalContent = document.getElementById("terminal");
+
+  lists.forEach((list) => {
+    list.classList.remove("is-stacked");
+
+    const availableWidth = terminalContent?.clientWidth ?? list.clientWidth;
+    const columnGap = parseFloat(getComputedStyle(list).columnGap) || 0;
+    const rows = Array.from(list.querySelectorAll<HTMLElement>(".banner-row"));
+    const shouldStack = rows.some((row) => {
+      const label = row.querySelector<HTMLElement>(".banner-row-label");
+      const value = row.querySelector<HTMLElement>(".banner-row-value");
+
+      if (!label || !value) return false;
+
+      return label.scrollWidth + value.scrollWidth + columnGap > availableWidth + 1;
+    });
+
+    list.classList.toggle("is-stacked", shouldStack);
+  });
+}
+
+function queueAsciiFit() {
+  if (asciiFitFrame) cancelAnimationFrame(asciiFitFrame);
+
+  asciiFitFrame = requestAnimationFrame(() => {
+    asciiFitFrame = 0;
+    fitAsciiArt();
+    fitBannerContacts();
+  });
 }
 
 function userInputHandler(e : KeyboardEvent) {
@@ -235,7 +313,7 @@ function commandHandler(input : string) {
   }
 }
 
-function writeLines(message : string[]) {
+function writeLines(message : string[], options: { delayMs?: number } = {}) {
   if (!mutWriteLines) return
 
   writeTranscriptLines(message, {
@@ -243,8 +321,10 @@ function writeLines(message : string[]) {
     createParagraph: () => document.createElement("p"),
     insertBefore: (paragraph, target) => {
       target.parentNode?.insertBefore(paragraph, target);
+      queueAsciiFit();
     },
     scrollToBottom,
+    delayMs: options.delayMs,
   });
 }
 
@@ -321,9 +401,7 @@ const initEventListeners = () => {
       }
     });
 
-    window.addEventListener('load', () => {
-    writeLines(runCommand("banner", createCommandContext()).lines);
-  });
+  writeLines(runCommand("banner", createCommandContext()).lines);
   
   USERINPUT.addEventListener('keypress', userInputHandler);
   USERINPUT.addEventListener('keydown', userInputHandler);
@@ -333,6 +411,18 @@ const initEventListeners = () => {
   window.addEventListener('click', () => {
     USERINPUT.focus();
   });
+
+  const MAIN = document.getElementById("main");
+  if (MAIN && "ResizeObserver" in window) {
+    new ResizeObserver(queueAsciiFit).observe(MAIN);
+  } else {
+    window.addEventListener("resize", queueAsciiFit);
+  }
+
+  if ("fonts" in document) {
+    document.fonts.ready.then(queueAsciiFit);
+    document.fonts.addEventListener?.("loadingdone", queueAsciiFit);
+  }
 
   console.log(`%cPassword: ${command.password}`, "color: red; font-size: 20px;");
 }

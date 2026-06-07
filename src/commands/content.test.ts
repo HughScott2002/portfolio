@@ -8,8 +8,8 @@ import { createWhoami } from "./whoami";
 
 describe("command content", () => {
   it("keeps visible terminal output conventions for configured content", () => {
-    expect(BANNER.some((line) => line.startsWith("<pre>"))).toBe(true);
-    expect(BANNER).toContain("Type <span class='command'>'dark'</span>, <span class='command'>'light'</span>, or <span class='command'>'system'</span> to change the theme.");
+    expect(BANNER.some((line) => line.startsWith("<pre"))).toBe(true);
+    expect(BANNER.some((line) => line.includes("<span class='command-hint-commands'><span class='command'>'dark'</span>, <span class='command'>'light'</span>, or <span class='command'>'system'</span></span>"))).toBe(true);
     expect(ABOUT.some((line) => line.includes("mailto:"))).toBe(true);
     expect(PROJECTS).toContain("2 File(s)");
     expect(EXPERIENCE).toContain("2 File(s)");

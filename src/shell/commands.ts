@@ -1,4 +1,4 @@
-import { commandToken, row, type TerminalLine } from "./format";
+import { commandHelpList, commandHelpRow, commandToken, type TerminalLine } from "./format";
 
 export type CommandHelpEntry = {
   names: string[];
@@ -8,7 +8,7 @@ export type CommandHelpEntry = {
 
 export const COMMAND_HELP: CommandHelpEntry[] = [
   { names: ["about"], display: "'about'", help: "Who made this website?" },
-  { names: ["experience", "ex"], display: "'experience'/'ex'", help: "Where has Hugh worked?" },
+  { names: ["ex"], display: "'ex'", help: "Where has Hugh worked?" },
   { names: ["contact"], display: "'contact'", help: "Start an email to Hugh." },
   { names: ["projects"], display: "'projects'", help: "Maybe there's something interesting." },
   { names: ["ls"], display: "'ls'", help: "List available commands." },
@@ -26,7 +26,6 @@ const AUTOCOMPLETE_ORDER = [
   "help",
   "ls",
   "about",
-  "experience",
   "ex",
   "contact",
   "projects",
@@ -64,7 +63,7 @@ export function isKnownCommand(input: string) {
 export function createHelpLines(): TerminalLine[] {
   return [
     "<br>",
-    ...COMMAND_HELP.map((entry) => row(commandToken(entry.display), entry.help, 17, entry.display.length)),
+    commandHelpList(COMMAND_HELP.map((entry) => commandHelpRow(commandToken(entry.display), entry.help))),
     "<br>",
     "Press <span class='keys'>[Tab]</span> for auto completion.",
     "Press <span class='keys'>[Esc]</span> to clear the input line.",

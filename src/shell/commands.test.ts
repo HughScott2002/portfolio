@@ -5,7 +5,9 @@ describe("command registry", () => {
   it("is the source of truth for help rows and autocomplete", () => {
     expect(listCommandNames()).toContain("dark");
     expect(listCommandNames()).toContain("system");
-    expect(autocompleteCommand("ex")).toBe("experience");
+    expect(autocompleteCommand("ex")).toBe("ex");
+    expect(listCommandNames()).not.toContain("experience");
+    expect(isKnownCommand("experience")).toBe(false);
     expect(autocompleteCommand("zzz")).toBeUndefined();
     expect(autocompleteSuffix("")).toBe("");
     expect(autocompleteSuffix("sys")).toBe("tem");
@@ -15,7 +17,7 @@ describe("command registry", () => {
     expect(isKnownCommand(" DARK ")).toBe(true);
     expect(isKnownCommand("dar")).toBe(false);
 
-    expect(createHelpLines()).toContain("&nbsp;&nbsp;<span class='command'>'dark'</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Switch to dark mode.");
+    expect(createHelpLines().some((line) => line.includes("<span class='command-help-row'><span class='command-help-name'><span class='command'>'dark'</span></span><span class='command-help-description'>Switch to dark mode.</span></span>"))).toBe(true);
     expect(createHelpLines()).toContain("Press <span class='keys'>[Tab]</span> for auto completion.");
   });
 });

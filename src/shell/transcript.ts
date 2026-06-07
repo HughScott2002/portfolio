@@ -7,6 +7,7 @@ type PromptHistoryElement = {
 };
 
 type ParagraphElement = {
+  className?: string;
   innerHTML: string;
 };
 
@@ -42,11 +43,19 @@ export function writeTranscriptLines<TTarget, TParagraph extends ParagraphElemen
   const delayMs = options.delayMs ?? 40;
 
   message.forEach((item, idx) => {
-    setTimer(() => {
+    const insertLine = () => {
       const paragraph = options.createParagraph();
+      paragraph.className = "terminal-line";
       paragraph.innerHTML = item;
       options.insertBefore(paragraph, options.target);
       options.scrollToBottom();
-    }, delayMs * idx);
+    };
+
+    if (delayMs <= 0) {
+      insertLine();
+      return;
+    }
+
+    setTimer(insertLine, delayMs * idx);
   });
 }

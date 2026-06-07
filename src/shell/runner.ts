@@ -70,7 +70,6 @@ export function runCommand(input: string, context: CommandRunContext): CommandRu
       return { lines: context.bareMode ? [`${context.username}`, "<br>"] : createWhoami(context.deviceInfo) };
     case "about":
       return { lines: context.bareMode ? ["Nothing to see here.", "<br>"] : ABOUT };
-    case "experience":
     case "ex":
       return { lines: context.bareMode ? ["Nothing to see here.", "<br>"] : EXPERIENCE };
     case "projects":

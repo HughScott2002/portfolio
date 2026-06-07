@@ -1,8 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@200;300;400;600&family=Pixelify+Sans&family=VT323&display=swap');
-
 :root {
   font-family: 'IBM Plex Mono', monospace;
   font-weight: 400;
+  --page-pad: clamp(8px, 1.4vw, 40px);
+  --shell-vertical-inset: calc(var(--page-pad) * 2);
+  --terminal-width: 1920px;
+  --terminal-font-size: clamp(14px, 11px + 0.45vw, 22px);
+  --terminal-line-height: 1.5;
+  --terminal-gutter: clamp(10px, 1.35vw, 32px);
+  --terminal-top-gap: clamp(10px, 1.1vw, 20px);
+  --terminal-radius: clamp(14px, 1.25vw, 24px);
+  --terminal-shadow-y: clamp(14px, 1.65vw, 28px);
+  --terminal-shadow-blur: clamp(32px, 4vw, 70px);
+  --titlebar-height: clamp(38px, 2.6vw, 52px);
+  --titlebar-pad: clamp(10px, 1vw, 18px);
+  --titlebar-font-size: clamp(12px, 9px + 0.35vw, 16px);
+  --window-dot-size: clamp(9px, 0.62vw, 13px);
+  --window-dot-gap: clamp(6px, 0.45vw, 9px);
+  --logo-size: clamp(22px, 1.5vw, 30px);
+  --prompt-font-size: clamp(13px, 10px + 0.4vw, 20px);
+  --prompt-corner-width: clamp(20px, 1.55vw, 30px);
+  --prompt-segment-height: clamp(24px, 1.4vw, 34px);
+  --prompt-segment-half: clamp(12px, 0.7vw, 17px);
+  --prompt-segment-arrow: clamp(12px, 0.7vw, 17px);
+  --prompt-block-pad-start: clamp(10px, 0.78vw, 16px);
+  --prompt-block-pad-end: clamp(8px, 0.68vw, 14px);
+  --ascii-min-font-size: 4px;
+  --ascii-max-font-size: clamp(11px, 0.42rem + 0.65vw, 18px);
+  --ascii-fluid-font-size: clamp(var(--ascii-min-font-size), 1.65vw, var(--ascii-max-font-size));
+  --ascii-font-size: var(--ascii-fit-size, var(--ascii-fluid-font-size));
+  --ascii-inline-bleed: 0px;
+  --ascii-horizontal-scale: 1;
+  --banner-row-gap: clamp(0.75ch, 1.25vw, 4ch);
+  --banner-link-font-size: clamp(12px, 9px + 0.35vw, 18px);
+  --command-help-gap: clamp(0.65ch, 2.2vw, 7ch);
   --p10k-gray: #d3d7cf;
   --p10k-blue: #3465a4;
   --p10k-green: #4e9a06;
@@ -77,16 +107,6 @@
   --prompt-default: var(--p10k-gray);
 }
 
-@keyframes typing {
-  from {
-    width: 0
-  }
-
-  to {
-    width: 100%
-  }
-}
-
 @keyframes cursor-blink {
   0%,
   45% {
@@ -99,12 +119,24 @@
   }
 }
 
+@keyframes terminal-line-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(0.18em);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 html,
 body {
   color: var(--text);
   background-color: var(--bg);
   height: 100%;
-  font-size: 18px;
+  font-size: var(--terminal-font-size);
   display: block;
 }
 
@@ -113,27 +145,30 @@ html {
 }
 
 body {
-  min-height: 100%;
-  padding: 28px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: var(--page-pad);
   box-sizing: border-box;
   font-weight: 400;
   background:
     linear-gradient(135deg, var(--bg-gradient), var(--bg-gradient-end) 42%),
     var(--bg);
+  overflow-x: hidden;
 }
 
 main {
   display: block;
   box-sizing: border-box;
-  width: min(1120px, 100%);
-  height: calc(100vh - 56px);
+  width: min(var(--terminal-width), 100%);
+  height: calc(100vh - var(--shell-vertical-inset));
+  height: calc(100dvh - var(--shell-vertical-inset));
   margin: 0 auto;
   border: 1px solid var(--surface-border);
-  border-radius: 22px;
+  border-radius: var(--terminal-radius);
   background: var(--surface);
   box-shadow:
-    0 28px 70px var(--surface-shadow-1),
-    0 10px 24px var(--surface-shadow-2),
+    0 var(--terminal-shadow-y) var(--terminal-shadow-blur) var(--surface-shadow-1),
+    0 10px clamp(18px, 1.7vw, 24px) var(--surface-shadow-2),
     inset 0 1px 0 var(--surface-highlight);
   overflow-y: auto;
   overflow-x: hidden;
@@ -148,29 +183,135 @@ main::-webkit-scrollbar {
 
 p {
   display: block;
-  line-height: 27px;
-  animation: typing 0.5s steps(30, end);
+  max-width: 100%;
+  line-height: var(--terminal-line-height);
+  white-space: normal;
+  overflow: visible;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.terminal-line {
+  animation: terminal-line-reveal 140ms ease-out both;
+}
+
+.terminal-row-label {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45ch;
   white-space: nowrap;
-  overflow: hidden;
+}
+
+.banner-contact-list {
+  display: inline-grid;
+  grid-template-columns: max-content minmax(0, max-content);
+  column-gap: var(--banner-row-gap);
+  row-gap: 0;
+  max-width: 100%;
+}
+
+.banner-row {
+  display: contents;
+}
+
+.banner-row-label {
+  grid-column: 1;
+  white-space: nowrap;
+}
+
+.banner-row-value {
+  grid-column: 2;
+  min-width: 0;
+}
+
+.banner-row-value a {
+  font-size: var(--banner-link-font-size);
+  line-height: inherit;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.banner-contact-list.is-stacked {
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: 0.18em;
+}
+
+.banner-contact-list.is-stacked .banner-row {
+  display: grid;
+  grid-column: 1;
+  grid-template-columns: max-content;
+  width: 100%;
+}
+
+.banner-contact-list.is-stacked .banner-row-label,
+.banner-contact-list.is-stacked .banner-row-value {
+  grid-column: 1;
+}
+
+.banner-contact-list.is-stacked .banner-row-value {
+  padding-left: 1.8ch;
+}
+
+.command-hint {
+  display: inline;
+}
+
+.command-hint-commands {
+  display: inline;
+}
+
+.command-help-list {
+  display: inline-grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: var(--command-help-gap);
+  max-width: 100%;
+}
+
+.command-help-row {
+  display: contents;
+}
+
+.command-help-name {
+  grid-column: 1;
+  white-space: nowrap;
+}
+
+.command-help-description {
+  grid-column: 2;
+  min-width: 0;
 }
 
 div {
-  line-height: 27px;
+  line-height: var(--terminal-line-height);
 }
 
 @font-face {
   font-family: ascii;
-  src: url("./font/IBMPlexMono-Thin.ttf")
+  src: url("./font/IBMPlexMono-Thin.ttf");
+  font-display: optional;
 }
 
-pre {
-  margin: 0;
+.ascii-art {
+  display: block;
+  margin-block: 0;
+  margin-inline: calc(var(--ascii-inline-bleed) * -1);
   padding: 0;
-  line-height: 23px !important;
+  width: max-content;
+  max-width: none;
+  line-height: 1.12 !important;
   color: var(--banner);
   font-family: "ascii", monospace;
-  font-size: 18px;
+  font-size: var(--ascii-font-size);
   font-weight: 600;
+  white-space: pre;
+  overflow: visible;
+  transform: scaleX(var(--ascii-horizontal-scale));
+  transform-origin: left top;
+}
+
+main.is-measuring-ascii .ascii-art {
+  font-size: var(--ascii-max-font-size);
 }
 
 input {
@@ -181,15 +322,16 @@ input {
   border: none;
   resize: none;
   outline: none;
-  font-size: 18px;
+  font-size: var(--terminal-font-size);
   color: var(--input-text);
   caret-color: var(--command-text);
-  width: 50%;
+  width: 100%;
   background: transparent !important;
 }
 
 a {
   color: var(--link);
+  overflow-wrap: anywhere;
 }
 
 a:hover {
@@ -199,7 +341,7 @@ a:hover {
 
 #bars {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 15px;
+  font-size: var(--titlebar-font-size);
   position: -webkit-sticky;
   position: sticky;
   width: 100%;
@@ -214,26 +356,26 @@ a:hover {
   position: relative;
   display: grid;
   grid-template-columns: auto auto 1fr;
-  column-gap: 10px;
+  column-gap: clamp(8px, 0.75vw, 12px);
   align-items: center;
-  min-height: 44px;
+  min-height: var(--titlebar-height);
   color: var(--titlebar-text);
   letter-spacing: 0;
   line-height: 1;
-  padding: 0 16px;
+  padding: 0 var(--titlebar-pad);
 }
 
 .window-controls {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--window-dot-gap);
   justify-self: end;
 }
 
 .window-control {
   display: block;
-  width: 12px;
-  height: 12px;
+  width: var(--window-dot-size);
+  height: var(--window-dot-size);
   border-radius: 999px;
   box-shadow:
     inset 0 0 0 1px rgba(36, 49, 63, 0.12),
@@ -254,54 +396,54 @@ a:hover {
 
 .nixos-logo {
   position: relative;
-  width: 28px;
-  height: 28px;
+  width: var(--logo-size);
+  height: var(--logo-size);
   justify-self: start;
   filter: drop-shadow(0 2px 3px rgba(82, 119, 195, 0.2));
 }
 
 .nixos-logo span {
   position: absolute;
-  left: 7px;
-  top: 11px;
-  width: 14px;
-  height: 5px;
+  left: calc(var(--logo-size) * 0.25);
+  top: calc(var(--logo-size) * 0.39);
+  width: calc(var(--logo-size) * 0.5);
+  height: calc(var(--logo-size) * 0.18);
   border-radius: 999px;
   background: var(--nixos-blue);
-  transform-origin: 7px 3px;
+  transform-origin: calc(var(--logo-size) * 0.25) calc(var(--logo-size) * 0.11);
 }
 
 .nixos-logo span:nth-child(1) {
-  transform: rotate(0deg) translateX(6px);
+  transform: rotate(0deg) translateX(calc(var(--logo-size) * 0.21));
 }
 
 .nixos-logo span:nth-child(2) {
-  transform: rotate(60deg) translateX(6px);
+  transform: rotate(60deg) translateX(calc(var(--logo-size) * 0.21));
   background: var(--nixos-light-blue);
 }
 
 .nixos-logo span:nth-child(3) {
-  transform: rotate(120deg) translateX(6px);
+  transform: rotate(120deg) translateX(calc(var(--logo-size) * 0.21));
 }
 
 .nixos-logo span:nth-child(4) {
-  transform: rotate(180deg) translateX(6px);
+  transform: rotate(180deg) translateX(calc(var(--logo-size) * 0.21));
   background: var(--nixos-light-blue);
 }
 
 .nixos-logo span:nth-child(5) {
-  transform: rotate(240deg) translateX(6px);
+  transform: rotate(240deg) translateX(calc(var(--logo-size) * 0.21));
 }
 
 .nixos-logo span:nth-child(6) {
-  transform: rotate(300deg) translateX(6px);
+  transform: rotate(300deg) translateX(calc(var(--logo-size) * 0.21));
   background: var(--nixos-light-blue);
 }
 
 .window-title {
   justify-self: start;
   color: var(--titlebar-text);
-  font-size: 15px;
+  font-size: var(--titlebar-font-size);
   font-weight: 600;
 }
 
@@ -323,11 +465,11 @@ a:hover {
 }
 
 #terminal {
-  margin: 18px 24px 0;
+  margin: var(--terminal-top-gap) var(--terminal-gutter) 0;
 }
 
 #input-line {
-  margin: 0 24px;
+  margin: 0 var(--terminal-gutter);
   overflow-x: hidden;
   width: auto;
 }
@@ -338,14 +480,15 @@ a:hover {
 
 .shell-prompt {
   color: var(--prompt-default);
-  font-size: 16px;
+  font-size: var(--prompt-font-size);
   line-height: 1.5;
 }
 
 .prompt-line {
   display: flex;
   align-items: center;
-  min-height: 28px;
+  min-height: calc(var(--prompt-segment-height) + 2px);
+  min-width: 0;
 }
 
 .prompt-line-top {
@@ -354,13 +497,14 @@ a:hover {
 
 .prompt-line-bottom {
   gap: 6px;
+  flex-wrap: wrap;
 }
 
 .prompt-corner {
   color: var(--prompt-default);
   font-weight: 600;
-  width: 24px;
-  flex: 0 0 24px;
+  width: var(--prompt-corner-width);
+  flex: 0 0 var(--prompt-corner-width);
 }
 
 .prompt-segments {
@@ -368,6 +512,7 @@ a:hover {
   align-items: center;
   gap: 0;
   min-width: 0;
+  max-width: 100%;
 }
 
 .prompt-block {
@@ -376,14 +521,16 @@ a:hover {
   position: relative;
   align-items: center;
   justify-content: center;
-  min-height: 26px;
-  padding: 0 12px 0 16px;
+  min-height: var(--prompt-segment-height);
+  min-width: 0;
+  max-width: 100%;
+  padding: 0 var(--prompt-block-pad-end) 0 var(--prompt-block-pad-start);
   background: var(--segment-bg);
   color: var(--p10k-text-dark);
   font-weight: 700;
   line-height: 1;
   white-space: nowrap;
-  margin-right: 14px;
+  margin-right: var(--prompt-segment-arrow);
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.14);
 }
 
@@ -391,17 +538,18 @@ a:hover {
   content: "";
   position: absolute;
   top: 0;
-  right: -14px;
+  right: calc(var(--prompt-segment-arrow) * -1);
   z-index: 2;
   width: 0;
   height: 0;
-  border-top: 13px solid transparent;
-  border-bottom: 13px solid transparent;
-  border-left: 14px solid var(--segment-bg);
+  border-top: var(--prompt-segment-half) solid transparent;
+  border-bottom: var(--prompt-segment-half) solid transparent;
+  border-left: var(--prompt-segment-arrow) solid var(--segment-bg);
 }
 
 .prompt-logo-block {
-  width: 36px;
+  width: calc(var(--prompt-segment-height) + 10px);
+  flex: 0 0 calc(var(--prompt-segment-height) + 10px);
   padding: 0;
   border-radius: 6px 0 0 6px;
   --segment-bg: var(--p10k-gray);
@@ -414,6 +562,7 @@ a:hover {
 .prompt-path {
   --segment-bg: var(--p10k-blue);
   color: var(--p10k-text-light);
+  max-width: min(34vw, 12rem);
 }
 
 .prompt-device {
@@ -423,9 +572,8 @@ a:hover {
 .prompt-theme {
   --segment-bg: var(--p10k-yellow);
   color: var(--p10k-text-dark);
-  border-radius: 0 6px 6px 0;
-  margin-right: 0;
-  padding-right: 16px;
+  margin-right: var(--prompt-segment-arrow);
+  padding-right: var(--prompt-block-pad-start);
 }
 
 :root[data-theme="dark"] .prompt-theme {
@@ -433,46 +581,9 @@ a:hover {
   color: var(--p10k-text-light);
 }
 
-.prompt-theme::after {
-  display: none;
-}
-
 .prompt-logo {
-  width: 20px;
-  height: 20px;
+  --logo-size: clamp(18px, 1.15vw, 24px);
   filter: none;
-}
-
-.prompt-logo span {
-  left: 5px;
-  top: 8px;
-  width: 10px;
-  height: 4px;
-  transform-origin: 5px 2px;
-}
-
-.prompt-logo span:nth-child(1) {
-  transform: rotate(0deg) translateX(4px);
-}
-
-.prompt-logo span:nth-child(2) {
-  transform: rotate(60deg) translateX(4px);
-}
-
-.prompt-logo span:nth-child(3) {
-  transform: rotate(120deg) translateX(4px);
-}
-
-.prompt-logo span:nth-child(4) {
-  transform: rotate(180deg) translateX(4px);
-}
-
-.prompt-logo span:nth-child(5) {
-  transform: rotate(240deg) translateX(4px);
-}
-
-.prompt-logo span:nth-child(6) {
-  transform: rotate(300deg) translateX(4px);
 }
 
 .prompt-chevron {
@@ -519,6 +630,8 @@ a:hover {
 .command-input-suggestion {
   color: var(--autocomplete-text);
   font-weight: 500;
+  min-width: 0;
+  overflow: hidden;
   white-space: pre;
 }
 
@@ -532,6 +645,10 @@ a:hover {
 
 .history-command {
   margin-left: 2px;
+  flex: 1 1 20rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .command {
@@ -555,73 +672,72 @@ a:hover {
   font-weight: 600;
 }
 
-@media (max-width: 600px) {
-  body {
-    font-size: 12px;
-    padding: 10px;
-    font-weight: 500;
+@media (max-width: 560px) {
+  :root {
+    --page-pad: clamp(5px, 1.8vw, 9px);
+    --terminal-gutter: clamp(3px, 1.35vw, 7px);
+    --terminal-radius: clamp(10px, 3vw, 14px);
+    --ascii-inline-bleed: var(--terminal-gutter);
+    --ascii-horizontal-scale: 0.86;
+    --banner-row-gap: 0.75ch;
+    --banner-link-font-size: 12px;
+    --command-help-gap: 0.65ch;
   }
 
-  input {
-    font-size: 12px;
+  .ascii-art {
+    line-height: 1.04 !important;
   }
 
-  p {
-    line-height: 17px;
+  .command-hint {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0 0.75ch;
   }
 
-  pre {
-    line-height: 14px !important;
-    font-size: 11px;
+  .command-hint-lead,
+  .command-hint-detail {
+    display: none;
   }
 
-  main {
-    height: calc(100vh - 20px);
-    border-width: 1px;
-    border-radius: 16px;
+  .command-hint-commands {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0 0.65ch;
   }
 
-  #bar-1 {
-    grid-template-columns: auto auto 1fr;
-    column-gap: 8px;
-    min-height: 38px;
-    padding: 0 10px;
+  .prompt-device,
+  .prompt-theme {
+    display: none;
   }
 
-  .window-controls {
-    gap: 6px;
+  .prompt-path {
+    border-radius: 0;
+    margin-right: var(--prompt-segment-arrow);
+    max-width: min(42vw, 9rem);
+    padding-right: var(--prompt-block-pad-start);
   }
+}
 
-  .window-control {
-    width: 9px;
-    height: 9px;
-  }
-
-  .nixos-logo {
-    width: 22px;
-    height: 22px;
-  }
-
-  .nixos-logo span {
-    left: 5px;
-    top: 9px;
-    width: 12px;
-    height: 4px;
-  }
-
+@media (max-width: 380px) {
   .window-title {
-    font-size: 12px;
+    max-width: 38vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  div {
-    line-height: 17px;
+  .prompt-logo-block {
+    display: none;
   }
 
-  #terminal {
-    margin: 12px 12px 0;
+  .prompt-user {
+    border-radius: 6px 0 0 6px;
   }
+}
 
-  #input-line {
-    margin: 0 12px;
+@media (prefers-reduced-motion: reduce) {
+  .terminal-line,
+  .command-input-cursor {
+    animation: none;
   }
 }
