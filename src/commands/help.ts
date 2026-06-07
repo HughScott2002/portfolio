@@ -9,6 +9,10 @@ const helpObj = {
       "Where has Hugh worked?"
     ],
     [
+      "'contact'",
+      "Start an email to Hugh."
+    ],
+    [
       "'projects'",
       "Maybe there's something interesting."
     ],

@@ -29,7 +29,7 @@ const PRE_USER = document.getElementById("pre-user");
 const HOST = document.getElementById("host");
 const USER = document.getElementById("user");
 const PROMPT = document.getElementById("prompt");
-const COMMANDS = ["help", "ls", "about", "experience", "projects", "whoami", "repo", "banner", "clear"];
+const COMMANDS = ["help", "ls", "about", "experience", "contact", "projects", "whoami", "repo", "banner", "clear"];
 const HISTORY : string[] = [];
 const SUDO_PASSWORD = command.password;
 const REPO_LINK = command.repoLink;
@@ -243,6 +243,16 @@ function commandHandler(input : string) {
       writeLines(["Redirecting to github.com...", "<br>"]);
       setTimeout(() => {
         window.open(REPO_LINK, '_blank');
+      }, 500);
+      break;
+    case 'contact':
+      if(bareMode) {
+        writeLines(["No email client survived.", "<br>"])
+        break;
+      }
+      writeLines(["Opening email client...", "<br>"]);
+      setTimeout(() => {
+        window.location.href = `mailto:${command.social.email}`;
       }, 500);
       break;
     case 'linkedin':

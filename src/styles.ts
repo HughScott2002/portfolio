@@ -3,7 +3,7 @@ import command from '../config.json' assert {type: 'json'};
 (() => {
   const style = document.createElement('style')
   const head = document.head
-  const background = `body {background: ${command.colors.background}}`
+  const background = `body {background-color: ${command.colors.background}}`
   const foreground = `body {color: ${command.colors.foreground}}`
   const inputBackground = `input {background: ${command.colors.background}}`
   const inputForeground = `input {color: ${command.colors.prompt.input}}`
@@ -29,13 +29,10 @@ import command from '../config.json' assert {type: 'json'};
     style.sheet.insertRule("#bars {display: none}")    
     style.sheet.insertRule("main {border: none}")
   } else {
-    style.sheet.insertRule(`#bars {background: ${command.colors.background}}`)
     style.sheet.insertRule(`main {border-color: ${command.colors.border.color}}`)
-    style.sheet.insertRule(`#bar-1 {background: ${command.colors.border.color}; color: ${command.colors.background}}`)
-    style.sheet.insertRule(`#bar-2 {background: ${command.colors.border.color}}`)
-    style.sheet.insertRule(`#bar-3 {background: ${command.colors.border.color}}`)
-    style.sheet.insertRule(`#bar-4 {background: ${command.colors.border.color}}`)
-    style.sheet.insertRule(`#bar-5 {background: ${command.colors.border.color}}`)
+    style.sheet.insertRule(`#bars {border-bottom-color: ${command.colors.border.color}}`)
+    style.sheet.insertRule(`#bar-1 {color: ${command.colors.foreground}}`)
+    style.sheet.insertRule(`.window-title {color: ${command.colors.foreground}}`)
   }
 
   style.sheet.insertRule(background)

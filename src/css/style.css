@@ -26,7 +26,7 @@ body {
   color: var(--text);
   background-color: var(--bg);
   height: 100%;
-  font-size: 16px;
+  font-size: 18px;
   display: block;
 }
 
@@ -35,21 +35,33 @@ html {
 }
 
 body {
-  padding: 16px;
+  min-height: 100%;
+  padding: 28px;
   box-sizing: border-box;
   font-weight: 400;
+  background:
+    linear-gradient(135deg, rgba(126, 126, 191, 0.16), rgba(251, 247, 239, 0) 42%),
+    var(--bg);
 }
 
 main {
   display: block;
   box-sizing: border-box;
-  height: 100%;
-  border: var(--border) solid 2px;
-  border-radius: 2px;
+  width: min(1120px, 100%);
+  height: calc(100vh - 56px);
+  margin: 0 auto;
+  border: 1px solid rgba(126, 126, 191, 0.42);
+  border-radius: 22px;
+  background: rgba(255, 252, 246, 0.9);
+  box-shadow:
+    0 28px 70px rgba(36, 49, 63, 0.22),
+    0 10px 24px rgba(36, 49, 63, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  backdrop-filter: blur(22px);
 }
 
 main::-webkit-scrollbar {
@@ -58,14 +70,14 @@ main::-webkit-scrollbar {
 
 p {
   display: block;
-  line-height: 22px;
+  line-height: 27px;
   animation: typing 0.5s steps(30, end);
   white-space: nowrap;
   overflow: hidden;
 }
 
 div {
-  line-height: 22px;
+  line-height: 27px;
 }
 
 @font-face {
@@ -76,9 +88,10 @@ div {
 pre {
   margin: 0;
   padding: 0;
-  line-height: 20px !important;
+  line-height: 23px !important;
   color: #2f6f9f;
   font-family: "ascii", monospace;
+  font-size: 18px;
   font-weight: 600;
 }
 
@@ -90,10 +103,11 @@ input {
   border: none;
   resize: none;
   outline: none;
-  font-size: 16px;
+  font-size: 18px;
   color: #1f2937;
   caret-color: var(--prompt-default);
   width: 50%;
+  background: transparent !important;
 }
 
 a {
@@ -106,56 +120,139 @@ a:hover {
 }
 
 #bars {
-  font-family: 'Pixelify Sans', sans-serif;
-  font-size: 20px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 15px;
   position: -webkit-sticky;
   position: sticky;
   width: 100%;
   top: 0;
-  background-color: var(--bg);
+  z-index: 2;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(244, 238, 228, 0.86));
+  border-bottom: 1px solid rgba(126, 126, 191, 0.24);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.72) inset;
 }
 
 #bar-1 {
-  height: 36px;
-  background-color: var(--border);
-  color: var(--bg);
-  line-height: 36px;
-  padding-left: 10px;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  column-gap: 10px;
+  align-items: center;
+  min-height: 44px;
+  color: #334155;
+  letter-spacing: 0;
+  line-height: 1;
+  padding: 0 16px;
+}
+
+.window-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: end;
+}
+
+.window-control {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  box-shadow:
+    inset 0 0 0 1px rgba(36, 49, 63, 0.12),
+    0 1px 1px rgba(36, 49, 63, 0.12);
+}
+
+.window-control.close {
+  background: #ff5f57;
+}
+
+.window-control.minimize {
+  background: #ffbd2e;
+}
+
+.window-control.zoom {
+  background: #28c840;
+}
+
+.nixos-logo {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  justify-self: start;
+  filter: drop-shadow(0 2px 3px rgba(82, 119, 195, 0.2));
+}
+
+.nixos-logo span {
+  position: absolute;
+  left: 7px;
+  top: 11px;
+  width: 14px;
+  height: 5px;
+  border-radius: 999px;
+  background: #5277c3;
+  transform-origin: 7px 3px;
+}
+
+.nixos-logo span:nth-child(1) {
+  transform: rotate(0deg) translateX(6px);
+}
+
+.nixos-logo span:nth-child(2) {
+  transform: rotate(60deg) translateX(6px);
+  background: #7ebae4;
+}
+
+.nixos-logo span:nth-child(3) {
+  transform: rotate(120deg) translateX(6px);
+}
+
+.nixos-logo span:nth-child(4) {
+  transform: rotate(180deg) translateX(6px);
+  background: #7ebae4;
+}
+
+.nixos-logo span:nth-child(5) {
+  transform: rotate(240deg) translateX(6px);
+}
+
+.nixos-logo span:nth-child(6) {
+  transform: rotate(300deg) translateX(6px);
+  background: #7ebae4;
+}
+
+.window-title {
+  justify-self: start;
+  color: rgba(51, 65, 85, 0.72);
+  font-size: 15px;
+  font-weight: 600;
 }
 
 #bar-2 {
-  height: 4px;
-  background-color: var(--border);
-  margin-top: 1px;
+  display: none;
 }
 
 #bar-3 {
-  height: 3px;
-  background-color: var(--border);
-  margin-top: 2px;
+  display: none;
 }
 
 #bar-4 {
-  height: 2px;
-  background-color: var(--border);
-  margin-top: 3px;
+  display: none;
 }
 
 
 #bar-5 {
-  height: 1px;
-  background-color: var(--border);
-  margin-top: 4px;
+  display: none;
 }
 
 #terminal {
-  margin-left: 20px;
+  margin: 18px 24px 0;
 }
 
 #input-line {
-  margin-left: 20px;
+  margin: 0 24px;
   overflow-x: hidden;
-  width: 100%;
+  width: auto;
 }
 
 .command {
@@ -176,37 +273,71 @@ a:hover {
 
 @media (max-width: 600px) {
   body {
-    font-size: 10px;
-    padding: 2px;
+    font-size: 12px;
+    padding: 10px;
     font-weight: 500;
   }
 
   input {
-    font-size: 10px;
+    font-size: 12px;
   }
 
   p {
-    line-height: 14px;
+    line-height: 17px;
   }
 
   pre {
-    line-height: 12px !important;
-    font-size: 9px;
+    line-height: 14px !important;
+    font-size: 11px;
   }
 
   main {
+    height: calc(100vh - 20px);
     border-width: 1px;
+    border-radius: 16px;
+  }
+
+  #bar-1 {
+    grid-template-columns: auto auto 1fr;
+    column-gap: 8px;
+    min-height: 38px;
+    padding: 0 10px;
+  }
+
+  .window-controls {
+    gap: 6px;
+  }
+
+  .window-control {
+    width: 9px;
+    height: 9px;
+  }
+
+  .nixos-logo {
+    width: 22px;
+    height: 22px;
+  }
+
+  .nixos-logo span {
+    left: 5px;
+    top: 9px;
+    width: 12px;
+    height: 4px;
+  }
+
+  .window-title {
+    font-size: 12px;
   }
 
   div {
-    line-height: 14px;
+    line-height: 17px;
   }
 
   #terminal {
-    margin-left: 8px;
+    margin: 12px 12px 0;
   }
 
   #input-line {
-    margin-left: 8px;
+    margin: 0 12px;
   }
 }
