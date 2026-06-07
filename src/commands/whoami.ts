@@ -1,45 +1,29 @@
-const whoamiObj = {
-  "message" : [
-    [
-      "In the kaleidoscope of existence,",
-      "I am but a reflection questioning the enigma - "
-    ],
-    [
-      "Amidst cosmic whispers,",
-      "I navigate the maze of self-discovery,",
-      "echoing the eternal refrain - "
-    ],
-    [
-      "In the symphony of life,",
-      "I am a note inquiring its own melody,",
-      "harmonizing with the universal query - ",
-    ],
-    [
-      "As stardust contemplating its journey,",
-      "I ponder the cosmic query,",
-      "silently asking - ",
-    ],
-    [
-      "In the tapestry of reality,",
-      "I am the thread of self-inquiry,",
-      "weaving through the eternal question - "
-    ],
-  ],
+import { commandToken, row } from "../shell/format";
+
+type DeviceInfo = {
+  device: string;
+  theme: string;
+  resolvedTheme: string;
+  language: string;
+  timezone: string;
+  screen: string;
+  cpuThreads: string;
+  memory: string;
+  online: string;
 }
 
-export const createWhoami = () : string[] => {
-  const whoami : string[] = [];  
-  const r = Math.floor(Math.random() * whoamiObj.message.length);
-  whoami.push("<br>");
-
-  whoamiObj.message[r].forEach((ele, idx) => {
-    if (idx === whoamiObj.message[r].length - 1) {
-      ele += "<span class='command'>who am I?</span>";
-    }
-    whoami.push(ele);
-  });
-
-  whoami.push("<br>");
-
-  return whoami
+export const createWhoami = (info : DeviceInfo) : string[] => {
+  return [
+    "<br>",
+    "Whoami? I still cannot see your name, but your browser left a few terminal crumbs:",
+    row(commandToken("device"), info.device, 13, "device".length),
+    row(commandToken("theme"), `${info.theme} (${info.resolvedTheme})`, 13, "theme".length),
+    row(commandToken("language"), info.language, 13, "language".length),
+    row(commandToken("timezone"), info.timezone, 13, "timezone".length),
+    row(commandToken("screen"), info.screen, 13, "screen".length),
+    row(commandToken("cpu"), info.cpuThreads, 13, "cpu".length),
+    row(commandToken("memory"), info.memory, 13, "memory".length),
+    row(commandToken("network"), info.online, 13, "network".length),
+    "<br>",
+  ];
 }

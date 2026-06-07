@@ -7,13 +7,15 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "test": "vitest run",
     "preview": "vite preview",
     "start": "bun run dev"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
     "typescript": "^5.2.2",
-    "vite": "^5.0.0"
+    "vite": "^5.0.0",
+    "vitest": "^4.1.8"
   },
   "dependencies": {
     "js-yaml": "^4.1.0"

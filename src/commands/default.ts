@@ -1,8 +1,10 @@
+import { commandToken } from "../shell/format";
+
 const createDefault = () : string[] => {
   const defaultMsgArr = [
     "<br>",
     "COMMAND NOT FOUND",
-    "Type <span class='command'>'help'</span> to get started.",
+    `Type ${commandToken("'help'")} to get started.`,
     "<br>"
   ]  
   

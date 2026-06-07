@@ -37,8 +37,8 @@
     </div>
     <br>
     <div id="terminal">
-      <div>
-        <span id="prompt"><span id="pre-user"></span>@<span id="pre-host"></span>:$ ~ </span>
+      <div class="prompt-entry">
+        <div id="prompt-template" class="shell-prompt"></div>
       </div>
       <!-- command output will be inserted before #write-lines-->
       <a id="write-lines"></a>
@@ -47,12 +47,9 @@
       <div>
         <p id="password-input" style="display: none;">Password: <input id="password-field" autocomplete="off"
             type="password" /></p>
-        <p id="input-hidden">
-          <span id="prompt"><span id="user"></span>@<span id="host"></span>:$ ~
-          </span>
-          <input id="user-input" type="text" enterkeyhint="Enter" spellcheck="false" autocapitalize="none"
-            autocomplete="off" />
-        </p>
+        <div id="input-hidden" class="prompt-entry">
+          <div id="active-prompt" class="shell-prompt"></div>
+        </div>
       </div>
       <br>
     </div>

@@ -1,32 +1,23 @@
 import command from '../../config.json' assert {type: 'json'};
+import { asciiLine, commandToken, link, row } from '../shell/format';
 
 const createBanner = () : string[] => {
   const banner : string[] = [];
   banner.push("<br>")
   command.ascii.forEach((ele) => {
-    let bannerString = "";
-    //this is for the ascii art
-    for (let i = 0; i < ele.length; i++) {
-      if (ele[i] === " ") {
-        bannerString += "&nbsp;";
-      } else {
-        bannerString += ele[i];
-      }
-    }
-    
-    let eleToPush = `<pre>${bannerString}</pre>`;
-    banner.push(eleToPush);
+    banner.push(asciiLine(ele));
   });  
   banner.push("<br>");
   banner.push(command.aboutGreeting);
   banner.push("<br>");
-  banner.push(`&nbsp;&nbsp;&nbsp;<i class='fa-solid fa-envelope'></i> Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='mailto:${command.social.email}'>${command.social.email}</a>`);
-  banner.push(`&nbsp;&nbsp;&nbsp;<i class='fa-brands fa-github'></i> Github&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='https://github.com/${command.social.github}'>github/${command.social.github}</a>`);
-  banner.push(`&nbsp;&nbsp;&nbsp;<i class='fa-brands fa-linkedin'></i> Linkedin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='https://www.linkedin.com/in/${command.social.linkedin}'>linkedin/${command.social.linkedin}</a>`);
+  banner.push(row("<i class='fa-solid fa-envelope'></i> Email", link(command.social.email, `mailto:${command.social.email}`), 17, "Email".length, 3));
+  banner.push(row("<i class='fa-brands fa-github'></i> Github", link(`github/${command.social.github}`, `https://github.com/${command.social.github}`), 17, "Github".length, 3));
+  banner.push(row("<i class='fa-brands fa-linkedin'></i> Linkedin", link(`linkedin/${command.social.linkedin}`, `https://www.linkedin.com/in/${command.social.linkedin}`), 17, "Linkedin".length, 3));
   banner.push("<br>");
-  banner.push("Type <span class='command'>'help'</span> or <span class='command'>'ls'</span> for a list of all available commands.");
-  banner.push("Type <span class='command'>'contact'</span> to start an email.");
-  banner.push(`Type <span class='command'>'repo'</span> to view the GitHub repository or click <a href='${command.repoLink}' target='_blank'>here</a>.`);
+  banner.push(`Type ${commandToken("'help'")} or ${commandToken("'ls'")} for a list of all available commands.`);
+  banner.push(`Type ${commandToken("'dark'")}, ${commandToken("'light'")}, or ${commandToken("'system'")} to change the theme.`);
+  banner.push(`Type ${commandToken("'contact'")} to start an email.`);
+  banner.push(`Type ${commandToken("'repo'")} to view the GitHub repository or click ${link("here", command.repoLink)}.`);
   banner.push("<br>");
   return banner;
 }

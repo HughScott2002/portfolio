@@ -1,38 +1,50 @@
 import command from '../config.json' assert {type: 'json'};
-import { HELP } from "./commands/help";
-import { BANNER } from "./commands/banner";
-import { ABOUT } from "./commands/about"
-import { DEFAULT } from "./commands/default";
-import { EXPERIENCE } from "./commands/experience";
-import { PROJECTS } from "./commands/projects";
-import { createWhoami } from "./commands/whoami";
+import { autocompleteCommand, autocompleteSuffix, isKnownCommand } from "./shell/commands";
+import { createInitialShellMode, enterBareMode, enterPasswordMode, exitPasswordMode, submitPassword } from "./shell/mode";
+import { renderPromptUi } from "./shell/prompt";
+import { runCommand, type ShellEffect } from "./shell/runner";
+import { applyBrowserTheme, getBrowserDeviceInfo, getStoredThemePreference, type ThemePreference } from "./shell/theme";
+import { createPromptHistoryEntry, writeTranscriptLines } from "./shell/transcript";
 
 //mutWriteLines gets deleted and reassigned
 let mutWriteLines = document.getElementById("write-lines");
 let historyIdx = 0
 let tempInput = ""
 let userInput : string;
-let isSudo = false;
-let isPasswordInput = false;
-let passwordCounter = 0;
-let bareMode = false;
+let shellMode = createInitialShellMode();
 
 //WRITELINESCOPY is used to during the "clear" command
 const WRITELINESCOPY = mutWriteLines;
 const TERMINAL = document.getElementById("terminal");
-const USERINPUT = document.getElementById("user-input") as HTMLInputElement;
 const INPUT_HIDDEN = document.getElementById("input-hidden");
 const PASSWORD = document.getElementById("password-input");
 const PASSWORD_INPUT = document.getElementById("password-field") as HTMLInputElement;
-const PRE_HOST = document.getElementById("pre-host");
-const PRE_USER = document.getElementById("pre-user");
-const HOST = document.getElementById("host");
-const USER = document.getElementById("user");
-const PROMPT = document.getElementById("prompt");
-const COMMANDS = ["help", "ls", "about", "experience", "contact", "projects", "whoami", "repo", "banner", "clear"];
+const PROMPT = document.getElementById("prompt-template");
+const ACTIVE_PROMPT = document.getElementById("active-prompt");
+
+if (PROMPT && ACTIVE_PROMPT) {
+  renderPromptUi({ promptTemplate: PROMPT, activePrompt: ACTIVE_PROMPT });
+}
+
+const USERINPUT = document.getElementById("user-input") as HTMLInputElement;
+const COMMAND_INPUT_MIRROR = document.getElementById("command-input-mirror");
+const COMMAND_INPUT_SUGGESTION = document.getElementById("command-input-suggestion");
 const HISTORY : string[] = [];
 const SUDO_PASSWORD = command.password;
 const REPO_LINK = command.repoLink;
+
+function applyTheme(themePreference : ThemePreference, persist = true) {
+  applyBrowserTheme(themePreference, persist);
+}
+
+function syncCommandInput() {
+  if (!COMMAND_INPUT_MIRROR) return;
+  COMMAND_INPUT_MIRROR.textContent = USERINPUT.value;
+  COMMAND_INPUT_MIRROR.classList.toggle("is-valid-command", isKnownCommand(USERINPUT.value));
+  if (COMMAND_INPUT_SUGGESTION) {
+    COMMAND_INPUT_SUGGESTION.textContent = autocompleteSuffix(USERINPUT.value);
+  }
+}
 
 const scrollToBottom = () => {
   const MAIN = document.getElementById("main");
@@ -47,7 +59,7 @@ function userInputHandler(e : KeyboardEvent) {
   switch(key) {
     case "Enter":
       e.preventDefault();
-      if (!isPasswordInput) {
+      if (!shellMode.isPasswordInput) {
         enterKey();
       } else {
         passwordHandler();
@@ -57,6 +69,7 @@ function userInputHandler(e : KeyboardEvent) {
       break;
     case "Escape":
       USERINPUT.value = "";
+      syncCommandInput();
       break;
     case "ArrowUp":
       arrowKeys(key);
@@ -70,19 +83,14 @@ function userInputHandler(e : KeyboardEvent) {
       e.preventDefault();
       break;
   }
+
+  requestAnimationFrame(syncCommandInput);
 }
 
 function enterKey() {
   if (!mutWriteLines || !PROMPT) return
   const resetInput = "";
-  let newUserInput;
   userInput = USERINPUT.value;
-
-  if (bareMode) {
-    newUserInput = userInput;
-  } else {
-    newUserInput = `<span class='output'>${userInput}</span>`;
-  }
 
   HISTORY.push(userInput);
   historyIdx = HISTORY.length
@@ -92,11 +100,16 @@ function enterKey() {
     commandHandler(userInput.toLowerCase().trim());
     USERINPUT.value = resetInput;
     userInput = resetInput;
+    syncCommandInput();
     return
   }
 
-  const div = document.createElement("div");
-  div.innerHTML = `<span id="prompt">${PROMPT.innerHTML}</span> ${newUserInput}`;
+  const div = createPromptHistoryEntry({
+    input: userInput,
+    promptHtml: PROMPT.innerHTML,
+    bareMode: shellMode.bareMode,
+    createElement: () => document.createElement("div"),
+  });
 
   if (mutWriteLines.parentNode) {
     mutWriteLines.parentNode.insertBefore(div, mutWriteLines);
@@ -112,16 +125,15 @@ function enterKey() {
   
   USERINPUT.value = resetInput;
   userInput = resetInput; 
+  syncCommandInput();
 }
 
 function tabKey() {
-  let currInput = USERINPUT.value;
+  const match = autocompleteCommand(USERINPUT.value);
 
-  for (const ele of COMMANDS) {
-    if(ele.startsWith(currInput)) {
-      USERINPUT.value = ele;
-      return
-    }
+  if (match) {
+    USERINPUT.value = match;
+    syncCommandInput();
   }
 }
 
@@ -132,6 +144,7 @@ function arrowKeys(e : string) {
           historyIdx += 1;
           USERINPUT.value = HISTORY[historyIdx];
           if (historyIdx === HISTORY.length) USERINPUT.value = tempInput;  
+          syncCommandInput();
       }      
       break;
     case "ArrowUp":
@@ -139,184 +152,100 @@ function arrowKeys(e : string) {
       if (historyIdx !== 0) {
         historyIdx -= 1;
         USERINPUT.value = HISTORY[historyIdx];
+        syncCommandInput();
       }
+      break;
+  }
+}
+
+function resetTerminal() {
+  setTimeout(() => {
+    if(!TERMINAL || !WRITELINESCOPY) return
+    TERMINAL.innerHTML = "";
+    TERMINAL.appendChild(WRITELINESCOPY);
+    mutWriteLines = WRITELINESCOPY;
+  })
+}
+
+function showPasswordPrompt() {
+  if(!PASSWORD) return
+  shellMode = enterPasswordMode(shellMode);
+  USERINPUT.disabled = true;
+
+  if(INPUT_HIDDEN) INPUT_HIDDEN.style.display = "none";
+  PASSWORD.style.display = "block";
+  setTimeout(() => {
+    PASSWORD_INPUT.focus();
+  }, 100);
+}
+
+function createCommandContext() {
+  return {
+    bareMode: shellMode.bareMode,
+    isSudo: shellMode.isSudo,
+    username: command.username,
+    repoLink: REPO_LINK,
+    email: command.social.email,
+    deviceInfo: getBrowserDeviceInfo(getStoredThemePreference(localStorage)),
+  };
+}
+
+function handleCommandEffect(effect?: ShellEffect) {
+  switch(effect?.type) {
+    case "clear":
+      resetTerminal();
+      break;
+    case "theme":
+      applyTheme(effect.preference);
+      break;
+    case "open":
+      setTimeout(() => {
+        window.open(effect.url, '_blank');
+      }, 500);
+      break;
+    case "mailto":
+      setTimeout(() => {
+        window.location.href = `mailto:${effect.email}`;
+      }, 500);
+      break;
+    case "passwordPrompt":
+      showPasswordPrompt();
+      break;
+    case "enterBareMode":
+      shellMode = enterBareMode(shellMode);
+      resetTerminal();
+      easterEggStyles();
+      setTimeout(() => {
+        writeLines(["What made you think that was a good idea?", "<br>"]);
+      }, 200)
+
+      setTimeout(() => {
+        writeLines(["Now everything is ruined.", "<br>"]);
+      }, 1200)
       break;
   }
 }
 
 function commandHandler(input : string) {
-  if(input.startsWith("rm -rf") && input.trim() !== "rm -rf") {
-    if (isSudo) {
-      if(input === "rm -rf src" && !bareMode) {
-        bareMode = true;
+  const result = runCommand(input, createCommandContext());
+  handleCommandEffect(result.effect);
 
-        setTimeout(() => {
-          if(!TERMINAL || !WRITELINESCOPY) return
-          TERMINAL.innerHTML = "";
-          TERMINAL.appendChild(WRITELINESCOPY);
-          mutWriteLines = WRITELINESCOPY;
-        });
-
-        easterEggStyles();
-        setTimeout(() => {
-          writeLines(["What made you think that was a good idea?", "<br>"]);
-        }, 200)
-
-        setTimeout(() => {
-          writeLines(["Now everything is ruined.", "<br>"]);
-        }, 1200)
-
-        } else if (input === "rm -rf src" && bareMode) {
-          writeLines(["there's no more src folder.", "<br>"])
-        } else {
-          if(bareMode) {
-            writeLines(["What else are you trying to delete?", "<br>"])
-          } else {
-            writeLines(["<br>", "Directory not found.", "type <span class='command'>'ls'</span> for a list of directories.", "<br>"]);
-          }
-        } 
-      } else {
-        writeLines(["Permission not granted.", "<br>"]);
-    }
-    return
+  if (result.lines.length > 0) {
+    writeLines(result.lines);
   }
-
-  switch(input) {
-    case 'clear':
-      setTimeout(() => {
-        if(!TERMINAL || !WRITELINESCOPY) return
-        TERMINAL.innerHTML = "";
-        TERMINAL.appendChild(WRITELINESCOPY);
-        mutWriteLines = WRITELINESCOPY;
-      })
-      break;
-    case 'banner':
-      if(bareMode) {
-        writeLines(["WebShell v1.0.0", "<br>"])
-        break;
-      }
-      writeLines(BANNER);
-      break;
-    case 'help':
-      if(bareMode) {
-        writeLines(["maybe restarting your browser will fix this.", "<br>"])
-        break;
-      }
-      writeLines(HELP);
-      break;
-    case 'ls':
-      if(bareMode) {
-        writeLines(["maybe restarting your browser will fix this.", "<br>"])
-        break;
-      }
-      writeLines(HELP);
-      break;
-    case 'whoami':      
-      if(bareMode) {
-        writeLines([`${command.username}`, "<br>"])
-        break;
-      }
-      writeLines(createWhoami());
-      break;
-    case 'about':
-      if(bareMode) {
-        writeLines(["Nothing to see here.", "<br>"])
-        break;
-      }
-      writeLines(ABOUT);
-      break;
-    case 'experience':
-      if(bareMode) {
-        writeLines(["Nothing to see here.", "<br>"])
-        break;
-      }
-      writeLines(EXPERIENCE);
-      break;
-    case 'projects':
-      if(bareMode) {
-        writeLines(["I don't want you to break the other projects.", "<br>"])
-        break;
-      }
-      writeLines(PROJECTS);
-      break;
-    case 'repo':
-      writeLines(["Redirecting to github.com...", "<br>"]);
-      setTimeout(() => {
-        window.open(REPO_LINK, '_blank');
-      }, 500);
-      break;
-    case 'contact':
-      if(bareMode) {
-        writeLines(["No email client survived.", "<br>"])
-        break;
-      }
-      writeLines(["Opening email client...", "<br>"]);
-      setTimeout(() => {
-        window.location.href = `mailto:${command.social.email}`;
-      }, 500);
-      break;
-    case 'linkedin':
-      //add stuff here
-      break;
-    case 'github':
-      //add stuff here
-      break;
-    case 'email':
-      //add stuff here
-      break;
-    case 'rm -rf':
-      if (bareMode) {
-        writeLines(["don't try again.", "<br>"])
-        break;
-      }
-
-      if (isSudo) {
-        writeLines(["Usage: <span class='command'>'rm -rf &lt;dir&gt;'</span>", "<br>"]);
-      } else {
-        writeLines(["Permission not granted.", "<br>"])
-      }
-        break;
-    case 'sudo':
-      if(bareMode) {
-        writeLines(["no.", "<br>"])
-        break;
-      }
-      if(!PASSWORD) return
-      isPasswordInput = true;
-      USERINPUT.disabled = true;
-
-      if(INPUT_HIDDEN) INPUT_HIDDEN.style.display = "none";
-      PASSWORD.style.display = "block";
-      setTimeout(() => {
-        PASSWORD_INPUT.focus();
-      }, 100);
-
-      break;
-    default:
-      if(bareMode) {
-        writeLines(["type 'help'", "<br>"])
-        break;
-      }
-
-      writeLines(DEFAULT);
-      break;
-  }  
 }
 
 function writeLines(message : string[]) {
-  message.forEach((item, idx) => {
-    displayText(item, idx);
-  });
-}
+  if (!mutWriteLines) return
 
-function displayText(item : string, idx : number) {
-  setTimeout(() => {
-    if(!mutWriteLines) return
-    const p = document.createElement("p");
-    p.innerHTML = item;
-    mutWriteLines.parentNode!.insertBefore(p, mutWriteLines);
-    scrollToBottom();
-  }, 40 * idx);
+  writeTranscriptLines(message, {
+    target: mutWriteLines,
+    createParagraph: () => document.createElement("p"),
+    insertBefore: (paragraph, target) => {
+      target.parentNode?.insertBefore(paragraph, target);
+    },
+    scrollToBottom,
+  });
 }
 
 function revertPasswordChanges() {
@@ -325,7 +254,7 @@ function revertPasswordChanges() {
     USERINPUT.disabled = false;
     INPUT_HIDDEN.style.display = "block";
     PASSWORD.style.display = "none";
-    isPasswordInput = false;
+    shellMode = exitPasswordMode(shellMode);
 
     setTimeout(() => {
       USERINPUT.focus();
@@ -333,24 +262,24 @@ function revertPasswordChanges() {
 }
 
 function passwordHandler() {
-  if (passwordCounter === 2) {
+  const result = submitPassword(shellMode, PASSWORD_INPUT.value, SUDO_PASSWORD);
+  shellMode = result.mode;
+
+  if (result.status === "locked") {
     if (!INPUT_HIDDEN || !mutWriteLines || !PASSWORD) return
     writeLines(["<br>", "INCORRECT PASSWORD.", "PERMISSION NOT GRANTED.", "<br>"])
     revertPasswordChanges();
-    passwordCounter = 0;
     return
   }
 
-  if (PASSWORD_INPUT.value === SUDO_PASSWORD) {
+  if (result.status === "granted") {
     if (!mutWriteLines || !mutWriteLines.parentNode) return
     writeLines(["<br>", "PERMISSION GRANTED.", "Try <span class='command'>'rm -rf'</span>", "<br>"])
     revertPasswordChanges();
-    isSudo = true;
     return
-  } else {
-    PASSWORD_INPUT.value = "";
-    passwordCounter++;
   }
+
+  PASSWORD_INPUT.value = "";
 }
 
 function easterEggStyles() {   
@@ -379,32 +308,26 @@ function easterEggStyles() {
   USERINPUT.style.fontFamily = "VT323, monospace";
   USERINPUT.style.fontSize = "20px";
   if (PROMPT) PROMPT.style.color = "white";
+  if (ACTIVE_PROMPT) ACTIVE_PROMPT.style.color = "white";
 
 }
 
 const initEventListeners = () => {
-  if(HOST) {
-    HOST.innerText= command.hostname;
-  }
+    applyTheme(getStoredThemePreference(localStorage), false);
 
-  if(USER) {
-    USER.innerText = command.username;
-  }
-
-  if(PRE_HOST) {
-    PRE_HOST.innerText= command.hostname;
-  }
-
-  if(PRE_USER) {
-    PRE_USER.innerText = command.username;
-  } 
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+      if (getStoredThemePreference(localStorage) === "system") {
+        applyTheme("system", false);
+      }
+    });
 
     window.addEventListener('load', () => {
-    writeLines(BANNER);
+    writeLines(runCommand("banner", createCommandContext()).lines);
   });
   
   USERINPUT.addEventListener('keypress', userInputHandler);
   USERINPUT.addEventListener('keydown', userInputHandler);
+  USERINPUT.addEventListener('input', syncCommandInput);
   PASSWORD_INPUT.addEventListener('keypress', userInputHandler);
 
   window.addEventListener('click', () => {
