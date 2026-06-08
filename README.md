@@ -1,9 +1,5 @@
 
-# WebShell
-
-WebShell is my terminal-style portfolio, built to present work, background, and contact details through a shell-like interface instead of a traditional landing page.
-
-## Live  
+# WebShell 
 Live site: https://hughscott.dev/
 <img width="1717" height="1301" alt="image" src="https://github.com/user-attachments/assets/ba61b0e1-c875-4959-a0a4-931a25b2f22e" />
 
