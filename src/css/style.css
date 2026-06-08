@@ -551,7 +551,6 @@ a:hover {
   position: absolute;
   top: 0;
   right: calc(var(--prompt-segment-arrow) * -1);
-  z-index: 2;
   width: 0;
   height: 0;
   border-top: var(--prompt-segment-half) solid transparent;

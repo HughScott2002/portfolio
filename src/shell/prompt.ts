@@ -39,7 +39,10 @@ export function createPromptHtml(options: { active?: boolean } = {}) {
           </div>`;
 }
 
-export function renderPromptUi(options: { promptTemplate: HTMLElement; activePrompt: HTMLElement }) {
+export function renderPromptUi(options: {
+  promptTemplate: HTMLElement;
+  activePrompt: HTMLElement;
+}) {
   options.promptTemplate.innerHTML = createPromptHtml();
   options.activePrompt.innerHTML = createPromptHtml({ active: true });
 }
