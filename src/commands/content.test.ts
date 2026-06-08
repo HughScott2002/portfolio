@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vitest";
-import { ABOUT } from "./about";
 import { BANNER } from "./banner";
 import { DEFAULT } from "./default";
 import { EXPERIENCE } from "./experience";
@@ -15,7 +14,6 @@ describe("command content", () => {
     expect(BANNER.some((line) => line.includes("to view my Github or click <a target='_blank'"))).toBe(true);
     expect(BANNER.some((line) => line.includes("<span class='command'>'git'</span>"))).toBe(true);
     expect(BANNER.some((line) => line.includes("<span class='command'>'repo'</span>"))).toBe(false);
-    expect(ABOUT.some((line) => line.includes("mailto:"))).toBe(true);
     expect(PROJECTS).toContain("2 File(s)");
     expect(EXPERIENCE).toContain("2 File(s)");
     expect(DEFAULT).toContain("Type <span class='command'>'help'</span> to get started.");

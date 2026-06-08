@@ -16,17 +16,17 @@ export const COMMAND_HELP: CommandHelpEntry[] = [
   { names: ["clear"], display: "'clear'", help: "Clear the terminal." },
   { names: ["system"], display: "'system'", help: "Use your system theme." },
   { names: ["banner"], display: "'banner'", help: "Display the banner." },
-  { names: ["about"], display: "'about'", help: "Who made this website?" },
+
   { names: ["whoami"], display: "'whoami'", help: "Who is he?" },
   { names: ["contact"], display: "'contact'", help: "Get in contact." },
   { names: ["projects"], display: "'projects'", help: "Maybe there's something interesting." },
-  { names: ["sudo"], display: "'sudo'", help: "?" },
+  // { names: ["sudo"], display: "'sudo'", help: "?" },
 ];
 
 const AUTOCOMPLETE_ORDER = [
   "help",
   "ls",
-  "about",
+
   "ex",
   "contact",
   "projects",

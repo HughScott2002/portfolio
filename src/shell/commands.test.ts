@@ -10,6 +10,9 @@ describe("command registry", () => {
     expect(autocompleteCommand("ex")).toBe("ex");
     expect(autocompleteCommand("gi")).toBe("git");
     expect(listCommandNames()).not.toContain("experience");
+    expect(listCommandNames()).not.toContain("about");
+    expect(isKnownCommand("about")).toBe(false);
+    expect(autocompleteCommand("ab")).toBeUndefined();
     expect(isKnownCommand("experience")).toBe(false);
     expect(autocompleteCommand("zzz")).toBeUndefined();
     expect(autocompleteSuffix("")).toBe("");

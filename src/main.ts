@@ -1,16 +1,35 @@
-import command from '../config.json' assert {type: 'json'};
-import { autocompleteCommand, autocompleteSuffix, isKnownCommand } from "./shell/commands";
-import { createInitialShellMode, enterBareMode, enterPasswordMode, exitPasswordMode, submitPassword } from "./shell/mode";
+import command from "../config.json" assert { type: "json" };
+import { BANNER_HINTS } from "./commands/banner";
+import {
+  autocompleteCommand,
+  autocompleteSuffix,
+  isKnownCommand,
+} from "./shell/commands";
+import {
+  createInitialShellMode,
+  enterBareMode,
+  enterPasswordMode,
+  exitPasswordMode,
+  submitPassword,
+} from "./shell/mode";
 import { renderPromptUi } from "./shell/prompt";
 import { runCommand, type ShellEffect } from "./shell/runner";
-import { applyBrowserTheme, getBrowserDeviceInfo, getStoredThemePreference, type ThemePreference } from "./shell/theme";
-import { createPromptHistoryEntry, writeTranscriptLines } from "./shell/transcript";
+import {
+  applyBrowserTheme,
+  getBrowserDeviceInfo,
+  getStoredThemePreference,
+  type ThemePreference,
+} from "./shell/theme";
+import {
+  createPromptHistoryEntry,
+  writeTranscriptLines,
+} from "./shell/transcript";
 
 //mutWriteLines gets deleted and reassigned
 let mutWriteLines = document.getElementById("write-lines");
-let historyIdx = 0
-let tempInput = ""
-let userInput : string;
+let historyIdx = 0;
+let tempInput = "";
+let userInput: string;
 let shellMode = createInitialShellMode();
 let asciiMeasureContext: CanvasRenderingContext2D | null = null;
 
@@ -19,7 +38,9 @@ const WRITELINESCOPY = mutWriteLines;
 const TERMINAL = document.getElementById("terminal");
 const INPUT_HIDDEN = document.getElementById("input-hidden");
 const PASSWORD = document.getElementById("password-input");
-const PASSWORD_INPUT = document.getElementById("password-field") as HTMLInputElement;
+const PASSWORD_INPUT = document.getElementById(
+  "password-field",
+) as HTMLInputElement;
 const PROMPT = document.getElementById("prompt-template");
 const ACTIVE_PROMPT = document.getElementById("active-prompt");
 let asciiFitFrame = 0;
@@ -30,19 +51,24 @@ if (PROMPT && ACTIVE_PROMPT) {
 
 const USERINPUT = document.getElementById("user-input") as HTMLInputElement;
 const COMMAND_INPUT_MIRROR = document.getElementById("command-input-mirror");
-const COMMAND_INPUT_SUGGESTION = document.getElementById("command-input-suggestion");
-const HISTORY : string[] = [];
+const COMMAND_INPUT_SUGGESTION = document.getElementById(
+  "command-input-suggestion",
+);
+const HISTORY: string[] = [];
 const SUDO_PASSWORD = command.password;
 const REPO_LINK = command.repoLink;
 
-function applyTheme(themePreference : ThemePreference, persist = true) {
+function applyTheme(themePreference: ThemePreference, persist = true) {
   applyBrowserTheme(themePreference, persist);
 }
 
 function syncCommandInput() {
   if (!COMMAND_INPUT_MIRROR) return;
   COMMAND_INPUT_MIRROR.textContent = USERINPUT.value;
-  COMMAND_INPUT_MIRROR.classList.toggle("is-valid-command", isKnownCommand(USERINPUT.value));
+  COMMAND_INPUT_MIRROR.classList.toggle(
+    "is-valid-command",
+    isKnownCommand(USERINPUT.value),
+  );
   if (COMMAND_INPUT_SUGGESTION) {
     COMMAND_INPUT_SUGGESTION.textContent = autocompleteSuffix(USERINPUT.value);
   }
@@ -50,17 +76,19 @@ function syncCommandInput() {
 
 const scrollToBottom = () => {
   const MAIN = document.getElementById("main");
-  if(!MAIN) return
+  if (!MAIN) return;
 
   MAIN.scrollTop = MAIN.scrollHeight;
-}
+};
 
 function fitAsciiArt() {
   const MAIN = document.getElementById("main");
   const TERMINAL_CONTENT = document.getElementById("terminal");
   if (!MAIN || !TERMINAL_CONTENT) return;
 
-  const artBlocks = Array.from(TERMINAL_CONTENT.querySelectorAll<HTMLPreElement>("pre.ascii-art"));
+  const artBlocks = Array.from(
+    TERMINAL_CONTENT.querySelectorAll<HTMLPreElement>("pre.ascii-art"),
+  );
   if (artBlocks.length === 0) return;
 
   MAIN.style.removeProperty("--ascii-fit-size");
@@ -68,38 +96,59 @@ function fitAsciiArt() {
 
   try {
     const styles = getComputedStyle(artBlocks[0]);
-    const inlineBleed = parseFloat(styles.getPropertyValue("--ascii-inline-bleed")) || 0;
-    const horizontalScale = Math.max(parseFloat(styles.getPropertyValue("--ascii-horizontal-scale")) || 1, 0.5);
-    const availableWidth = TERMINAL_CONTENT.getBoundingClientRect().width + inlineBleed * 2;
+    const inlineBleed =
+      parseFloat(styles.getPropertyValue("--ascii-inline-bleed")) || 0;
+    const horizontalScale = Math.max(
+      parseFloat(styles.getPropertyValue("--ascii-horizontal-scale")) || 1,
+      0.5,
+    );
+    const availableWidth =
+      TERMINAL_CONTENT.getBoundingClientRect().width + inlineBleed * 2;
     const maxSize = parseFloat(styles.fontSize);
     const fontFamily = styles.fontFamily;
     const fontWeight = styles.fontWeight;
     const fontStyle = styles.fontStyle;
 
-    asciiMeasureContext = asciiMeasureContext ?? document.createElement("canvas").getContext("2d");
+    asciiMeasureContext =
+      asciiMeasureContext ?? document.createElement("canvas").getContext("2d");
 
     if (!asciiMeasureContext) return;
 
     asciiMeasureContext.font = `${fontStyle} ${fontWeight} ${maxSize}px ${fontFamily}`;
-    const widestLine = Math.max(...artBlocks.map((block) => {
-      const measuredLineWidth = (block.textContent ?? "").split("\n").reduce((widest, line) => {
-        return Math.max(widest, asciiMeasureContext?.measureText(line).width ?? 0);
-      }, 0);
+    const widestLine = Math.max(
+      ...artBlocks.map((block) => {
+        const measuredLineWidth = (block.textContent ?? "")
+          .split("\n")
+          .reduce((widest, line) => {
+            return Math.max(
+              widest,
+              asciiMeasureContext?.measureText(line).width ?? 0,
+            );
+          }, 0);
 
-      return Math.max(block.scrollWidth, measuredLineWidth);
-    }));
+        return Math.max(block.scrollWidth, measuredLineWidth);
+      }),
+    );
 
     if (!availableWidth || !widestLine || !maxSize) return;
 
-    const fittedSize = Math.min(maxSize, (maxSize * availableWidth * 0.998) / (widestLine * horizontalScale));
-    MAIN.style.setProperty("--ascii-fit-size", `${Math.floor(fittedSize * 100) / 100}px`);
+    const fittedSize = Math.min(
+      maxSize,
+      (maxSize * availableWidth * 0.998) / (widestLine * horizontalScale),
+    );
+    MAIN.style.setProperty(
+      "--ascii-fit-size",
+      `${Math.floor(fittedSize * 100) / 100}px`,
+    );
   } finally {
     MAIN.classList.remove("is-measuring-ascii");
   }
 }
 
 function fitBannerContacts() {
-  const lists = Array.from(document.querySelectorAll<HTMLElement>(".banner-contact-list"));
+  const lists = Array.from(
+    document.querySelectorAll<HTMLElement>(".banner-contact-list"),
+  );
   const terminalContent = document.getElementById("terminal");
 
   lists.forEach((list) => {
@@ -109,14 +158,17 @@ function fitBannerContacts() {
     const availableWidth = terminalContent?.clientWidth ?? list.clientWidth;
     const columnGap = parseFloat(getComputedStyle(list).columnGap) || 0;
     const rows = Array.from(list.querySelectorAll<HTMLElement>(".banner-row"));
-    const hasOverflowingRow = () => rows.some((row) => {
-      const label = row.querySelector<HTMLElement>(".banner-row-label");
-      const value = row.querySelector<HTMLElement>(".banner-row-value");
+    const hasOverflowingRow = () =>
+      rows.some((row) => {
+        const label = row.querySelector<HTMLElement>(".banner-row-label");
+        const value = row.querySelector<HTMLElement>(".banner-row-value");
 
-      if (!label || !value) return false;
+        if (!label || !value) return false;
 
-      return label.scrollWidth + value.scrollWidth + columnGap > availableWidth + 1;
-    });
+        return (
+          label.scrollWidth + value.scrollWidth + columnGap > availableWidth + 1
+        );
+      });
 
     if (!hasOverflowingRow()) return;
 
@@ -138,10 +190,10 @@ function queueAsciiFit() {
   });
 }
 
-function userInputHandler(e : KeyboardEvent) {
+function userInputHandler(e: KeyboardEvent) {
   const key = e.key;
 
-  switch(key) {
+  switch (key) {
     case "Enter":
       e.preventDefault();
       if (!shellMode.isPasswordInput) {
@@ -173,20 +225,20 @@ function userInputHandler(e : KeyboardEvent) {
 }
 
 function enterKey() {
-  if (!mutWriteLines || !PROMPT) return
+  if (!mutWriteLines || !PROMPT) return;
   const resetInput = "";
   userInput = USERINPUT.value;
 
   HISTORY.push(userInput);
-  historyIdx = HISTORY.length
+  historyIdx = HISTORY.length;
 
   //if clear then early return
-  if (userInput === 'clear') {
+  if (userInput === "clear") {
     commandHandler(userInput.toLowerCase().trim());
     USERINPUT.value = resetInput;
     userInput = resetInput;
     syncCommandInput();
-    return
+    return;
   }
 
   const div = createPromptHistoryEntry({
@@ -201,15 +253,15 @@ function enterKey() {
   }
 
   /*
-  if input is empty or a collection of spaces, 
+  if input is empty or a collection of spaces,
   just insert a prompt before #write-lines
   */
   if (userInput.trim().length !== 0) {
-      commandHandler(userInput.toLowerCase().trim());
-    }
-  
+    commandHandler(userInput.toLowerCase().trim());
+  }
+
   USERINPUT.value = resetInput;
-  userInput = resetInput; 
+  userInput = resetInput;
   syncCommandInput();
 }
 
@@ -222,15 +274,15 @@ function tabKey() {
   }
 }
 
-function arrowKeys(e : string) {
-  switch(e){
-    case "ArrowDown":      
+function arrowKeys(e: string) {
+  switch (e) {
+    case "ArrowDown":
       if (historyIdx !== HISTORY.length) {
-          historyIdx += 1;
-          USERINPUT.value = HISTORY[historyIdx];
-          if (historyIdx === HISTORY.length) USERINPUT.value = tempInput;  
-          syncCommandInput();
-      }      
+        historyIdx += 1;
+        USERINPUT.value = HISTORY[historyIdx];
+        if (historyIdx === HISTORY.length) USERINPUT.value = tempInput;
+        syncCommandInput();
+      }
       break;
     case "ArrowUp":
       if (historyIdx === HISTORY.length) tempInput = USERINPUT.value;
@@ -243,21 +295,22 @@ function arrowKeys(e : string) {
   }
 }
 
-function resetTerminal() {
+function resetTerminal(onReady?: () => void) {
   setTimeout(() => {
-    if(!TERMINAL || !WRITELINESCOPY) return
+    if (!TERMINAL || !WRITELINESCOPY) return;
     TERMINAL.innerHTML = "";
     TERMINAL.appendChild(WRITELINESCOPY);
     mutWriteLines = WRITELINESCOPY;
-  })
+    onReady?.();
+  });
 }
 
 function showPasswordPrompt() {
-  if(!PASSWORD) return
+  if (!PASSWORD) return;
   shellMode = enterPasswordMode(shellMode);
   USERINPUT.disabled = true;
 
-  if(INPUT_HIDDEN) INPUT_HIDDEN.style.display = "none";
+  if (INPUT_HIDDEN) INPUT_HIDDEN.style.display = "none";
   PASSWORD.style.display = "block";
   setTimeout(() => {
     PASSWORD_INPUT.focus();
@@ -276,16 +329,18 @@ function createCommandContext() {
 }
 
 function handleCommandEffect(effect?: ShellEffect) {
-  switch(effect?.type) {
+  switch (effect?.type) {
     case "clear":
-      resetTerminal();
+      resetTerminal(() => {
+        writeLines(["<br>", ...BANNER_HINTS, "<br>"]);
+      });
       break;
     case "theme":
       applyTheme(effect.preference);
       break;
     case "open":
       setTimeout(() => {
-        window.open(effect.url, '_blank');
+        window.open(effect.url, "_blank");
       }, 500);
       break;
     case "mailto":
@@ -302,16 +357,16 @@ function handleCommandEffect(effect?: ShellEffect) {
       easterEggStyles();
       setTimeout(() => {
         writeLines(["What made you think that was a good idea?", "<br>"]);
-      }, 200)
+      }, 200);
 
       setTimeout(() => {
         writeLines(["Now everything is ruined.", "<br>"]);
-      }, 1200)
+      }, 1200);
       break;
   }
 }
 
-function commandHandler(input : string) {
+function commandHandler(input: string) {
   const result = runCommand(input, createCommandContext());
   handleCommandEffect(result.effect);
 
@@ -320,8 +375,8 @@ function commandHandler(input : string) {
   }
 }
 
-function writeLines(message : string[], options: { delayMs?: number } = {}) {
-  if (!mutWriteLines) return
+function writeLines(message: string[], options: { delayMs?: number } = {}) {
+  if (!mutWriteLines) return;
 
   writeTranscriptLines(message, {
     target: mutWriteLines,
@@ -336,16 +391,16 @@ function writeLines(message : string[], options: { delayMs?: number } = {}) {
 }
 
 function revertPasswordChanges() {
-    if (!INPUT_HIDDEN || !PASSWORD) return
-    PASSWORD_INPUT.value = "";
-    USERINPUT.disabled = false;
-    INPUT_HIDDEN.style.display = "block";
-    PASSWORD.style.display = "none";
-    shellMode = exitPasswordMode(shellMode);
+  if (!INPUT_HIDDEN || !PASSWORD) return;
+  PASSWORD_INPUT.value = "";
+  USERINPUT.disabled = false;
+  INPUT_HIDDEN.style.display = "block";
+  PASSWORD.style.display = "none";
+  shellMode = exitPasswordMode(shellMode);
 
-    setTimeout(() => {
-      USERINPUT.focus();
-    }, 200)
+  setTimeout(() => {
+    USERINPUT.focus();
+  }, 200);
 }
 
 function passwordHandler() {
@@ -353,31 +408,41 @@ function passwordHandler() {
   shellMode = result.mode;
 
   if (result.status === "locked") {
-    if (!INPUT_HIDDEN || !mutWriteLines || !PASSWORD) return
-    writeLines(["<br>", "INCORRECT PASSWORD.", "PERMISSION NOT GRANTED.", "<br>"])
+    if (!INPUT_HIDDEN || !mutWriteLines || !PASSWORD) return;
+    writeLines([
+      "<br>",
+      "INCORRECT PASSWORD.",
+      "PERMISSION NOT GRANTED.",
+      "<br>",
+    ]);
     revertPasswordChanges();
-    return
+    return;
   }
 
   if (result.status === "granted") {
-    if (!mutWriteLines || !mutWriteLines.parentNode) return
-    writeLines(["<br>", "PERMISSION GRANTED.", "Try <span class='command'>'rm -rf'</span>", "<br>"])
+    if (!mutWriteLines || !mutWriteLines.parentNode) return;
+    writeLines([
+      "<br>",
+      "PERMISSION GRANTED.",
+      "Try <span class='command'>'rm -rf'</span>",
+      "<br>",
+    ]);
     revertPasswordChanges();
-    return
+    return;
   }
 
   PASSWORD_INPUT.value = "";
 }
 
-function easterEggStyles() {   
+function easterEggStyles() {
   const bars = document.getElementById("bars");
   const body = document.body;
   const main = document.getElementById("main");
   const span = document.getElementsByTagName("span");
 
-  if (!bars) return
+  if (!bars) return;
   bars.innerHTML = "";
-  bars.remove()
+  bars.remove();
 
   if (main) main.style.border = "none";
 
@@ -396,26 +461,27 @@ function easterEggStyles() {
   USERINPUT.style.fontSize = "20px";
   if (PROMPT) PROMPT.style.color = "white";
   if (ACTIVE_PROMPT) ACTIVE_PROMPT.style.color = "white";
-
 }
 
 const initEventListeners = () => {
-    applyTheme(getStoredThemePreference(localStorage), false);
+  applyTheme(getStoredThemePreference(localStorage), false);
 
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+  window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", () => {
       if (getStoredThemePreference(localStorage) === "system") {
         applyTheme("system", false);
       }
     });
 
   writeLines(runCommand("banner", createCommandContext()).lines);
-  
-  USERINPUT.addEventListener('keypress', userInputHandler);
-  USERINPUT.addEventListener('keydown', userInputHandler);
-  USERINPUT.addEventListener('input', syncCommandInput);
-  PASSWORD_INPUT.addEventListener('keypress', userInputHandler);
 
-  window.addEventListener('click', () => {
+  USERINPUT.addEventListener("keypress", userInputHandler);
+  USERINPUT.addEventListener("keydown", userInputHandler);
+  USERINPUT.addEventListener("input", syncCommandInput);
+  PASSWORD_INPUT.addEventListener("keypress", userInputHandler);
+
+  window.addEventListener("click", () => {
     USERINPUT.focus();
   });
 
@@ -431,7 +497,10 @@ const initEventListeners = () => {
     document.fonts.addEventListener?.("loadingdone", queueAsciiFit);
   }
 
-  console.log(`%cPassword: ${command.password}`, "color: red; font-size: 20px;");
-}
+  // console.log(
+  //   `%cPassword: ${command.password}`,
+  //   "color: red; font-size: 20px;",
+  // );
+};
 
 initEventListeners();

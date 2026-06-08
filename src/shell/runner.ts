@@ -1,4 +1,3 @@
-import { ABOUT } from "../commands/about";
 import { BANNER } from "../commands/banner";
 import { DEFAULT } from "../commands/default";
 import { EXPERIENCE } from "../commands/experience";
@@ -68,8 +67,6 @@ export function runCommand(input: string, context: CommandRunContext): CommandRu
       return { lines: context.bareMode ? ["maybe restarting your browser will fix this.", "<br>"] : HELP };
     case "whoami":
       return { lines: context.bareMode ? [`${context.username}`, "<br>"] : createWhoami(context.deviceInfo) };
-    case "about":
-      return { lines: context.bareMode ? ["Nothing to see here.", "<br>"] : ABOUT };
     case "ex":
       return { lines: context.bareMode ? ["Nothing to see here.", "<br>"] : EXPERIENCE };
     case "projects":
@@ -92,8 +89,8 @@ export function runCommand(input: string, context: CommandRunContext): CommandRu
       return {
         lines: context.isSudo ? [`Usage: ${commandToken("'rm -rf &lt;dir&gt;'")}`, "<br>"] : ["Permission not granted.", "<br>"],
       };
-    case "sudo":
-      return context.bareMode ? { lines: ["no.", "<br>"] } : { lines: [], effect: { type: "passwordPrompt" } };
+    // case "sudo":
+    //   return context.bareMode ? { lines: ["no.", "<br>"] } : { lines: [], effect: { type: "passwordPrompt" } };
     default:
       return { lines: context.bareMode ? ["type 'help'", "<br>"] : DEFAULT };
   }

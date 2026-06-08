@@ -1,5 +1,5 @@
+# WebShell
 
-# WebShell 
 Live site: https://hughscott.dev/
 <img width="1717" height="1301" alt="image" src="https://github.com/user-attachments/assets/ba61b0e1-c875-4959-a0a4-931a25b2f22e" />
 
@@ -17,7 +17,6 @@ The design blends a NixOS, macOS, and oh-my-posh-inspired shell aesthetic: clean
 ## Commands
 
 - `help` or `ls` - list available commands.
-- `about` - view the introduction.
 - `projects` - browse selected work.
 - `ex` - see background and experience.
 - `whoami` - inspect browser/device details.
@@ -47,6 +46,6 @@ bun run build
 ```
 
 ##TODO
-add a `cv` command that downloads my resume
-change the `whoami` to be about me
-change `about` to be less redundant and more creative 
+
+- add a `cv` command that downloads my resume
+- change the `whoami` to be about me

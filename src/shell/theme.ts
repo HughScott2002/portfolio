@@ -27,12 +27,18 @@ function isThemePreference(value: string | null): value is ThemePreference {
   return value === "light" || value === "dark" || value === "system";
 }
 
-export function getStoredThemePreference(storage: Pick<Storage, "getItem">, key = THEME_STORAGE_KEY): ThemePreference {
+export function getStoredThemePreference(
+  storage: Pick<Storage, "getItem">,
+  key = THEME_STORAGE_KEY,
+): ThemePreference {
   const storedTheme = storage.getItem(key);
   return isThemePreference(storedTheme) ? storedTheme : "system";
 }
 
-export function resolveThemePreference(themePreference: ThemePreference, prefersDark: boolean): ResolvedTheme {
+export function resolveThemePreference(
+  themePreference: ThemePreference,
+  prefersDark: boolean,
+): ResolvedTheme {
   if (themePreference === "system") {
     return prefersDark ? "dark" : "light";
   }
@@ -52,7 +58,10 @@ export function applyThemePreference(
     persist?: boolean;
   },
 ) {
-  const resolvedTheme = resolveThemePreference(themePreference, options.prefersDark);
+  const resolvedTheme = resolveThemePreference(
+    themePreference,
+    options.prefersDark,
+  );
   options.root.dataset.theme = resolvedTheme;
 
   for (const element of options.promptDeviceElements) {
@@ -71,7 +80,9 @@ export function applyThemePreference(
 }
 
 export function getSystemTheme() {
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
 }
 
 function getPlatformDeviceLabel(platform: string) {
@@ -79,30 +90,44 @@ function getPlatformDeviceLabel(platform: string) {
   if (platform.includes("android")) return "android";
   if (platform.includes("mac")) return "mac";
   if (platform.includes("win")) return "win";
-  if (platform.includes("linux")) return "lin";
+  if (platform.includes("linux")) return "linux";
   return "";
 }
 
-export function getDeviceLabel(nav: Navigator & { userAgentData?: { platform?: string } } = navigator) {
-  const platform = `${nav.userAgentData?.platform || nav.platform || ""}`.toLowerCase();
+export function getDeviceLabel(
+  nav: Navigator & { userAgentData?: { platform?: string } } = navigator,
+) {
+  const platform =
+    `${nav.userAgentData?.platform || nav.platform || ""}`.toLowerCase();
   const userAgent = nav.userAgent.toLowerCase();
   const platformLabel = getPlatformDeviceLabel(platform);
 
   if (platformLabel) return platformLabel;
   if (userAgent.includes("android")) return "android";
   if (/iphone|ipad|ipod/.test(userAgent)) return "ios";
-  if (userAgent.includes("macintosh") || userAgent.includes("mac os x")) return "mac";
+  if (userAgent.includes("macintosh") || userAgent.includes("mac os x"))
+    return "mac";
   if (userAgent.includes("windows")) return "win";
   if (userAgent.includes("linux")) return "lin";
   return "web";
 }
 
-export function getBrowserDeviceInfo(themePreference: ThemePreference): DeviceInfo {
+export function getBrowserDeviceInfo(
+  themePreference: ThemePreference,
+): DeviceInfo {
   const nav = navigator as Navigator & { deviceMemory?: number };
-  const resolvedTheme = themePreference === "system" ? getSystemTheme() : themePreference;
-  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "unknown";
-  const memory = typeof nav.deviceMemory === "number" ? `${nav.deviceMemory} GB` : "not shared";
-  const cpuThreads = typeof navigator.hardwareConcurrency === "number" ? `${navigator.hardwareConcurrency} threads` : "not shared";
+  const resolvedTheme =
+    themePreference === "system" ? getSystemTheme() : themePreference;
+  const timezone =
+    Intl.DateTimeFormat().resolvedOptions().timeZone || "unknown";
+  const memory =
+    typeof nav.deviceMemory === "number"
+      ? `${nav.deviceMemory} GB`
+      : "not shared";
+  const cpuThreads =
+    typeof navigator.hardwareConcurrency === "number"
+      ? `${navigator.hardwareConcurrency} threads`
+      : "not shared";
 
   return {
     device: getDeviceLabel(),
@@ -117,7 +142,10 @@ export function getBrowserDeviceInfo(themePreference: ThemePreference): DeviceIn
   };
 }
 
-export function applyBrowserTheme(themePreference: ThemePreference, persist = true) {
+export function applyBrowserTheme(
+  themePreference: ThemePreference,
+  persist = true,
+) {
   return applyThemePreference(themePreference, {
     root: document.documentElement,
     storage: localStorage,
