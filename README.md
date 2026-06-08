@@ -45,3 +45,8 @@ Build for production:
 ```bash
 bun run build
 ```
+
+##TODO
+add a `cv` command that downloads my resume
+change the `whoami` to be about me
+change `about` to be less redundant and more creative 
