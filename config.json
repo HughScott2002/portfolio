@@ -27,15 +27,19 @@
     ]
   ],
   "experience": [
-    [
-      "Portfolio",
-      "Building focused web experiences with TypeScript, Vite, and terminal-inspired interfaces.",
-      "2026"
+     [
+      "Jae Labs",
+      "Building agentjae.ai to bring zero admin to your salesforce",
+      "Current"
+    ],[
+      "Sagicor Group Ja",
+      "Managing the entire technology concern for Properties division",
+      "Current"
     ],
     [
-      "Open Source",
-      "Exploring developer tooling, Linux workflows, and polished frontend systems.",
-      "Current"
+      "Kintech Solutions",
+      "Build Elotree CRM", and polished frontend systems.",
+      "2024"
     ]
   ],
   "colors": {
