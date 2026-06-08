@@ -1,10 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { asciiBlock, bannerContactList, bannerRow, commandHelpList, commandHelpRow, commandHint, commandToken, countLine, link, row, rowLabel } from "./format";
+import { asciiBlock, bannerContactList, bannerLink, bannerRow, commandHelpList, commandHelpRow, commandHint, commandToken, countLine, link, row, rowLabel } from "./format";
 
 describe("terminal formatting", () => {
   it("renders reusable terminal markup without changing visible output conventions", () => {
     expect(commandToken("'help'")).toBe("<span class='command'>'help'</span>");
     expect(link("GitHub", "https://github.com/example")).toBe("<a target='_blank' href='https://github.com/example'>GitHub</a>");
+    expect(bannerLink("github/HughScott2002", "github", "https://github.com/HughScott2002")).toBe("<a class='banner-link' target='_blank' href='https://github.com/HughScott2002'><span class='banner-link-full'>github/HughScott2002</span><span class='banner-link-compact'>github</span></a>");
     expect(rowLabel("fa-solid fa-envelope", "Email")).toBe("<span class='terminal-row-label'><i class='fa-solid fa-envelope'></i><span>Email</span></span>");
     expect(bannerRow("Email", "hugh@example.com")).toBe("<span class='banner-row'><span class='banner-row-label'>Email</span><span class='banner-row-value'>hugh@example.com</span></span>");
     expect(bannerContactList(["a", "b"])).toBe("<span class='banner-contact-list'>ab</span>");

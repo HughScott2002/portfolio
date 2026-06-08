@@ -7,19 +7,20 @@ export type CommandHelpEntry = {
 };
 
 export const COMMAND_HELP: CommandHelpEntry[] = [
-  { names: ["about"], display: "'about'", help: "Who made this website?" },
-  { names: ["ex"], display: "'ex'", help: "Where has Hugh worked?" },
-  { names: ["contact"], display: "'contact'", help: "Start an email to Hugh." },
-  { names: ["projects"], display: "'projects'", help: "Maybe there's something interesting." },
+
   { names: ["ls"], display: "'ls'", help: "List available commands." },
-  { names: ["whoami"], display: "'whoami'", help: "Ask who I am. Get your browser's answer." },
-  { names: ["sudo"], display: "'sudo'", help: "???" },
+  { names: ["ex"], display: "'ex'", help: "What have I done?" },
   { names: ["git"], display: "'git'", help: "View the Github Repository." },
-  { names: ["banner"], display: "'banner'", help: "Display the banner." },
-  { names: ["clear"], display: "'clear'", help: "Clear the terminal." },
   { names: ["dark"], display: "'dark'", help: "Switch to dark mode." },
   { names: ["light"], display: "'light'", help: "Switch to light mode." },
+  { names: ["clear"], display: "'clear'", help: "Clear the terminal." },
   { names: ["system"], display: "'system'", help: "Use your system theme." },
+  { names: ["banner"], display: "'banner'", help: "Display the banner." },
+  { names: ["about"], display: "'about'", help: "Who made this website?" },
+  { names: ["whoami"], display: "'whoami'", help: "Who is he?" },
+  { names: ["contact"], display: "'contact'", help: "Get in contact." },
+  { names: ["projects"], display: "'projects'", help: "Maybe there's something interesting." },
+  { names: ["sudo"], display: "'sudo'", help: "?" },
 ];
 
 const AUTOCOMPLETE_ORDER = [

@@ -1,5 +1,5 @@
 import command from '../../config.json' assert {type: 'json'};
-import { asciiBlock, bannerContactList, bannerRow, commandHint, commandToken, link, rowLabel } from '../shell/format';
+import { asciiBlock, bannerContactList, bannerLink, bannerRow, commandHint, commandToken, link, rowLabel } from '../shell/format';
 
 const createBanner = (): string[] => {
   const banner: string[] = [];
@@ -9,9 +9,9 @@ const createBanner = (): string[] => {
   banner.push(command.aboutGreeting);
   banner.push("<br>");
   banner.push(bannerContactList([
-    bannerRow(rowLabel("fa-solid fa-envelope", "Email"), link(command.social.email, `mailto:${command.social.email}`)),
-    bannerRow(rowLabel("fa-brands fa-github", "Github"), link(`github/${command.social.github}`, `https://github.com/${command.social.github}`)),
-    bannerRow(rowLabel("fa-brands fa-linkedin", "Linkedin"), link(`www.linkedin.com/in/${command.social.linkedin}`, `https://www.linkedin.com/in/${command.social.linkedin}`)),
+    bannerRow(rowLabel("fa-solid fa-envelope", "Email"), bannerLink(command.social.email, "email", `mailto:${command.social.email}`)),
+    bannerRow(rowLabel("fa-brands fa-github", "Github"), bannerLink(`github/${command.social.github}`, "github", `https://github.com/${command.social.github}`)),
+    bannerRow(rowLabel("fa-brands fa-linkedin", "Linkedin"), bannerLink(`www.linkedin.com/in/${command.social.linkedin}`, "linkedin", `https://www.linkedin.com/in/${command.social.linkedin}`)),
   ]));
   banner.push("<br>");
   banner.push(commandHint(`${commandToken("'help'")} or ${commandToken("'ls'")}`, " for a list of all available commands."));

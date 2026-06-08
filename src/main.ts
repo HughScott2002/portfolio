@@ -104,11 +104,12 @@ function fitBannerContacts() {
 
   lists.forEach((list) => {
     list.classList.remove("is-stacked");
+    list.classList.remove("is-compact");
 
     const availableWidth = terminalContent?.clientWidth ?? list.clientWidth;
     const columnGap = parseFloat(getComputedStyle(list).columnGap) || 0;
     const rows = Array.from(list.querySelectorAll<HTMLElement>(".banner-row"));
-    const shouldStack = rows.some((row) => {
+    const hasOverflowingRow = () => rows.some((row) => {
       const label = row.querySelector<HTMLElement>(".banner-row-label");
       const value = row.querySelector<HTMLElement>(".banner-row-value");
 
@@ -117,7 +118,13 @@ function fitBannerContacts() {
       return label.scrollWidth + value.scrollWidth + columnGap > availableWidth + 1;
     });
 
-    list.classList.toggle("is-stacked", shouldStack);
+    if (!hasOverflowingRow()) return;
+
+    list.classList.add("is-compact");
+
+    if (hasOverflowingRow()) {
+      list.classList.add("is-stacked");
+    }
   });
 }
 

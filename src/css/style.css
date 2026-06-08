@@ -232,6 +232,18 @@ p {
   word-break: normal;
 }
 
+.banner-link-compact {
+  display: none;
+}
+
+.banner-contact-list.is-compact .banner-link-full {
+  display: none;
+}
+
+.banner-contact-list.is-compact .banner-link-compact {
+  display: inline;
+}
+
 .banner-contact-list.is-stacked {
   grid-template-columns: minmax(0, 1fr);
   row-gap: 0.18em;

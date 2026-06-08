@@ -10,6 +10,10 @@ export function link(label: string, href: string) {
   return `<a target='_blank' href='${href}'>${label}</a>`;
 }
 
+export function bannerLink(fullLabel: string, compactLabel: string, href: string) {
+  return `<a class='banner-link' target='_blank' href='${href}'><span class='banner-link-full'>${fullLabel}</span><span class='banner-link-compact'>${compactLabel}</span></a>`;
+}
+
 export function rowLabel(iconClass: string, label: string) {
   return `<span class='terminal-row-label'><i class='${iconClass}'></i><span>${label}</span></span>`;
 }
