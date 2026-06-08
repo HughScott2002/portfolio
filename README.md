@@ -1,8 +1,8 @@
-# WebShell
 
-WebShell is my terminal-style portfolio, built to present work, background, and contact details through a shell-like interface instead of a traditional landing page.
-
+# WebShell 
 Live site: https://hughscott.dev/
+<img width="1717" height="1301" alt="image" src="https://github.com/user-attachments/assets/ba61b0e1-c875-4959-a0a4-931a25b2f22e" />
+
 ## About
 
 The design blends a NixOS, macOS, and oh-my-posh-inspired shell aesthetic: clean prompts, soft terminal contrast, and a polished command-line feel. It is meant to feel like a personal workstation turned into a portfolio.
