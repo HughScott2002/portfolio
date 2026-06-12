@@ -17,26 +17,24 @@
     "github": "HughScott2002",
     "linkedin": "hugh-scott-3912421a5/"
   },
-"aboutGreeting": "'Build something people want' - yc",
+  "aboutGreeting": "'Build something people want' - yc",
   "projects": [
-    [ "Agent Jae",
+    [
+      "Agent Jae",
       "Zero admin AI agents for salespeople",
       "https://agentjae.ai/"
     ],
     [
       "MassivCart",
-      "Find the cheapest price",
+      "Find the cheapest food prices",
       "https://www.massivcart.com/"
     ],
-    [ "Vulta",
-      "D.A.W file assistant",
-      "https://github.com/HughScott2002/Vulta"
-    ],
-    [ "Omni",
+    ["Vulta", "D.A.W file assistant", "https://github.com/HughScott2002/Vulta"],
+    [
+      "Omni",
       "Multi-Service Neobank functionality built in go",
       "https://github.com/HughScott2002/Omni-Server"
     ]
-
   ],
   "experience": [
     [
