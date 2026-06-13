@@ -1,11 +1,15 @@
 # WebShell
 
 Live site: https://hughscott.dev/
+
+Light
+<img width="1935" height="1261" alt="image" src="https://github.com/user-attachments/assets/483087c0-1a09-4917-a7ee-aa92be64d1e6" />
+Dark
 <img width="1717" height="1301" alt="image" src="https://github.com/user-attachments/assets/ba61b0e1-c875-4959-a0a4-931a25b2f22e" />
 
 ## About
 
-The design blends a NixOS, macOS, and oh-my-posh-inspired shell aesthetic: clean prompts, soft terminal contrast, and a polished command-line feel. It is meant to feel like a personal workstation turned into a portfolio.
+The design is meant to feel like a personal workstation turned into a portfolio. It blends my NixOS/GNOME Shell with elements of macOS, and a oh-my-posh inspired shell aesthetic: clean prompts, soft terminal contrast, and a polished command-line feel. 
 
 ## What You Can Explore
 
