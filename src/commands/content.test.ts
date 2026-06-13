@@ -30,9 +30,12 @@ describe("command content", () => {
       online: "online",
     });
 
-    expect(whoami).toContain("Whoami Im Hugh you saw that already!");
-    expect(whoami).toContain("\n\nHere's the plot twist, this terminal runs on your side.");
-    expect(whoami).toContain("So here's what your browser says:");
+    expect(whoami).toContain("Whoami? Im Hugh Scott!");
+    expect(whoami).toContain("I love building things and making music!");
+    expect(whoami).toContain("I'm learing Rust and Golang to become the most dangerous");
+    expect(whoami).toContain("But also...");
+    expect(whoami).toContain("\n\nHere's a plot twist, this terminal runs on your side.");
+    expect(whoami).toContain("So here's what your browser says about you!:");
     expect(whoami).toContain("&nbsp;&nbsp;<span class='command'>theme</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dark (dark)");
   });
 });

@@ -29,7 +29,7 @@
       "Find the cheapest food prices",
       "https://www.massivcart.com/"
     ],
-    ["Vulta", "D.A.W file assistant", "https://github.com/HughScott2002/Vulta"],
+    ["Vulta", "D.A.W Tauri file assistant", "https://github.com/HughScott2002/Vulta"],
     [
       "Omni",
       "Multi-Service Neobank functionality built in go",
