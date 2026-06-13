@@ -19,7 +19,7 @@ The design blends a NixOS, macOS, and oh-my-posh-inspired shell aesthetic: clean
 - `help` or `ls` - list available commands.
 - `projects` - browse selected work.
 - `ex` - see background and experience.
-- `whoami` - inspect browser/device details.
+- `whoami` - tells you who i am.
 - `contact` - open email.
 - `git` - open the repository.
 - `dark`, `light`, `system` - switch themes.

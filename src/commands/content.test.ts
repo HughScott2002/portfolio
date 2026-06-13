@@ -31,9 +31,9 @@ describe("command content", () => {
     });
 
     expect(whoami).toContain("Whoami? Im Hugh Scott!");
-    expect(whoami).toContain("I love building things and making music!");
-    expect(whoami).toContain("I'm learing Rust and Golang to become the most dangerous");
-    expect(whoami).toContain("But also...");
+    expect(whoami).toContain("I love building software and making music!");
+    expect(whoami).toContain("My ultimate goal is to be a unicorn startup founder from Jamaica");
+    expect(whoami).toContain("But enough about me...");
     expect(whoami).toContain("\n\nHere's a plot twist, this terminal runs on your side.");
     expect(whoami).toContain("So here's what your browser says about you!:");
     expect(whoami).toContain("&nbsp;&nbsp;<span class='command'>theme</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dark (dark)");
