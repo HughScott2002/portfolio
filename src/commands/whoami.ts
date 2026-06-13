@@ -14,7 +14,8 @@ type DeviceInfo = {
 
 export const createWhoami = (info: DeviceInfo): string[] => {
   return [
-    "Whoami? I'm Hugh Scott",
+    "Whoami? I'm Hugh Scott!!",
+    "I'm a software developer from Mandeville, Jamaica",
     "I love building software and making music",
     "My ultimate goal is to be a unicorn startup founder from Jamaica",
     "But enough about me...",
