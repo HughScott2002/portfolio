@@ -14,7 +14,10 @@ type DeviceInfo = {
 
 export const createWhoami = (info: DeviceInfo): string[] => {
   return [
-    "Whoami Im Hugh you saw that already!",
+    "Whoami? I'm Hugh Scott",
+    "I love building software and making music",
+    "My ultimate goal is to be a unicorn startup founder from Jamaica",
+    "But enough about me...",
     "\n\nHere's the plot twist, this terminal runs on your side.",
     "So here's what your browser says:",
     row(commandToken("device"), info.device, 13, "device".length),
