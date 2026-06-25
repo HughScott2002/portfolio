@@ -9,7 +9,7 @@ Dark
 
 ## About
 
-The design is meant to feel like a personal workstation turned into a portfolio. It blends my NixOS/GNOME Shell with elements of macOS, and a oh-my-posh inspired shell aesthetic: clean prompts, soft terminal contrast, and a polished command-line feel. 
+The design is meant to feel like a personal workstation turned into a portfolio. It blends my NixOS/GNOME Shell with elements of macOS, and a oh-my-posh inspired shell aesthetic: clean prompts, soft terminal contrast, and a polished command-line feel.
 
 ## What You Can Explore
 
@@ -52,4 +52,3 @@ bun run build
 ##TODO
 
 - add a `cv` command that downloads my resume
-- change the `whoami` to be about me
