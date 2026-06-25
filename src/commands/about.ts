@@ -4,8 +4,8 @@ import { link, row } from "../shell/format";
 const createAbout = (): string[] => {
   const about: string[] = [];
   const EMAIL = "Email";
-  const GITHUB = "Github";
-  const LINKEDIN = "Linkedin";
+  const GITHUB = "GitHub";
+  const LINKEDIN = "LinkedIn";
 
   const email = `<i class='fa-solid fa-envelope'></i> ${EMAIL}`;
   const github = `<i class='fa-brands fa-github'></i> ${GITHUB}`;

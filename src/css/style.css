@@ -22,6 +22,7 @@
   --prompt-segment-height: clamp(24px, 1.4vw, 34px);
   --prompt-segment-half: clamp(12px, 0.7vw, 17px);
   --prompt-segment-arrow: clamp(12px, 0.7vw, 17px);
+  --prompt-segment-radius: clamp(7px, 0.55vw, 10px);
   --prompt-block-pad-start: clamp(10px, 0.78vw, 16px);
   --prompt-block-pad-end: clamp(8px, 0.68vw, 14px);
   --ascii-min-font-size: 4px;
@@ -46,65 +47,71 @@
   --nixos-purple: #7e7ebf;
   --nixos-blue: #5277c3;
   --nixos-light-blue: #7ebae4;
-  --macos-light-bg: #f5f5f7;
-  --macos-light-surface: #ffffff;
-  --macos-light-titlebar: #f5f5f7;
-  --macos-light-text: #1d1d1f;
-  --macos-dark-bg: #1c1c1e;
-  --macos-dark-surface: #2c2c2e;
-  --macos-dark-titlebar: #2c2c2e;
-  --macos-dark-text: #f5f5f7;
-  --bg: var(--macos-light-bg);
-  --bg-gradient: rgba(126, 126, 191, 0.18);
-  --bg-gradient-end: rgba(245, 245, 247, 0);
+  --adwaita-light-bg: #f6f5f4;
+  --adwaita-light-surface: rgba(255, 255, 255, 0.94);
+  --adwaita-light-titlebar: #ebebe7;
+  --adwaita-light-text: #241f31;
+  --adwaita-dark-bg: #1e1e24;
+  --adwaita-dark-surface: rgba(32, 34, 42, 0.96);
+  --adwaita-dark-titlebar: #30323d;
+  --adwaita-dark-text: #f6f5f4;
+  --bg: var(--adwaita-light-bg);
+  --bg-gradient: rgba(126, 186, 228, 0.18);
+  --bg-gradient-end: rgba(246, 245, 244, 0);
   --border: var(--nixos-purple);
-  --text: var(--macos-light-text);
-  --surface: rgba(255, 255, 255, 0.92);
-  --surface-border: rgba(126, 126, 191, 0.55);
-  --surface-shadow-1: rgba(36, 49, 63, 0.18);
-  --surface-shadow-2: rgba(36, 49, 63, 0.1);
+  --text: var(--adwaita-light-text);
+  --surface: var(--adwaita-light-surface);
+  --surface-border: rgba(82, 119, 195, 0.22);
+  --surface-ring: rgba(255, 255, 255, 0.3);
+  --surface-shadow-1: rgba(36, 49, 63, 0.13);
+  --surface-shadow-2: rgba(36, 49, 63, 0.06);
   --surface-highlight: rgba(255, 255, 255, 0.86);
-  --titlebar: var(--macos-light-titlebar);
+  --titlebar: var(--adwaita-light-titlebar);
   --titlebar-highlight: #ffffff;
   --titlebar-text: #3a3a3c;
-  --input-text: var(--macos-light-text);
+  --input-text: var(--adwaita-light-text);
   --banner: var(--p10k-blue);
   --link: var(--p10k-blue);
   --link-highlight-bg: var(--p10k-yellow);
   --link-highlight-text: var(--p10k-text-dark);
   --command-text: var(--p10k-orange);
-  --command-glow: #fff7d6;
+  --command-glow: rgba(242, 109, 80, 0.22);
   --cursor-color: var(--p10k-black);
   --autocomplete-text: rgba(29, 29, 31, 0.38);
   --valid-command-text: var(--p10k-blue);
   --prompt-default: #6f5f42;
+  --focus-ring: rgba(82, 119, 195, 0.34);
+  --prompt-focus: rgba(78, 154, 6, 0.26);
 }
 
 :root[data-theme="dark"] {
-  --bg: var(--p10k-black);
-  --bg-gradient: rgba(0, 0, 0, 0);
-  --bg-gradient-end: rgba(0, 0, 0, 0);
+  --bg: var(--adwaita-dark-bg);
+  --bg-gradient: rgba(82, 119, 195, 0.12);
+  --bg-gradient-end: rgba(30, 30, 36, 0);
   --border: var(--nixos-purple);
-  --text: var(--macos-dark-text);
-  --surface: var(--p10k-black);
-  --surface-border: rgba(126, 126, 191, 0.9);
-  --surface-shadow-1: rgba(0, 0, 0, 0.72);
-  --surface-shadow-2: rgba(0, 0, 0, 0.5);
-  --surface-highlight: rgba(126, 126, 191, 0.2);
-  --titlebar: var(--macos-dark-titlebar);
+  --text: var(--adwaita-dark-text);
+  --surface: var(--adwaita-dark-surface);
+  --surface-border: rgba(126, 126, 191, 0.38);
+  --surface-ring: rgba(255, 255, 255, 0.08);
+  --surface-shadow-1: rgba(0, 0, 0, 0.54);
+  --surface-shadow-2: rgba(0, 0, 0, 0.34);
+  --surface-highlight: rgba(126, 126, 191, 0.16);
+  --titlebar: var(--adwaita-dark-titlebar);
   --titlebar-highlight: rgba(255, 255, 255, 0.12);
   --titlebar-text: var(--p10k-text-light);
-  --input-text: var(--p10k-text-light);
+  --input-text: var(--adwaita-dark-text);
   --banner: var(--p10k-blue);
   --link: var(--p10k-blue);
   --link-highlight-bg: var(--nixos-purple);
   --link-highlight-text: var(--p10k-text-dark);
   --command-text: var(--p10k-blue);
-  --command-glow: var(--p10k-blue);
+  --command-glow: rgba(52, 101, 164, 0.28);
   --cursor-color: var(--p10k-blue);
   --autocomplete-text: rgba(211, 215, 207, 0.52);
   --valid-command-text: var(--p10k-cyan);
   --prompt-default: var(--p10k-gray);
+  --focus-ring: rgba(126, 186, 228, 0.34);
+  --prompt-focus: rgba(137, 209, 220, 0.28);
 }
 
 @keyframes cursor-blink {
@@ -142,6 +149,8 @@ body {
 
 html {
   overflow: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -152,6 +161,7 @@ body {
   font-weight: 400;
   background:
     linear-gradient(135deg, var(--bg-gradient), var(--bg-gradient-end) 42%),
+    radial-gradient(circle at top left, rgba(82, 119, 195, 0.1), transparent 34%),
     var(--bg);
   overflow-x: hidden;
 }
@@ -167,6 +177,7 @@ main {
   border-radius: var(--terminal-radius);
   background: var(--surface);
   box-shadow:
+    0 0 0 1px var(--surface-ring),
     0 var(--terminal-shadow-y) var(--terminal-shadow-blur) var(--surface-shadow-1),
     0 10px clamp(18px, 1.7vw, 24px) var(--surface-shadow-2),
     inset 0 1px 0 var(--surface-highlight);
@@ -174,7 +185,10 @@ main {
   overflow-x: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  backdrop-filter: blur(22px);
+  backdrop-filter: blur(10px);
+  transition-property: background-color, border-color, box-shadow;
+  transition-duration: 180ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
 main::-webkit-scrollbar {
@@ -189,6 +203,7 @@ p {
   overflow: visible;
   overflow-wrap: break-word;
   word-break: normal;
+  text-wrap: pretty;
 }
 
 .terminal-line {
@@ -206,7 +221,7 @@ p {
   display: inline-grid;
   grid-template-columns: max-content minmax(0, max-content);
   column-gap: var(--banner-row-gap);
-  row-gap: 0;
+  row-gap: 0.14em;
   max-width: 100%;
 }
 
@@ -277,6 +292,7 @@ p {
   display: inline-grid;
   grid-template-columns: max-content minmax(0, 1fr);
   column-gap: var(--command-help-gap);
+  row-gap: 0.16em;
   max-width: 100%;
 }
 
@@ -292,6 +308,7 @@ p {
 .command-help-description {
   grid-column: 2;
   min-width: 0;
+  text-wrap: pretty;
 }
 
 div {
@@ -344,11 +361,35 @@ input {
 a {
   color: var(--link);
   overflow-wrap: anywhere;
+  border-radius: 4px;
+  text-decoration: none;
+  transition-property: color, background-color, box-shadow;
+  transition-duration: 140ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
-a:hover {
+a:hover,
+a:focus-visible {
   background-color: var(--link-highlight-bg);
   color: var(--link-highlight-text);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.banner-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  transition-property: color, background-color, box-shadow, transform;
+  transition-duration: 140ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.banner-link:active {
+  transform: scale(0.96);
 }
 
 #bars {
@@ -362,12 +403,16 @@ a:hover {
   background: var(--titlebar);
   border-bottom: 1px solid rgba(126, 126, 191, 0.24);
   box-shadow: 0 1px 0 var(--titlebar-highlight) inset;
+  transition-property: background-color, border-color, box-shadow;
+  transition-duration: 180ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
 #bar-1 {
   position: relative;
   display: grid;
-  grid-template-columns: auto auto 1fr;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas: "controls title logo";
   column-gap: clamp(8px, 0.75vw, 12px);
   align-items: center;
   min-height: var(--titlebar-height);
@@ -381,7 +426,8 @@ a:hover {
   display: flex;
   align-items: center;
   gap: var(--window-dot-gap);
-  justify-self: end;
+  grid-area: controls;
+  justify-self: start;
 }
 
 .window-control {
@@ -410,7 +456,8 @@ a:hover {
   position: relative;
   width: var(--logo-size);
   height: var(--logo-size);
-  justify-self: start;
+  grid-area: logo;
+  justify-self: end;
   filter: drop-shadow(0 2px 3px rgba(82, 119, 195, 0.2));
 }
 
@@ -453,10 +500,14 @@ a:hover {
 }
 
 .window-title {
-  justify-self: start;
+  grid-area: title;
+  justify-self: center;
   color: var(--titlebar-text);
+  font-family: Cantarell, "IBM Plex Sans", "Segoe UI", sans-serif;
   font-size: var(--titlebar-font-size);
-  font-weight: 600;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-wrap: balance;
 }
 
 #bar-2 {
@@ -504,11 +555,11 @@ a:hover {
 }
 
 .prompt-line-top {
-  gap: 4px;
+  gap: 6px;
 }
 
 .prompt-line-bottom {
-  gap: 6px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
@@ -543,7 +594,12 @@ a:hover {
   line-height: 1;
   white-space: nowrap;
   margin-right: var(--prompt-segment-arrow);
-  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.14);
+  box-shadow:
+    inset 0 -1px 0 rgba(0, 0, 0, 0.14),
+    0 1px 1px rgba(0, 0, 0, 0.06);
+  transition-property: background-color, color, box-shadow, filter;
+  transition-duration: 160ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
 .prompt-block::after {
@@ -562,7 +618,7 @@ a:hover {
   width: calc(var(--prompt-segment-height) + 10px);
   flex: 0 0 calc(var(--prompt-segment-height) + 10px);
   padding: 0;
-  border-radius: 6px 0 0 6px;
+  border-radius: var(--prompt-segment-radius) 0 0 var(--prompt-segment-radius);
   --segment-bg: var(--p10k-gray);
 }
 
@@ -600,6 +656,9 @@ a:hover {
 .prompt-chevron {
   color: var(--command-text);
   font-weight: 700;
+  transition-property: color, text-shadow, transform;
+  transition-duration: 140ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
 .prompt-line-bottom input {
@@ -636,6 +695,9 @@ a:hover {
   background: var(--cursor-color);
   transform: translateY(0.16em);
   animation: cursor-blink 1s steps(1, end) infinite;
+  transition-property: background-color, box-shadow, transform;
+  transition-duration: 140ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
 .command-input-suggestion {
@@ -644,6 +706,10 @@ a:hover {
   min-width: 0;
   overflow: hidden;
   white-space: pre;
+  opacity: 0.82;
+  transition-property: color, opacity;
+  transition-duration: 140ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
 .command-input-wrap input {
@@ -663,10 +729,8 @@ a:hover {
 }
 
 .command {
-  text-shadow:
-    0 0 7px var(--command-glow),
-    0 0 151px var(--command-text);
-  color: #b14f2a;
+  text-shadow: 0 0 0.45em var(--command-glow);
+  color: var(--command-text);
 }
 
 :root[data-theme="dark"] a,
@@ -675,12 +739,36 @@ a:hover {
 }
 
 .output {
-  font-weight: 500 !important;
+  font-weight: 400 !important;
 }
 
 .keys {
   color: #2f6f9f;
   font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.terminal-count,
+.terminal-metric-value {
+  font-variant-numeric: tabular-nums;
+}
+
+#input-line:focus-within .prompt-chevron {
+  color: var(--p10k-green);
+  text-shadow: 0 0 0.7em var(--prompt-focus);
+}
+
+:root[data-theme="dark"] #input-line:focus-within .prompt-chevron {
+  color: var(--p10k-cyan);
+}
+
+#input-line:focus-within .command-input-cursor {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18), 0 0 0.8em var(--command-glow);
+  transform: translateY(0.16em) scale(1.02);
+}
+
+#input-line:focus-within .command-input-suggestion {
+  opacity: 0.96;
 }
 
 @media (max-width: 560px) {
@@ -688,15 +776,17 @@ a:hover {
     --page-pad: clamp(5px, 1.8vw, 9px);
     --terminal-gutter: clamp(3px, 1.35vw, 7px);
     --terminal-radius: clamp(10px, 3vw, 14px);
+    --prompt-font-size: clamp(12px, 2.5vw + 2px, 14px);
+    --prompt-segment-height: 24px;
+    --prompt-segment-half: 12px;
+    --prompt-segment-arrow: 11px;
+    --prompt-block-pad-start: 8px;
+    --prompt-block-pad-end: 6px;
+    --prompt-corner-width: 18px;
     --ascii-inline-bleed: var(--terminal-gutter);
-    --ascii-horizontal-scale: 0.86;
     --banner-row-gap: 0.75ch;
     --banner-link-font-size: 12px;
     --command-help-gap: 0.65ch;
-  }
-
-  .ascii-art {
-    line-height: 1.04 !important;
   }
 
   .command-hint {
@@ -716,16 +806,22 @@ a:hover {
     gap: 0 0.65ch;
   }
 
-  .prompt-device,
-  .prompt-theme {
-    display: none;
+  .prompt-line-top {
+    align-items: flex-start;
+  }
+
+  .prompt-segments {
+    flex-wrap: wrap;
+    row-gap: 4px;
   }
 
   .prompt-path {
-    border-radius: 0;
-    margin-right: var(--prompt-segment-arrow);
-    max-width: min(42vw, 9rem);
-    padding-right: var(--prompt-block-pad-start);
+    max-width: min(44vw, 10rem);
+  }
+
+  .banner-link {
+    min-height: 40px;
+    align-items: center;
   }
 }
 
@@ -742,7 +838,15 @@ a:hover {
   }
 
   .prompt-user {
-    border-radius: 6px 0 0 6px;
+    border-radius: var(--prompt-segment-radius) 0 0 var(--prompt-segment-radius);
+  }
+
+  .prompt-theme {
+    display: none;
+  }
+
+  .prompt-path {
+    max-width: min(50vw, 9rem);
   }
 }
 

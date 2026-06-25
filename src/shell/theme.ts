@@ -90,7 +90,7 @@ function getPlatformDeviceLabel(platform: string) {
   if (platform.includes("android")) return "android";
   if (platform.includes("mac")) return "mac";
   if (platform.includes("win")) return "win";
-  if (platform.includes("linux")) return "linux";
+  if (platform.includes("linux")) return "lin";
   return "";
 }
 

@@ -7,19 +7,18 @@ export type CommandHelpEntry = {
 };
 
 export const COMMAND_HELP: CommandHelpEntry[] = [
-
-  { names: ["ls"], display: "'ls'", help: "List available commands." },
-  { names: ["ex"], display: "'ex'", help: "What have I done?" },
-  { names: ["git"], display: "'git'", help: "View the Github Repository." },
+  { names: ["help", "ls"], display: "'help' or 'ls'", help: "List available commands." },
+  { names: ["ex"], display: "'ex'", help: "Browse recent experience." },
+  { names: ["git"], display: "'git'", help: "Open my GitHub profile." },
   { names: ["dark"], display: "'dark'", help: "Switch to dark mode." },
   { names: ["light"], display: "'light'", help: "Switch to light mode." },
   { names: ["clear"], display: "'clear'", help: "Clear the terminal." },
   { names: ["system"], display: "'system'", help: "Use your system theme." },
   { names: ["banner"], display: "'banner'", help: "Display the banner." },
 
-  { names: ["whoami"], display: "'whoami'", help: "Who is he?" },
-  { names: ["contact"], display: "'contact'", help: "Get in contact." },
-  { names: ["projects"], display: "'projects'", help: "Maybe there's something interesting." },
+  { names: ["whoami"], display: "'whoami'", help: "About Hugh + your browser details." },
+  { names: ["contact"], display: "'contact'", help: "Start an email." },
+  { names: ["projects"], display: "'projects'", help: "Browse selected projects." },
   // { names: ["sudo"], display: "'sudo'", help: "?" },
 ];
 

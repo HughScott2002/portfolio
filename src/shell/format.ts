@@ -7,11 +7,11 @@ export function commandToken(label: string) {
 }
 
 export function link(label: string, href: string) {
-  return `<a target='_blank' href='${href}'>${label}</a>`;
+  return `<a target='_blank' rel='noreferrer' href='${href}'>${label}</a>`;
 }
 
 export function bannerLink(fullLabel: string, compactLabel: string, href: string) {
-  return `<a class='banner-link' target='_blank' href='${href}'><span class='banner-link-full'>${fullLabel}</span><span class='banner-link-compact'>${compactLabel}</span></a>`;
+  return `<a class='banner-link' target='_blank' rel='noreferrer' href='${href}'><span class='banner-link-full'>${fullLabel}</span><span class='banner-link-compact'>${compactLabel}</span></a>`;
 }
 
 export function rowLabel(iconClass: string, label: string) {
@@ -47,5 +47,5 @@ export function asciiBlock(lines: string[]) {
 }
 
 export function countLine(count: number) {
-  return `${count} File(s)`;
+  return `<span class='terminal-count'>${count}</span> File(s)`;
 }

@@ -4,8 +4,8 @@ import { asciiBlock, bannerContactList, bannerLink, bannerRow, commandHelpList, 
 describe("terminal formatting", () => {
   it("renders reusable terminal markup without changing visible output conventions", () => {
     expect(commandToken("'help'")).toBe("<span class='command'>'help'</span>");
-    expect(link("GitHub", "https://github.com/example")).toBe("<a target='_blank' href='https://github.com/example'>GitHub</a>");
-    expect(bannerLink("github/HughScott2002", "github", "https://github.com/HughScott2002")).toBe("<a class='banner-link' target='_blank' href='https://github.com/HughScott2002'><span class='banner-link-full'>github/HughScott2002</span><span class='banner-link-compact'>github</span></a>");
+    expect(link("GitHub", "https://github.com/example")).toBe("<a target='_blank' rel='noreferrer' href='https://github.com/example'>GitHub</a>");
+    expect(bannerLink("github/HughScott2002", "github", "https://github.com/HughScott2002")).toBe("<a class='banner-link' target='_blank' rel='noreferrer' href='https://github.com/HughScott2002'><span class='banner-link-full'>github/HughScott2002</span><span class='banner-link-compact'>github</span></a>");
     expect(rowLabel("fa-solid fa-envelope", "Email")).toBe("<span class='terminal-row-label'><i class='fa-solid fa-envelope'></i><span>Email</span></span>");
     expect(bannerRow("Email", "hugh@example.com")).toBe("<span class='banner-row'><span class='banner-row-label'>Email</span><span class='banner-row-value'>hugh@example.com</span></span>");
     expect(bannerContactList(["a", "b"])).toBe("<span class='banner-contact-list'>ab</span>");
@@ -14,6 +14,6 @@ describe("terminal formatting", () => {
     expect(commandHelpList(["a", "b"])).toBe("<span class='command-help-list'>ab</span>");
     expect(row("Email", "hugh@example.com")).toBe("&nbsp;&nbsp;Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hugh@example.com");
     expect(asciiBlock(["A B", "C D"])).toBe("<pre class='ascii-art'>A&nbsp;B\nC&nbsp;D</pre>");
-    expect(countLine(2)).toBe("2 File(s)");
+    expect(countLine(2)).toBe("<span class='terminal-count'>2</span> File(s)");
   });
 });
