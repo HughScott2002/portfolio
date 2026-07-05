@@ -51,4 +51,4 @@ bun run build
 
 ##TODO
 
-- add a `cv` command that downloads my resume
+- add a `cv` command that downloads my resume (maybe notify me when someone downloads it, if it's not more trouble than it's worth)
