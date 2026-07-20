@@ -6,10 +6,12 @@ const createAbout = (): string[] => {
   const EMAIL = "Email";
   const GITHUB = "GitHub";
   const LINKEDIN = "LinkedIn";
+  const HUGGINGFACE = "Hugging Face";
 
   const email = `<i class='fa-solid fa-envelope'></i> ${EMAIL}`;
   const github = `<i class='fa-brands fa-github'></i> ${GITHUB}`;
   const linkedin = `<i class='fa-brands fa-linkedin'></i> ${LINKEDIN}`;
+  const huggingface = `🤗 ${HUGGINGFACE}`;
 
   about.push("<br>");
   about.push(command.aboutGreeting);
@@ -42,6 +44,17 @@ const createAbout = (): string[] => {
       ),
       17,
       LINKEDIN.length,
+    ),
+  );
+  about.push(
+    row(
+      huggingface,
+      link(
+        `huggingface.co/${command.social.huggingface}`,
+        `https://huggingface.co/${command.social.huggingface}`,
+      ),
+      17,
+      HUGGINGFACE.length,
     ),
   );
   about.push("<br>");

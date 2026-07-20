@@ -11,6 +11,7 @@ describe("command content", () => {
     expect(BANNER.some((line) => line.startsWith("<pre"))).toBe(true);
     expect(BANNER.some((line) => line.includes("<span class='banner-link-full'>github/HughScott2002</span><span class='banner-link-compact'>github</span>"))).toBe(true);
     expect(BANNER.some((line) => line.includes("<span class='banner-link-full'>www.linkedin.com/in/hugh-scott-3912421a5/</span><span class='banner-link-compact'>linkedin</span>"))).toBe(true);
+    expect(BANNER.some((line) => line.includes("<span class='banner-link-full'>huggingface.co/HughScott</span><span class='banner-link-compact'>huggingface</span>"))).toBe(true);
     expect(BANNER.some((line) => line.includes("<span class='command-hint-commands'><span class='command'>'dark'</span>, <span class='command'>'light'</span>, or <span class='command'>'system'</span></span>"))).toBe(true);
     expect(BANNER.some((line) => line.includes("to view my GitHub or click <a target='_blank'"))).toBe(true);
     expect(BANNER.some((line) => line.includes("<span class='command'>'git'</span>"))).toBe(true);

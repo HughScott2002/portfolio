@@ -80,6 +80,7 @@ export function runCommand(input: string, context: CommandRunContext): CommandRu
     case "linkedin":
     case "github":
     case "email":
+    case "huggingface":
       return { lines: [] };
     case "rm -rf":
       if (context.bareMode) {

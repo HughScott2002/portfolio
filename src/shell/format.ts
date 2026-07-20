@@ -18,6 +18,10 @@ export function rowLabel(iconClass: string, label: string) {
   return `<span class='terminal-row-label'><i class='${iconClass}'></i><span>${label}</span></span>`;
 }
 
+export function emojiRowLabel(emoji: string, label: string) {
+  return `<span class='terminal-row-label'><span>${emoji}</span><span>${label}</span></span>`;
+}
+
 export function bannerRow(label: string, value: string) {
   return `<span class='banner-row'><span class='banner-row-label'>${label}</span><span class='banner-row-value'>${value}</span></span>`;
 }
