@@ -1,39 +1,48 @@
 :root {
-  font-family: 'IBM Plex Mono', monospace;
+  --font-terminal: 'Geist Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+  --font-interface: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 40px;
+  font-family: var(--font-terminal);
   font-weight: 400;
-  --page-pad: clamp(8px, 1.4vw, 40px);
+  font-variant-ligatures: none;
+  --page-pad: clamp(12px, 2.5vw, 32px);
   --shell-vertical-inset: calc(var(--page-pad) * 2);
-  --terminal-width: 1920px;
-  --terminal-font-size: clamp(14px, 11px + 0.45vw, 22px);
-  --terminal-line-height: 1.5;
-  --terminal-gutter: clamp(10px, 1.35vw, 32px);
-  --terminal-top-gap: clamp(10px, 1.1vw, 20px);
+  --terminal-width: 1280px;
+  --terminal-font-size: 1rem;
+  --terminal-line-height: 1.65;
+  --terminal-gutter: clamp(16px, 3vw, 40px);
+  --terminal-top-gap: var(--space-xl);
   --terminal-radius: clamp(14px, 1.25vw, 24px);
   --terminal-shadow-y: clamp(14px, 1.65vw, 28px);
   --terminal-shadow-blur: clamp(32px, 4vw, 70px);
-  --titlebar-height: clamp(38px, 2.6vw, 52px);
-  --titlebar-pad: clamp(10px, 1vw, 18px);
-  --titlebar-font-size: clamp(12px, 9px + 0.35vw, 16px);
-  --window-dot-size: clamp(9px, 0.62vw, 13px);
+  --titlebar-height: 44px;
+  --titlebar-pad: var(--space-md);
+  --titlebar-font-size: 0.875rem;
+  --window-dot-size: clamp(12px, 0.8vw, 14px);
   --window-dot-gap: clamp(6px, 0.45vw, 9px);
   --logo-size: clamp(22px, 1.5vw, 30px);
-  --prompt-font-size: clamp(13px, 10px + 0.4vw, 20px);
-  --prompt-corner-width: clamp(20px, 1.55vw, 30px);
-  --prompt-segment-height: clamp(24px, 1.4vw, 34px);
-  --prompt-segment-half: clamp(12px, 0.7vw, 17px);
-  --prompt-segment-arrow: clamp(12px, 0.7vw, 17px);
+  --prompt-font-size: 0.875rem;
+  --prompt-corner-width: 24px;
+  --prompt-segment-height: 28px;
+  --prompt-segment-half: 14px;
+  --prompt-segment-arrow: 12px;
   --prompt-segment-radius: clamp(7px, 0.55vw, 10px);
-  --prompt-block-pad-start: clamp(10px, 0.78vw, 16px);
-  --prompt-block-pad-end: clamp(8px, 0.68vw, 14px);
+  --prompt-block-pad-start: 12px;
+  --prompt-block-pad-end: 8px;
   --ascii-min-font-size: 4px;
-  --ascii-max-font-size: clamp(11px, 0.42rem + 0.65vw, 18px);
+  --ascii-max-font-size: 16px;
   --ascii-fluid-font-size: clamp(var(--ascii-min-font-size), 1.65vw, var(--ascii-max-font-size));
   --ascii-font-size: var(--ascii-fit-size, var(--ascii-fluid-font-size));
   --ascii-inline-bleed: 0px;
   --ascii-horizontal-scale: 1;
-  --banner-row-gap: clamp(0.75ch, 1.25vw, 4ch);
-  --banner-link-font-size: clamp(12px, 9px + 0.35vw, 18px);
-  --command-help-gap: clamp(0.65ch, 2.2vw, 7ch);
+  --banner-row-gap: var(--space-lg);
+  --banner-link-font-size: var(--terminal-font-size);
+  --command-help-gap: var(--space-xl);
   --p10k-gray: #d3d7cf;
   --p10k-blue: #3465a4;
   --p10k-green: #4e9a06;
@@ -48,16 +57,12 @@
   --nixos-blue: #5277c3;
   --nixos-light-blue: #7ebae4;
   --adwaita-light-bg: #f6f5f4;
-  --adwaita-light-surface: rgba(255, 255, 255, 0.94);
-  --adwaita-light-titlebar: #ebebe7;
+  --adwaita-light-surface: rgba(255, 255, 255, 0.85);
   --adwaita-light-text: #241f31;
   --adwaita-dark-bg: #1e1e24;
-  --adwaita-dark-surface: rgba(32, 34, 42, 0.96);
-  --adwaita-dark-titlebar: #30323d;
+  --adwaita-dark-surface: rgba(0, 0, 0, 0.9);
   --adwaita-dark-text: #f6f5f4;
-  --bg: var(--adwaita-light-bg);
-  --bg-gradient: rgba(126, 186, 228, 0.18);
-  --bg-gradient-end: rgba(246, 245, 244, 0);
+  --bg: #000000;
   --border: var(--nixos-purple);
   --text: var(--adwaita-light-text);
   --surface: var(--adwaita-light-surface);
@@ -66,18 +71,16 @@
   --surface-shadow-1: rgba(36, 49, 63, 0.13);
   --surface-shadow-2: rgba(36, 49, 63, 0.06);
   --surface-highlight: rgba(255, 255, 255, 0.86);
-  --titlebar: var(--adwaita-light-titlebar);
-  --titlebar-highlight: #ffffff;
   --titlebar-text: #3a3a3c;
   --input-text: var(--adwaita-light-text);
   --banner: var(--p10k-blue);
   --link: var(--p10k-blue);
   --link-highlight-bg: var(--p10k-yellow);
   --link-highlight-text: var(--p10k-text-dark);
-  --command-text: var(--p10k-orange);
+  --command-text: #a64024;
   --command-glow: rgba(242, 109, 80, 0.22);
   --cursor-color: var(--p10k-black);
-  --autocomplete-text: rgba(29, 29, 31, 0.38);
+  --autocomplete-text: #40454d;
   --valid-command-text: var(--p10k-blue);
   --prompt-default: #6f5f42;
   --focus-ring: rgba(82, 119, 195, 0.34);
@@ -85,9 +88,6 @@
 }
 
 :root[data-theme="dark"] {
-  --bg: var(--adwaita-dark-bg);
-  --bg-gradient: rgba(82, 119, 195, 0.12);
-  --bg-gradient-end: rgba(30, 30, 36, 0);
   --border: var(--nixos-purple);
   --text: var(--adwaita-dark-text);
   --surface: var(--adwaita-dark-surface);
@@ -96,18 +96,16 @@
   --surface-shadow-1: rgba(0, 0, 0, 0.54);
   --surface-shadow-2: rgba(0, 0, 0, 0.34);
   --surface-highlight: rgba(126, 126, 191, 0.16);
-  --titlebar: var(--adwaita-dark-titlebar);
-  --titlebar-highlight: rgba(255, 255, 255, 0.12);
   --titlebar-text: var(--p10k-text-light);
   --input-text: var(--adwaita-dark-text);
-  --banner: var(--p10k-blue);
-  --link: var(--p10k-blue);
+  --banner: var(--nixos-light-blue);
+  --link: var(--nixos-light-blue);
   --link-highlight-bg: var(--nixos-purple);
   --link-highlight-text: var(--p10k-text-dark);
-  --command-text: var(--p10k-blue);
+  --command-text: var(--nixos-light-blue);
   --command-glow: rgba(52, 101, 164, 0.28);
-  --cursor-color: var(--p10k-blue);
-  --autocomplete-text: rgba(211, 215, 207, 0.52);
+  --cursor-color: var(--nixos-light-blue);
+  --autocomplete-text: rgba(211, 215, 207, 0.7);
   --valid-command-text: var(--p10k-cyan);
   --prompt-default: var(--p10k-gray);
   --focus-ring: rgba(126, 186, 228, 0.34);
@@ -159,10 +157,11 @@ body {
   padding: var(--page-pad);
   box-sizing: border-box;
   font-weight: 400;
-  background:
-    linear-gradient(135deg, var(--bg-gradient), var(--bg-gradient-end) 42%),
-    radial-gradient(circle at top left, rgba(82, 119, 195, 0.1), transparent 34%),
-    var(--bg);
+  background: var(--bg);
+  background-image: url('/sky-background.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   overflow-x: hidden;
 }
 
@@ -185,9 +184,12 @@ main {
   height: calc(100vh - var(--shell-vertical-inset));
   height: calc(100dvh - var(--shell-vertical-inset));
   margin: 0 auto;
+  /* Reserve the title bar so its translucent surface is painted only once. */
+  padding-top: var(--titlebar-height);
   border: 1px solid var(--surface-border);
   border-radius: var(--terminal-radius);
   background: var(--surface);
+  background-clip: content-box;
   box-shadow:
     0 0 0 1px var(--surface-ring),
     0 var(--terminal-shadow-y) var(--terminal-shadow-blur) var(--surface-shadow-1),
@@ -197,7 +199,8 @@ main {
   overflow-x: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   transition-property: background-color, border-color, box-shadow;
   transition-duration: 180ms;
   transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
@@ -222,6 +225,11 @@ p {
   animation: terminal-line-reveal 140ms ease-out both;
 }
 
+.terminal-line:has(> br:only-child) {
+  height: var(--space-lg);
+  line-height: 0;
+}
+
 .terminal-row-label {
   display: inline-flex;
   align-items: baseline;
@@ -233,7 +241,8 @@ p {
   display: inline-grid;
   grid-template-columns: max-content minmax(0, max-content);
   column-gap: var(--banner-row-gap);
-  row-gap: 0.14em;
+  row-gap: var(--space-sm);
+  align-items: center;
   max-width: 100%;
 }
 
@@ -304,7 +313,7 @@ p {
   display: inline-grid;
   grid-template-columns: max-content minmax(0, 1fr);
   column-gap: var(--command-help-gap);
-  row-gap: 0.16em;
+  row-gap: var(--space-sm);
   max-width: 100%;
 }
 
@@ -328,9 +337,11 @@ div {
 }
 
 @font-face {
-  font-family: ascii;
-  src: url("./font/IBMPlexMono-Thin.ttf");
-  font-display: optional;
+  font-family: 'Geist Mono';
+  src: url('./font/GeistMono-Variable.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
 }
 
 .ascii-art {
@@ -342,7 +353,7 @@ div {
   max-width: none;
   line-height: 1.12 !important;
   color: var(--banner);
-  font-family: "ascii", monospace;
+  font-family: var(--font-terminal);
   font-size: var(--ascii-font-size);
   font-weight: 600;
   white-space: pre;
@@ -356,8 +367,10 @@ main.is-measuring-ascii .ascii-art {
 }
 
 input {
-  font-family: 'IBM Plex Mono', monospace;
-  font-weight: 500;
+  font-family: var(--font-terminal);
+  font-weight: inherit;
+  line-height: inherit;
+  font-variant-ligatures: none;
   padding: 0px;
   margin: 0px;
   border: none;
@@ -405,19 +418,17 @@ a:focus-visible {
 }
 
 #bars {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--font-interface);
   font-size: var(--titlebar-font-size);
   position: -webkit-sticky;
   position: sticky;
   width: 100%;
-  top: 0;
+  top: calc(var(--titlebar-height) * -1);
   z-index: 2;
-  background: var(--titlebar);
-  border-bottom: 1px solid rgba(126, 126, 191, 0.24);
-  box-shadow: 0 1px 0 var(--titlebar-highlight) inset;
-  transition-property: background-color, border-color, box-shadow;
-  transition-duration: 180ms;
-  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  margin-top: calc(var(--titlebar-height) * -1);
+  background: var(--surface);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 #bar-1 {
@@ -515,7 +526,7 @@ a:focus-visible {
   grid-area: title;
   justify-self: center;
   color: var(--titlebar-text);
-  font-family: Cantarell, "IBM Plex Sans", "Segoe UI", sans-serif;
+  font-family: var(--font-interface);
   font-size: var(--titlebar-font-size);
   font-weight: 500;
   letter-spacing: 0;
@@ -545,12 +556,13 @@ a:focus-visible {
 
 #input-line {
   margin: 0 var(--terminal-gutter);
+  padding-bottom: var(--space-xl);
   overflow-x: hidden;
   width: auto;
 }
 
 .prompt-entry {
-  margin: 0 0 8px;
+  margin: 0 0 var(--space-md);
 }
 
 .shell-prompt {
@@ -567,12 +579,13 @@ a:focus-visible {
 }
 
 .prompt-line-top {
-  gap: 6px;
+  gap: var(--space-sm);
 }
 
 .prompt-line-bottom {
-  gap: 8px;
+  gap: var(--space-sm);
   flex-wrap: wrap;
+  font-size: var(--terminal-font-size);
 }
 
 .prompt-corner {
@@ -602,7 +615,7 @@ a:focus-visible {
   padding: 0 var(--prompt-block-pad-end) 0 var(--prompt-block-pad-start);
   background: var(--segment-bg);
   color: var(--p10k-text-dark);
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1;
   white-space: nowrap;
   margin-right: var(--prompt-segment-arrow);
@@ -695,7 +708,7 @@ a:focus-visible {
 
 .command-input-mirror.is-valid-command {
   color: var(--valid-command-text);
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .command-input-cursor {
@@ -714,7 +727,7 @@ a:focus-visible {
 
 .command-input-suggestion {
   color: var(--autocomplete-text);
-  font-weight: 500;
+  font-weight: 400;
   min-width: 0;
   overflow: hidden;
   white-space: pre;
@@ -734,7 +747,7 @@ a:focus-visible {
 
 .history-command {
   margin-left: 2px;
-  flex: 1 1 20rem;
+  flex: 1 1 0;
   min-width: 0;
   overflow-wrap: anywhere;
   word-break: normal;
@@ -747,7 +760,7 @@ a:focus-visible {
 
 :root[data-theme="dark"] a,
 :root[data-theme="dark"] .command {
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .output {
@@ -755,7 +768,7 @@ a:focus-visible {
 }
 
 .keys {
-  color: #2f6f9f;
+  color: var(--banner);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
@@ -784,21 +797,25 @@ a:focus-visible {
 }
 
 @media (max-width: 560px) {
+  body {
+    background-image: url('/sky-background-mobile.webp');
+  }
+
   :root {
-    --page-pad: clamp(5px, 1.8vw, 9px);
-    --terminal-gutter: clamp(3px, 1.35vw, 7px);
+    --page-pad: var(--space-sm);
+    --terminal-gutter: var(--space-md);
+    --terminal-top-gap: var(--space-lg);
     --terminal-radius: clamp(10px, 3vw, 14px);
-    --prompt-font-size: clamp(12px, 2.5vw + 2px, 14px);
+    --prompt-font-size: 0.8125rem;
     --prompt-segment-height: 24px;
     --prompt-segment-half: 12px;
-    --prompt-segment-arrow: 11px;
+    --prompt-segment-arrow: 8px;
     --prompt-block-pad-start: 8px;
     --prompt-block-pad-end: 6px;
     --prompt-corner-width: 18px;
-    --ascii-inline-bleed: var(--terminal-gutter);
-    --banner-row-gap: 0.75ch;
-    --banner-link-font-size: 12px;
-    --command-help-gap: 0.65ch;
+    --ascii-inline-bleed: 0px;
+    --banner-row-gap: 12px;
+    --command-help-gap: var(--space-md);
   }
 
   .command-hint {

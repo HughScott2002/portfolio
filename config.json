@@ -18,7 +18,7 @@
     "linkedin": "hugh-scott-3912421a5/",
     "huggingface": "HughScott"
   },
-  "aboutGreeting": "'Build something people want' - yc",
+  "aboutGreeting": "'build something people want' - yc",
   "projects": [
     [
       "Agent Jae",
@@ -30,10 +30,19 @@
       "Find the cheapest food prices",
       "https://www.massivcart.com/"
     ],
-    ["Vulta", "D.A.W Tauri file assistant", "https://github.com/HughScott2002/Vulta"],
+    [
+      "Aurora",
+      "Native linix RGB controls for Legion Laptops",
+      "https://github.com/HughScott2002/Aurora-Legion"
+    ],
+    [
+      "Vulta",
+      "When you bounce your music clean up your ideas.",
+      "https://github.com/HughScott2002/Vulta"
+    ],
     [
       "Omni",
-      "Multi-Service Neobank functionality built in go",
+      "Multi-Service Neobank Infratcure",
       "https://github.com/HughScott2002/Omni-Server"
     ]
   ],
@@ -50,9 +59,10 @@
     ],
     [
       "Kintech Solutions",
-      "Built Elotree CRM, and polished frontend systems",
-      "2024"
-    ]
+      "Front-End Software Engineer for Elotree CRM, and polished frontend systems",
+      "2022 -2025"
+    ],
+    ["Reas Marketing, LLC logo", "Software Engineer Consultant", "2022 - 2025"]
   ],
   "colors": {
     "background": "#fbf7ef",
