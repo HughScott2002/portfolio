@@ -330,7 +330,19 @@ p {
 }
 
 .banner-contact-list.is-compact .banner-link-compact {
-  display: inline;
+  display: inline-flex;
+}
+
+.banner-contact-list.is-compact {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.banner-contact-list.is-compact .banner-row-label {
+  display: none;
+}
+
+.banner-contact-list.is-compact .banner-row-value {
+  grid-column: 1;
 }
 
 .banner-contact-list.is-stacked {
@@ -930,6 +942,23 @@ a:focus-visible {
   .banner-link {
     min-height: 40px;
     align-items: center;
+  }
+
+  .banner-contact-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .banner-contact-list .banner-row-label,
+  .banner-contact-list .banner-link-full {
+    display: none;
+  }
+
+  .banner-contact-list .banner-row-value {
+    grid-column: 1;
+  }
+
+  .banner-contact-list .banner-link-compact {
+    display: inline-flex;
   }
 
   .terminal-detail-row {

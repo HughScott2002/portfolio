@@ -16,10 +16,10 @@ const createBanner = (): string[] => {
   banner.push(command.aboutGreeting);
   banner.push("<br>");
   banner.push(bannerContactList([
-    bannerRow(rowLabel("email", "Email"), bannerLink(command.social.email, "email", `mailto:${command.social.email}`)),
-    bannerRow(rowLabel("github", "GitHub"), bannerLink(`github/${command.social.github}`, "github", `https://github.com/${command.social.github}`)),
-    bannerRow(rowLabel("linkedin", "LinkedIn"), bannerLink(`www.linkedin.com/in/${command.social.linkedin}`, "linkedin", `https://www.linkedin.com/in/${command.social.linkedin}`)),
-    bannerRow(rowLabel("huggingFace", "Hugging Face"), bannerLink(`huggingface.co/${command.social.huggingface}`, "huggingface", `https://huggingface.co/${command.social.huggingface}`)),
+    bannerRow(rowLabel("email", "Email"), bannerLink(command.social.email, rowLabel("email", "Email"), `mailto:${command.social.email}`)),
+    bannerRow(rowLabel("github", "GitHub"), bannerLink(`github/${command.social.github}`, rowLabel("github", "GitHub"), `https://github.com/${command.social.github}`)),
+    bannerRow(rowLabel("linkedin", "LinkedIn"), bannerLink(`www.linkedin.com/in/${command.social.linkedin}`, rowLabel("linkedin", "LinkedIn"), `https://www.linkedin.com/in/${command.social.linkedin}`)),
+    bannerRow(rowLabel("huggingFace", "Hugging Face"), bannerLink(`huggingface.co/${command.social.huggingface}`, rowLabel("huggingFace", "Hugging Face"), `https://huggingface.co/${command.social.huggingface}`)),
   ]));
   banner.push("<br>");
   banner.push(...BANNER_HINTS);
