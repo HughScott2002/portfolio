@@ -65,7 +65,7 @@ export function createHelpLines(): TerminalLine[] {
     "<br>",
     commandHelpList(COMMAND_HELP.map((entry) => commandHelpRow(commandToken(entry.display), entry.help))),
     "<br>",
-    "Press <span class='keys'>[Tab]</span> for auto completion.",
+    "Press <span class='keys'>[Tab]</span> or <span class='keys'>[→]</span>, or tap the suggestion to autocomplete.",
     "Press <span class='keys'>[Esc]</span> to clear the input line.",
     "Press <span class='keys'>[↑][↓]</span> to scroll through your history of commands.",
     "<br>",

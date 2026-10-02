@@ -28,6 +28,6 @@ describe("command registry", () => {
     expect(createHelpLines().some((line) => line.includes("<span class='command-help-row'><span class='command-help-name'><span class='command'>'dark'</span></span><span class='command-help-description'>Switch to dark mode.</span></span>"))).toBe(true);
     expect(createHelpLines().some((line) => line.includes("<span class='command'>'help' or 'ls'</span></span><span class='command-help-description'>List available commands.</span>"))).toBe(true);
     expect(createHelpLines().some((line) => line.includes("<span class='command'>'whoami'</span></span><span class='command-help-description'>About Hugh + your browser details.</span>"))).toBe(true);
-    expect(createHelpLines()).toContain("Press <span class='keys'>[Tab]</span> for auto completion.");
+    expect(createHelpLines()).toContain("Press <span class='keys'>[Tab]</span> or <span class='keys'>[→]</span>, or tap the suggestion to autocomplete.");
   });
 });

@@ -1,4 +1,5 @@
 :root {
+  --font-body: 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-terminal: 'Geist Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
   --font-interface: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --space-xs: 4px;
@@ -7,14 +8,14 @@
   --space-lg: 24px;
   --space-xl: 32px;
   --space-2xl: 40px;
-  font-family: var(--font-terminal);
+  font-family: var(--font-body);
   font-weight: 400;
   font-variant-ligatures: none;
   --page-pad: clamp(12px, 2.5vw, 32px);
   --shell-vertical-inset: calc(var(--page-pad) * 2);
   --terminal-width: 1280px;
   --terminal-font-size: 1rem;
-  --terminal-line-height: 1.65;
+  --terminal-line-height: 1.55;
   --terminal-gutter: clamp(16px, 3vw, 40px);
   --terminal-top-gap: var(--space-xl);
   --terminal-radius: clamp(14px, 1.25vw, 24px);
@@ -232,16 +233,68 @@ p {
 
 .terminal-row-label {
   display: inline-flex;
-  align-items: baseline;
-  gap: 0.45ch;
+  align-items: center;
+  gap: var(--space-sm);
   white-space: nowrap;
+  font-weight: 500;
+}
+
+.terminal-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.terminal-icon svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+
+.terminal-icon svg:not([fill]) {
+  fill: currentColor;
+}
+
+.terminal-detail-row {
+  display: grid;
+  grid-template-columns: minmax(0, var(--detail-label-width)) minmax(0, 1fr);
+  column-gap: var(--space-lg);
+  align-items: baseline;
+  max-width: 76ch;
+}
+
+.terminal-detail-label {
+  font-weight: 500;
+}
+
+.terminal-detail-label .command {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.terminal-detail-value {
+  min-width: 0;
+}
+
+.terminal-line:has(> .terminal-detail-row) {
+  margin-bottom: var(--space-sm);
+}
+
+.command,
+.keys,
+.terminal-metric-value {
+  font-family: var(--font-terminal);
+  font-size: 0.9375rem;
 }
 
 .banner-contact-list {
   display: inline-grid;
   grid-template-columns: max-content minmax(0, max-content);
   column-gap: var(--banner-row-gap);
-  row-gap: var(--space-sm);
+  row-gap: var(--space-xs);
   align-items: center;
   max-width: 100%;
 }
@@ -282,7 +335,7 @@ p {
 
 .banner-contact-list.is-stacked {
   grid-template-columns: minmax(0, 1fr);
-  row-gap: 0.18em;
+  row-gap: var(--space-sm);
 }
 
 .banner-contact-list.is-stacked .banner-row {
@@ -298,7 +351,7 @@ p {
 }
 
 .banner-contact-list.is-stacked .banner-row-value {
-  padding-left: 1.8ch;
+  padding-left: 28px;
 }
 
 .command-hint {
@@ -334,6 +387,14 @@ p {
 
 div {
   line-height: var(--terminal-line-height);
+}
+
+@font-face {
+  font-family: 'Geist';
+  src: url('./font/Geist-Variable.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
 }
 
 @font-face {
@@ -566,6 +627,7 @@ a:focus-visible {
 }
 
 .shell-prompt {
+  font-family: var(--font-terminal);
   color: var(--prompt-default);
   font-size: var(--prompt-font-size);
   line-height: 1.5;
@@ -726,15 +788,32 @@ a:focus-visible {
 }
 
 .command-input-suggestion {
+  position: relative;
+  z-index: 1;
+  min-height: 44px;
+  min-width: 44px;
+  margin-block: -10px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  font: inherit;
+  text-align: left;
   color: var(--autocomplete-text);
   font-weight: 400;
-  min-width: 0;
   overflow: hidden;
   white-space: pre;
   opacity: 0.82;
+  cursor: pointer;
+  touch-action: manipulation;
   transition-property: color, opacity;
   transition-duration: 140ms;
   transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.command-input-suggestion:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
 }
 
 .command-input-wrap input {
@@ -851,6 +930,15 @@ a:focus-visible {
   .banner-link {
     min-height: 40px;
     align-items: center;
+  }
+
+  .terminal-detail-row {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--space-xs);
+  }
+
+  .terminal-line:has(> .terminal-detail-row) {
+    margin-bottom: var(--space-md);
   }
 }
 

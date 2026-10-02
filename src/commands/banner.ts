@@ -1,5 +1,5 @@
 import command from '../../config.json' assert {type: 'json'};
-import { asciiBlock, bannerContactList, bannerLink, bannerRow, commandHint, commandToken, emojiRowLabel, link, rowLabel } from '../shell/format';
+import { asciiBlock, bannerContactList, bannerLink, bannerRow, commandHint, commandToken, link, rowLabel } from '../shell/format';
 
 export const BANNER_HINTS = [
   commandHint(`${commandToken("'help'")} or ${commandToken("'ls'")}`, " for a list of all available commands."),
@@ -16,10 +16,10 @@ const createBanner = (): string[] => {
   banner.push(command.aboutGreeting);
   banner.push("<br>");
   banner.push(bannerContactList([
-    bannerRow(rowLabel("fa-solid fa-envelope", "Email"), bannerLink(command.social.email, "email", `mailto:${command.social.email}`)),
-    bannerRow(rowLabel("fa-brands fa-github", "GitHub"), bannerLink(`github/${command.social.github}`, "github", `https://github.com/${command.social.github}`)),
-    bannerRow(rowLabel("fa-brands fa-linkedin", "LinkedIn"), bannerLink(`www.linkedin.com/in/${command.social.linkedin}`, "linkedin", `https://www.linkedin.com/in/${command.social.linkedin}`)),
-    bannerRow(emojiRowLabel("🤗", "Hugging Face"), bannerLink(`huggingface.co/${command.social.huggingface}`, "huggingface", `https://huggingface.co/${command.social.huggingface}`)),
+    bannerRow(rowLabel("email", "Email"), bannerLink(command.social.email, "email", `mailto:${command.social.email}`)),
+    bannerRow(rowLabel("github", "GitHub"), bannerLink(`github/${command.social.github}`, "github", `https://github.com/${command.social.github}`)),
+    bannerRow(rowLabel("linkedin", "LinkedIn"), bannerLink(`www.linkedin.com/in/${command.social.linkedin}`, "linkedin", `https://www.linkedin.com/in/${command.social.linkedin}`)),
+    bannerRow(rowLabel("huggingFace", "Hugging Face"), bannerLink(`huggingface.co/${command.social.huggingface}`, "huggingface", `https://huggingface.co/${command.social.huggingface}`)),
   ]));
   banner.push("<br>");
   banner.push(...BANNER_HINTS);

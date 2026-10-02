@@ -27,7 +27,7 @@ describe("command runner", () => {
       effect: { type: "theme", preference: "dark" },
     });
 
-    expect(runCommand("ls", context).lines).toContain("Press <span class='keys'>[Tab]</span> for auto completion.");
+    expect(runCommand("ls", context).lines).toContain("Press <span class='keys'>[Tab]</span> or <span class='keys'>[→]</span>, or tap the suggestion to autocomplete.");
     expect(runCommand("rm -rf src", context).lines).toEqual(["Permission not granted.", "<br>"]);
     expect(runCommand("rm -rf src", { ...context, isSudo: true })).toEqual({
       lines: [],

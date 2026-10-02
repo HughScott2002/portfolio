@@ -7,7 +7,7 @@ const createExperience = () : string[] => {
   experience.push("<br>");
 
   command.experience.forEach((ele) => {
-    experience.push(row(commandToken(ele[0]), `${ele[2]} - ${ele[1]}`, 18, ele[0].length));
+    experience.push(row(commandToken(ele[0]), `${ele[2]} - ${ele[1]}`, "13rem"));
   });
 
   experience.push("<br>");

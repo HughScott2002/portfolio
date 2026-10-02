@@ -1,3 +1,5 @@
+import { contactIcon, type ContactIcon } from "./icons";
+
 const SPACE = "&nbsp;";
 
 export type TerminalLine = string;
@@ -14,12 +16,8 @@ export function bannerLink(fullLabel: string, compactLabel: string, href: string
   return `<a class='banner-link' target='_blank' rel='noreferrer' href='${href}'><span class='banner-link-full'>${fullLabel}</span><span class='banner-link-compact'>${compactLabel}</span></a>`;
 }
 
-export function rowLabel(iconClass: string, label: string) {
-  return `<span class='terminal-row-label'><i class='${iconClass}'></i><span>${label}</span></span>`;
-}
-
-export function emojiRowLabel(emoji: string, label: string) {
-  return `<span class='terminal-row-label'><span>${emoji}</span><span>${label}</span></span>`;
+export function rowLabel(icon: ContactIcon, label: string) {
+  return `<span class='terminal-row-label'>${contactIcon(icon)}<span>${label}</span></span>`;
 }
 
 export function bannerRow(label: string, value: string) {
@@ -42,8 +40,8 @@ export function commandHelpList(rows: string[]) {
   return `<span class='command-help-list'>${rows.join("")}</span>`;
 }
 
-export function row(label: string, value: string, width = 17, visibleLength = label.length, indent = 2) {
-  return `${SPACE.repeat(indent)}${label}${SPACE.repeat(Math.max(2, width - visibleLength))}${value}`;
+export function row(label: string, value: string, labelWidth = "9rem") {
+  return `<span class='terminal-detail-row' style='--detail-label-width: ${labelWidth}'><span class='terminal-detail-label'>${label}</span><span class='terminal-detail-value'>${value}</span></span>`;
 }
 
 export function asciiBlock(lines: string[]) {

@@ -1,5 +1,5 @@
 import command from "../../config.json" assert { type: "json" };
-import { link, row } from "../shell/format";
+import { link, row, rowLabel } from "../shell/format";
 
 const createAbout = (): string[] => {
   const about: string[] = [];
@@ -8,10 +8,10 @@ const createAbout = (): string[] => {
   const LINKEDIN = "LinkedIn";
   const HUGGINGFACE = "Hugging Face";
 
-  const email = `<i class='fa-solid fa-envelope'></i> ${EMAIL}`;
-  const github = `<i class='fa-brands fa-github'></i> ${GITHUB}`;
-  const linkedin = `<i class='fa-brands fa-linkedin'></i> ${LINKEDIN}`;
-  const huggingface = `🤗 ${HUGGINGFACE}`;
+  const email = rowLabel("email", EMAIL);
+  const github = rowLabel("github", GITHUB);
+  const linkedin = rowLabel("linkedin", LINKEDIN);
+  const huggingface = rowLabel("huggingFace", HUGGINGFACE);
 
   about.push("<br>");
   about.push(command.aboutGreeting);
@@ -20,8 +20,6 @@ const createAbout = (): string[] => {
     row(
       email,
       link(command.social.email, `mailto:${command.social.email}`),
-      17,
-      EMAIL.length,
     ),
   );
   about.push(
@@ -31,8 +29,6 @@ const createAbout = (): string[] => {
         `github/${command.social.github}`,
         `https://github.com/${command.social.github}`,
       ),
-      17,
-      GITHUB.length,
     ),
   );
   about.push(
@@ -42,8 +38,6 @@ const createAbout = (): string[] => {
         `linkedin/${command.social.linkedin}`,
         `https://www.linkedin.com/in/${command.social.linkedin}`,
       ),
-      17,
-      LINKEDIN.length,
     ),
   );
   about.push(
@@ -53,8 +47,6 @@ const createAbout = (): string[] => {
         `huggingface.co/${command.social.huggingface}`,
         `https://huggingface.co/${command.social.huggingface}`,
       ),
-      17,
-      HUGGINGFACE.length,
     ),
   );
   about.push("<br>");

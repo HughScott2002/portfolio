@@ -38,6 +38,6 @@ describe("command content", () => {
     expect(whoami).toContain("But enough about me...");
     expect(whoami).toContain("\n\nPlot twist: this terminal runs on your side.");
     expect(whoami).toContain("So here's what your browser says:");
-    expect(whoami).toContain("&nbsp;&nbsp;<span class='command'>theme</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='terminal-metric-value'>dark (dark)</span>");
+    expect(whoami).toContain("<span class='terminal-detail-row' style='--detail-label-width: 7rem'><span class='terminal-detail-label'><span class='command'>theme</span></span><span class='terminal-detail-value'><span class='terminal-metric-value'>dark (dark)</span></span></span>");
   });
 });

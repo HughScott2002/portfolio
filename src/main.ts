@@ -70,7 +70,13 @@ function syncCommandInput() {
     isKnownCommand(USERINPUT.value),
   );
   if (COMMAND_INPUT_SUGGESTION) {
-    COMMAND_INPUT_SUGGESTION.textContent = autocompleteSuffix(USERINPUT.value);
+    const suffix = autocompleteSuffix(USERINPUT.value);
+    COMMAND_INPUT_SUGGESTION.textContent = suffix;
+    COMMAND_INPUT_SUGGESTION.hidden = suffix.length === 0;
+    COMMAND_INPUT_SUGGESTION.setAttribute(
+      "aria-label",
+      `Complete command: ${USERINPUT.value}${suffix}`,
+    );
   }
 }
 
@@ -216,8 +222,20 @@ function userInputHandler(e: KeyboardEvent) {
       arrowKeys(key);
       break;
     case "Tab":
-      tabKey();
+      completeCommand();
       e.preventDefault();
+      break;
+    case "ArrowRight":
+      if (
+        !e.isComposing && !e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey &&
+        !shellMode.isPasswordInput &&
+        USERINPUT.selectionStart === USERINPUT.value.length &&
+        USERINPUT.selectionEnd === USERINPUT.value.length &&
+        autocompleteSuffix(USERINPUT.value)
+      ) {
+        completeCommand();
+        e.preventDefault();
+      }
       break;
   }
 
@@ -265,11 +283,14 @@ function enterKey() {
   syncCommandInput();
 }
 
-function tabKey() {
+function completeCommand() {
+  if (USERINPUT.disabled) return;
   const match = autocompleteCommand(USERINPUT.value);
 
   if (match) {
     USERINPUT.value = match;
+    USERINPUT.focus({ preventScroll: true });
+    USERINPUT.setSelectionRange(match.length, match.length);
     syncCommandInput();
   }
 }
@@ -480,6 +501,14 @@ const initEventListeners = () => {
   USERINPUT.addEventListener("keydown", userInputHandler);
   USERINPUT.addEventListener("input", syncCommandInput);
   PASSWORD_INPUT.addEventListener("keypress", userInputHandler);
+
+  COMMAND_INPUT_SUGGESTION?.addEventListener("pointerdown", (event) => {
+    // Keep the input focused so tapping a suggestion keeps the mobile keyboard open.
+    event.preventDefault();
+  });
+  COMMAND_INPUT_SUGGESTION?.addEventListener("click", () => {
+    if (autocompleteSuffix(USERINPUT.value)) completeCommand();
+  });
 
   window.addEventListener("click", () => {
     USERINPUT.focus();

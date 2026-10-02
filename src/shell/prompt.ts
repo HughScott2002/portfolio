@@ -16,7 +16,7 @@ function commandInputHtml() {
 	              <span class="command-input-wrap">
 	                <span id="command-input-mirror" class="command-input-mirror" aria-hidden="true"></span>
 	                <span class="command-input-cursor" aria-hidden="true"></span>
-	                <span id="command-input-suggestion" class="command-input-suggestion" aria-hidden="true"></span>
+	                <button id="command-input-suggestion" class="command-input-suggestion" type="button" hidden></button>
 	                <input id="user-input" type="text" enterkeyhint="Enter" spellcheck="false" autocapitalize="none"
 	                  autocomplete="off" />
 	              </span>`;

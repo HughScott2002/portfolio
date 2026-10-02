@@ -7,7 +7,7 @@ const createProject = () : string[] => {
   projects.push("<br>")
 
   command.projects.forEach((ele) => {
-    projects.push(row(link(ele[0], ele[2]), ele[1], 17, ele[0].length));
+    projects.push(row(link(ele[0], ele[2]), ele[1]));
   });
 
   projects.push("<br>");
