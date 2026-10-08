@@ -45,7 +45,7 @@ export function row(label: string, value: string, labelWidth = "9rem") {
 }
 
 export function asciiBlock(lines: string[]) {
-  return `<pre class='ascii-art'>${lines.map((line) => line.split(" ").join(SPACE)).join("\n")}</pre>`;
+  return `<pre class='ascii-art' aria-hidden='true'>${lines.map((line) => line.split(" ").join(SPACE)).join("\n")}</pre>`;
 }
 
 export function countLine(count: number) {

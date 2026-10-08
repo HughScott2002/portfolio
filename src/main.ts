@@ -222,8 +222,15 @@ function userInputHandler(e: KeyboardEvent) {
       arrowKeys(key);
       break;
     case "Tab":
-      completeCommand();
-      e.preventDefault();
+      if (
+        !e.isComposing && !e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey &&
+        !shellMode.isPasswordInput &&
+        COMMAND_INPUT_SUGGESTION && !COMMAND_INPUT_SUGGESTION.hidden &&
+        autocompleteSuffix(USERINPUT.value)
+      ) {
+        completeCommand();
+        e.preventDefault();
+      }
       break;
     case "ArrowRight":
       if (

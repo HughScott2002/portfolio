@@ -1,4 +1,5 @@
 :root {
+  color-scheme: light;
   --font-body: 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-terminal: 'Geist Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
   --font-interface: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -73,6 +74,7 @@
   --surface-shadow-2: rgba(36, 49, 63, 0.06);
   --surface-highlight: rgba(255, 255, 255, 0.86);
   --titlebar-text: #3a3a3c;
+  --titlebar-surface: var(--adwaita-light-bg);
   --input-text: var(--adwaita-light-text);
   --banner: var(--p10k-blue);
   --link: var(--p10k-blue);
@@ -89,6 +91,7 @@
 }
 
 :root[data-theme="dark"] {
+  color-scheme: dark;
   --border: var(--nixos-purple);
   --text: var(--adwaita-dark-text);
   --surface: var(--adwaita-dark-surface);
@@ -98,6 +101,7 @@
   --surface-shadow-2: rgba(0, 0, 0, 0.34);
   --surface-highlight: rgba(126, 126, 191, 0.16);
   --titlebar-text: var(--p10k-text-light);
+  --titlebar-surface: var(--adwaita-dark-bg);
   --input-text: var(--adwaita-dark-text);
   --banner: var(--nixos-light-blue);
   --link: var(--nixos-light-blue);
@@ -480,6 +484,10 @@ a:focus-visible {
 .banner-link {
   display: inline-flex;
   align-items: center;
+  min-height: 44px;
+  padding-block: var(--space-xs);
+  box-sizing: border-box;
+  touch-action: manipulation;
   gap: 0;
   transition-property: color, background-color, box-shadow, transform;
   transition-duration: 140ms;
@@ -499,9 +507,7 @@ a:focus-visible {
   top: calc(var(--titlebar-height) * -1);
   z-index: 2;
   margin-top: calc(var(--titlebar-height) * -1);
-  background: var(--surface);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  background: var(--titlebar-surface);
 }
 
 #bar-1 {
@@ -770,6 +776,7 @@ a:focus-visible {
   align-items: center;
   flex: 1 1 auto;
   min-width: 0;
+  min-height: 44px;
   color: var(--input-text);
 }
 
@@ -804,7 +811,7 @@ a:focus-visible {
   z-index: 1;
   min-height: 44px;
   min-width: 44px;
-  margin-block: -10px;
+  margin-block: 0;
   padding: 0;
   border: 0;
   border-radius: 4px;
@@ -909,23 +916,6 @@ a:focus-visible {
     --command-help-gap: var(--space-md);
   }
 
-  .command-hint {
-    display: inline-flex;
-    flex-wrap: wrap;
-    gap: 0 0.75ch;
-  }
-
-  .command-hint-lead,
-  .command-hint-detail {
-    display: none;
-  }
-
-  .command-hint-commands {
-    display: inline-flex;
-    flex-wrap: wrap;
-    gap: 0 0.65ch;
-  }
-
   .prompt-line-top {
     align-items: flex-start;
   }
@@ -937,11 +927,6 @@ a:focus-visible {
 
   .prompt-path {
     max-width: min(44vw, 10rem);
-  }
-
-  .banner-link {
-    min-height: 40px;
-    align-items: center;
   }
 
   .banner-contact-list {
@@ -997,6 +982,12 @@ a:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+
   .terminal-line,
   .command-input-cursor {
     animation: none;

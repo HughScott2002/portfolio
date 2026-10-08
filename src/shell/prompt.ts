@@ -18,7 +18,7 @@ function commandInputHtml() {
 	                <span class="command-input-cursor" aria-hidden="true"></span>
 	                <button id="command-input-suggestion" class="command-input-suggestion" type="button" hidden></button>
 	                <input id="user-input" type="text" enterkeyhint="Enter" spellcheck="false" autocapitalize="none"
-	                  autocomplete="off" />
+	                  autocomplete="off" aria-label="Terminal command" />
 	              </span>`;
 }
 
