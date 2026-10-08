@@ -525,8 +525,8 @@ a:focus-visible {
 .banner-link {
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
-  padding-block: var(--space-xs);
+  min-height: var(--space-xl);
+  padding-block: 0;
   box-sizing: border-box;
   touch-action: manipulation;
   gap: 0;
@@ -935,6 +935,13 @@ a:focus-visible {
 
 #input-line:focus-within .command-input-suggestion {
   opacity: 0.96;
+}
+
+@media (max-width: 560px), (pointer: coarse) {
+  .banner-link {
+    min-height: 44px;
+    padding-block: var(--space-xs);
+  }
 }
 
 @media (max-width: 560px) {
