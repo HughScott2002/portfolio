@@ -74,7 +74,6 @@
   --surface-shadow-2: rgba(36, 49, 63, 0.06);
   --surface-highlight: rgba(255, 255, 255, 0.86);
   --titlebar-text: #3a3a3c;
-  --titlebar-surface: var(--adwaita-light-bg);
   --input-text: var(--adwaita-light-text);
   --banner: var(--p10k-blue);
   --link: var(--p10k-blue);
@@ -101,7 +100,6 @@
   --surface-shadow-2: rgba(0, 0, 0, 0.34);
   --surface-highlight: rgba(126, 126, 191, 0.16);
   --titlebar-text: var(--p10k-text-light);
-  --titlebar-surface: var(--adwaita-dark-bg);
   --input-text: var(--adwaita-dark-text);
   --banner: var(--nixos-light-blue);
   --link: var(--nixos-light-blue);
@@ -507,7 +505,9 @@ a:focus-visible {
   top: calc(var(--titlebar-height) * -1);
   z-index: 2;
   margin-top: calc(var(--titlebar-height) * -1);
-  background: var(--titlebar-surface);
+  background: var(--surface);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 #bar-1 {
