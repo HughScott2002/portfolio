@@ -18,13 +18,14 @@ function metricValue(value: string) {
 
 export const createWhoami = (info: DeviceInfo): string[] => {
   return [
-    "Whoami? I'm Hugh Scott.",
-    "I'm a software developer from Mandeville, Jamaica.",
-    "I love building software and making music.",
-    "My long-term goal is to build a unicorn startup from Jamaica.",
-    "But enough about me...",
-    "\n\nPlot twist: this terminal runs on your side.",
-    "So here's what your browser says:",
+    "<span class='whoami-intro'><span class='whoami-name' role='heading' aria-level='2'>Hugh Scott</span><span class='whoami-role'>Software Engineer · Mandeville, Jamaica</span></span>",
+    "<span class='whoami-copy'>I build polished interfaces, backend services, and AI tools.</span>",
+    "<span class='whoami-section-title' role='heading' aria-level='3'>Core skills</span>",
+    "<span class='whoami-skills'>TypeScript · Go · Rust · Frontend engineering · AI tooling · Technical operations</span>",
+    "<span class='whoami-section-title' role='heading' aria-level='3'>Beyond the code</span>",
+    "I make music.",
+    "<span class='whoami-section-title' role='heading' aria-level='3'>Your browser</span>",
+    "<span class='whoami-browser-intro'>Here's some stuff I know about you.</span>",
     row(commandToken("device"), metricValue(info.device), "7rem"),
     row(commandToken("theme"), metricValue(`${info.theme} (${info.resolvedTheme})`), "7rem"),
     row(commandToken("language"), metricValue(info.language), "7rem"),

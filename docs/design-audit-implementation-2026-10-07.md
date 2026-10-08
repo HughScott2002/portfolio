@@ -30,3 +30,9 @@ The command and password inputs also receive accessible names. Reduced motion di
 Open the changed site at `http://localhost:5173/`, the original baseline at `http://localhost:5174/`, or the local visual comparison at `http://localhost:5173/.gstack/design-reports/audit-polish-2026-10-07/comparison.html` while the development servers are running.
 
 These checks use local Chromium and a local Vite server. They do not establish deployed Core Web Vitals or replace testing on physical phones and screen readers. The change adds no runtime packages or remote assets.
+
+## Resume introduction
+
+The revised `whoami` leads with Hugh Scott's Software Engineer title, location, and core skills, including TypeScript, Go, and Rust. Separate headings identify the skills, music, and browser details. The closing line is "Here's some stuff I know about you." Founder ambitions and project names are removed from this introduction. The semantic site overview mirrors the resume copy for accessibility and indexing.
+
+The command opens at the introduction instead of scrolling straight past it to the browser statistics. Other commands retain their existing scroll behavior. Light/dark browser checks verify the name and skills appear above the fold at mobile, tablet, and desktop widths, with all browser details retained.

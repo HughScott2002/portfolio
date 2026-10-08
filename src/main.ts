@@ -399,21 +399,29 @@ function commandHandler(input: string) {
   handleCommandEffect(result.effect);
 
   if (result.lines.length > 0) {
-    writeLines(result.lines);
+    writeLines(result.lines, { scrollToStart: input === "whoami" });
   }
 }
 
-function writeLines(message: string[], options: { delayMs?: number } = {}) {
+function writeLines(message: string[], options: { delayMs?: number; scrollToStart?: boolean } = {}) {
   if (!mutWriteLines) return;
+  let firstLine: HTMLElement | null = null;
 
   writeTranscriptLines(message, {
     target: mutWriteLines,
     createParagraph: () => document.createElement("p"),
     insertBefore: (paragraph, target) => {
+      firstLine ??= paragraph;
       target.parentNode?.insertBefore(paragraph, target);
       queueAsciiFit();
     },
-    scrollToBottom,
+    scrollToBottom: () => {
+      if (options.scrollToStart && firstLine) {
+        firstLine.scrollIntoView({ block: "start" });
+      } else {
+        scrollToBottom();
+      }
+    },
     delayMs: options.delayMs,
   });
 }

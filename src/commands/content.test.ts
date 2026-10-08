@@ -32,12 +32,10 @@ describe("command content", () => {
       online: "online",
     });
 
-    expect(whoami).toContain("Whoami? I'm Hugh Scott.");
-    expect(whoami).toContain("I love building software and making music.");
-    expect(whoami).toContain("My long-term goal is to build a unicorn startup from Jamaica.");
-    expect(whoami).toContain("But enough about me...");
-    expect(whoami).toContain("\n\nPlot twist: this terminal runs on your side.");
-    expect(whoami).toContain("So here's what your browser says:");
+    expect(whoami.join("\n")).toContain("Software Engineer · Mandeville, Jamaica");
+    expect(whoami.join("\n")).toContain("TypeScript · Go · Rust");
+    expect(whoami).toContain("I make music.");
+    expect(whoami.join("\n")).toContain("Here's some stuff I know about you.");
     expect(whoami).toContain("<span class='terminal-detail-row' style='--detail-label-width: 7rem'><span class='terminal-detail-label'><span class='command'>theme</span></span><span class='terminal-detail-value'><span class='terminal-metric-value'>dark (dark)</span></span></span>");
   });
 });

@@ -285,6 +285,49 @@ p {
   margin-bottom: var(--space-sm);
 }
 
+.whoami-intro {
+  display: block;
+  margin-block: var(--space-lg) var(--space-md);
+}
+
+.terminal-line:has(> .whoami-intro) {
+  scroll-margin-top: calc(var(--titlebar-height) + var(--space-md));
+}
+
+.whoami-name {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.whoami-role {
+  display: block;
+  margin-top: var(--space-xs);
+}
+
+.whoami-copy,
+.whoami-skills {
+  display: block;
+  max-width: 65ch;
+}
+
+.whoami-skills {
+  font-weight: 500;
+}
+
+.whoami-section-title {
+  display: block;
+  margin-block: var(--space-lg) var(--space-xs);
+  font-weight: 600;
+}
+
+.whoami-browser-intro {
+  display: block;
+  margin-bottom: var(--space-md);
+}
+
 .command,
 .keys,
 .terminal-metric-value {
