@@ -21,7 +21,7 @@ export const createWhoami = (info: DeviceInfo): string[] => {
     "<span class='whoami-intro'><span class='whoami-name' role='heading' aria-level='2'>Hugh Scott</span><span class='whoami-role'>Software Engineer · Mandeville, Jamaica</span></span>",
     "<span class='whoami-copy'>I build polished interfaces, backend services, and AI tools.</span>",
     "<span class='whoami-section-title' role='heading' aria-level='3'>Core skills</span>",
-    "<span class='whoami-skills'>TypeScript · Go · Rust · Frontend engineering · AI tooling · Technical operations</span>",
+    "<span class='whoami-skills'>TypeScript · Go · Rust · Full-stack engineering · AI tooling · Technical operations</span>",
     "<span class='whoami-section-title' role='heading' aria-level='3'>Beyond the code</span>",
     "I make music.",
     "<span class='whoami-section-title' role='heading' aria-level='3'>Your browser</span>",
