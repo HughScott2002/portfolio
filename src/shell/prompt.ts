@@ -1,14 +1,10 @@
+import nixosLogo from "../icons/nixos.svg?raw";
+
 function nixosLogoHtml(extraClass = "") {
   const className = `nixos-logo${extraClass ? ` ${extraClass}` : ""}`;
+  const svg = nixosLogo.replace("<svg ", `<svg aria-hidden="true" `);
   return `
-                <span class="${className}" aria-label="NixOS" role="img">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </span>`;
+                <span class="${className}" aria-label="NixOS" role="img">${svg}</span>`;
 }
 
 function commandInputHtml() {
