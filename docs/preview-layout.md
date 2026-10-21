@@ -109,3 +109,44 @@ Consequences worth knowing:
   show visitors a block page instead of the portfolio.
 - The block page carries a "re-evaluated" request link. Submitting it gets the domain categorised
   and the block lifted for that network.
+
+## One place to change the preview
+
+The preview copy and image live in the `preview` block of `config.json`. A Vite plugin
+(`vite.config.ts`) injects the meta tags at build time and in dev, so the HTML can never drift
+from the config.
+
+```json
+"preview": {
+  "url": "https://hughscott.dev/",
+  "siteName": "Hugh Scott",
+  "pageTitle": "Hugh Scott | WebShell",
+  "title": "Hugh Scott — Building AI-enabled systems end to end",
+  "description": "Zero-admin AI sales agents (Agent Jae) and live price comparison (MassivCart). TypeScript, Go, Rust. Open to senior and staff roles.",
+  "images": [{ "path": "/og.png", "alt": "..." }]
+}
+```
+
+Change `title` and every place updates: `og:title`, `twitter:title`, the meta description, and the
+browser tab (via `pageTitle`). Change `description` and `og:description`, `twitter:description` and
+the meta description all follow.
+
+### Images
+
+`images` is a list, so more than one image of the same aspect ratio can be published from the same
+place — the first entry is the primary one used for `twitter:image`, and every entry gets its own
+`og:image`, `og:image:width`, `og:image:height`, `og:image:type` and `og:image:alt`.
+
+**The dimensions are read from the file on disk at build time, not typed in by hand.** Drop a new
+1200x630 file in `public/`, update the path in `config.json`, and the tags follow. This fixed a real
+bug: `og:image:width` and `og:image:height` had been hand-written as 1448 and 1184 for a file that
+has always been 1200x630. Platforms that trust those numbers lay the card out wrong when they
+disagree with the real file.
+
+### Why build time and not the browser
+
+Link preview crawlers fetch raw HTML and never run JavaScript. Anything injected at runtime is
+invisible to them, so the tags have to be in the served HTML. The plugin runs in
+`transformIndexHtml`, which covers both `vite dev` and `vite build`, and it strips any
+pre-existing `og:*`, `twitter:*` or description tags before injecting, so there is exactly one
+source of truth.

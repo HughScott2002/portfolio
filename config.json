@@ -1,4 +1,17 @@
 {
+  "preview": {
+    "url": "https://hughscott.dev/",
+    "siteName": "Hugh Scott",
+    "pageTitle": "Hugh Scott | WebShell",
+    "title": "Hugh Scott — Building AI-enabled systems end to end",
+    "description": "Zero-admin AI sales agents (Agent Jae) and live price comparison (MassivCart). TypeScript, Go, Rust. Open to senior and staff roles.",
+    "images": [
+      {
+        "path": "/og.png",
+        "alt": "Hugh Scott's WebShell terminal portfolio, an interactive command line site."
+      }
+    ]
+  },
   "ascii": [
     "██╗  ██╗██╗   ██╗ ██████╗ ██╗  ██╗     ███████╗ ██████╗ ██████╗ ████████╗████████╗",
     "██║  ██║██║   ██║██╔════╝ ██║  ██║     ██╔════╝██╔════╝██╔═══██╗╚══██╔══╝╚══██╔══╝",
