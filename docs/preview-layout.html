@@ -1,0 +1,183 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face {
+    font-family: 'Geist';
+    src: url('file:///home/hugh/Documents/Projects/portfolio/src/css/font/Geist-Variable.woff2') format('woff2');
+    font-weight: 100 900;
+    font-display: block;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Geist', system-ui, sans-serif;
+    background: #FFFFFF;
+    padding: 40px 32px 48px;
+    width: 1080px;
+  }
+  h1 { font-size: 22px; font-weight: 600; color: #241F31; letter-spacing: -0.01em; }
+  .lede { font-size: 14px; color: #5B5766; margin-top: 6px; margin-bottom: 28px; max-width: 720px; line-height: 1.5; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .panel { border: 1px solid #DCE0F1; border-radius: 14px; overflow: hidden; }
+  .panel-head { padding: 10px 16px; background: #F8F7F4; border-bottom: 1px solid #DCE0F1; display: flex; justify-content: space-between; align-items: center; }
+  .panel-head span:first-child { font-size: 13px; font-weight: 600; color: #241F31; }
+  .panel-head span:last-child { font-size: 11px; color: #5B5766; }
+  .stage { padding: 20px; display: flex; justify-content: center; }
+  .card { width: 340px; font-size: 14px; }
+  .img { width: 340px; height: 178px; object-fit: cover; display: block; }
+  .title { font-weight: 600; line-height: 1.25; }
+  .desc { line-height: 1.35; }
+  .domain { font-size: 12px; }
+
+  /* WhatsApp */
+  .wa { background: #ECE5DD; padding: 16px; }
+  .wa .bubble { background: #FFFFFF; border-radius: 8px; padding: 0; overflow: hidden; box-shadow: 0 1px 1px rgba(0,0,0,0.13); }
+  .wa .img { border-radius: 0; }
+  .wa .body { padding: 9px 10px 8px; }
+  .wa .title { color: #111B21; font-size: 14.5px; }
+  .wa .desc { color: #667781; font-size: 13.5px; margin-top: 3px; }
+  .wa .domain { color: #00A884; margin-top: 4px; }
+
+  /* Telegram */
+  .tg { background: #F1F1F2; padding: 16px; }
+  .tg .bubble { background: #FFFFFF; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
+  .tg .head { display: flex; align-items: center; gap: 6px; padding: 7px 10px 6px; border-bottom: 1px solid #EDEDED; }
+  .tg .fav { width: 16px; height: 16px; border-radius: 4px; background: #000; }
+  .tg .head .domain { color: #707579; }
+  .tg .body { padding: 8px 10px 10px; }
+  .tg .title { color: #0F0F0F; font-size: 14.5px; }
+  .tg .desc { color: #707579; font-size: 13.5px; margin-top: 3px; }
+
+  /* X */
+  .x { background: #FFFFFF; padding: 16px; }
+  .x .post { border: 1px solid #EFF3F4; border-radius: 16px; padding: 12px; }
+  .x .meta { font-size: 12px; color: #536471; }
+  .x .title { color: #0F1419; font-size: 15px; margin-top: 2px; }
+  .x .desc { color: #536471; font-size: 14px; margin-top: 2px; }
+  .x .img { margin-top: 10px; border-radius: 16px; width: 100%; height: auto; aspect-ratio: 1200/630; }
+
+  /* LinkedIn */
+  .li { background: #F4F2EE; padding: 16px; }
+  .li .bubble { background: #FFFFFF; border-radius: 8px; padding: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+  .li .row { display: flex; gap: 10px; }
+  .li .thumb { width: 104px; height: 60px; border-radius: 4px; object-fit: cover; flex: 0 0 auto; }
+  .li .title { color: #000000; font-size: 14px; }
+  .li .domain { color: #000000; font-size: 12px; margin-top: 3px; }
+  .li .none { font-size: 12px; color: #00000099; margin-top: 6px; }
+
+  .anatomy { margin-top: 32px; border: 1px solid #DCE0F1; border-radius: 14px; overflow: hidden; }
+  .anatomy .head { padding: 12px 16px; background: #F8F7F4; border-bottom: 1px solid #DCE0F1; font-size: 13px; font-weight: 600; color: #241F31; }
+  .anatomy table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .anatomy th, .anatomy td { text-align: left; padding: 9px 16px; border-bottom: 1px solid #EEF0F8; vertical-align: top; color: #3A3A44; }
+  .anatomy th { color: #5B5766; font-weight: 500; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .anatomy td:first-child { color: #241F31; font-weight: 500; white-space: nowrap; }
+  .mono { font-family: ui-monospace, monospace; font-size: 11.5px; color: #5B5766; }
+  .crops { display: flex; gap: 28px; padding: 20px 16px 8px; align-items: flex-start; }
+  .crop { display: flex; flex-direction: column; gap: 9px; }
+  .crop-box { border: 1px solid #DCE0F1; border-radius: 8px; }
+  .crop-label { font-size: 12.5px; font-weight: 500; color: #241F31; line-height: 1.4; }
+  .crop-label span { font-weight: 400; color: #5B5766; font-size: 11.5px; }
+  .crop-rule { padding: 6px 16px 16px; font-size: 12.5px; color: #3A3A44; }
+</style>
+</head>
+<body>
+  <h1>How your link preview will actually render</h1>
+  <p class="lede">Same URL, four different renderers. The image is the card art; the title, description and domain come from the meta tags in <span class="mono">index.html</span>, not from the image. Nothing is baked into the picture.</p>
+
+  <div class="grid">
+    <div class="panel">
+      <div class="panel-head"><span>WhatsApp</span><span>image on top, tight text</span></div>
+      <div class="stage wa">
+        <div class="card bubble">
+          <img class="img" src="file:///home/hugh/Downloads/og-C.png" alt="">
+          <div class="body">
+            <div class="title">Hugh Scott — Building AI-enabled systems end to end</div>
+            <div class="desc">Zero-admin AI sales agents (Agent Jae) and live price comparison (MassivCart). TypeScript, Go, Rust. Open to senior and staff roles.</div>
+            <div class="domain">hughscott.dev</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><span>Telegram</span><span>image on top, domain in header</span></div>
+      <div class="stage tg">
+        <div class="card bubble">
+          <div class="head"><div class="fav"></div><div class="domain">hughscott.dev</div></div>
+          <img class="img" src="file:///home/hugh/Downloads/og-C.png" alt="">
+          <div class="body">
+            <div class="title">Hugh Scott — Building AI-enabled systems end to end</div>
+            <div class="desc">Zero-admin AI sales agents (Agent Jae) and live price comparison (MassivCart). TypeScript, Go, Rust. Open to senior and staff roles.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><span>X / Twitter</span><span>text first, image below</span></div>
+      <div class="stage x">
+        <div class="card post">
+          <div class="meta">hughscott.dev</div>
+          <div class="title">Hugh Scott — Building AI-enabled systems end to end</div>
+          <div class="desc">Zero-admin AI sales agents (Agent Jae) and live price comparison (MassivCart). TypeScript, Go, Rust. Open to senior and staff roles.</div>
+          <img class="img" src="file:///home/hugh/Downloads/og-C.png" alt="">
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><span>LinkedIn</span><span>thumbnail only, no description</span></div>
+      <div class="stage li">
+        <div class="card bubble">
+          <div class="row">
+            <img class="thumb" src="file:///home/hugh/Downloads/og-C.png" alt="">
+            <div>
+              <div class="title">Hugh Scott — Building AI-enabled systems end to end</div>
+              <div class="domain">hughscott.dev</div>
+            </div>
+          </div>
+          <div class="none">LinkedIn shows no og:description at all — the title has to carry the whole pitch.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="anatomy">
+    <div class="head">What your image has to survive — every platform shows a different crop of the same 1200x630</div>
+    <div class="crops">
+      <div class="crop">
+        <div class="crop-box" style="width:320px;height:168px;overflow:hidden;position:relative;background:#000;">
+          <img src="file:///home/hugh/Downloads/og-C.png" style="position:absolute;left:0;top:0;width:320px;height:168px;">
+        </div>
+        <div class="crop-label">Full 1.91:1 band<br><span>WhatsApp, Telegram, X — 320x168</span></div>
+      </div>
+      <div class="crop">
+        <div class="crop-box" style="width:168px;height:168px;overflow:hidden;position:relative;background:#000;">
+          <img src="file:///home/hugh/Downloads/og-C.png" style="position:absolute;left:-76px;top:-76px;width:320px;height:168px;">
+        </div>
+        <div class="crop-label">Centre square<br><span>WhatsApp small variant, X small card — 62x62 shown at 3x here</span></div>
+      </div>
+      <div class="crop">
+        <div class="crop-box" style="width:168px;height:98px;overflow:hidden;position:relative;background:#000;">
+          <img src="file:///home/hugh/Downloads/og-C.png" style="position:absolute;left:0;top:0;width:320px;height:168px;">
+        </div>
+        <div class="crop-label">Short band<br><span>LinkedIn thumb and message-list rows — 104x60 shown at 1.6x here</span></div>
+      </div>
+    </div>
+    <div class="crop-rule">Rule: one recognisable shape, dead centre, sized so it still reads at 62px. Everything else is atmosphere.</div>
+  </div>
+
+  <div class="anatomy">
+    <div class="head">Anatomy — what each slot controls, and what each platform does with it</div>
+    <table>
+      <tr><th>Slot</th><th>Where it comes from</th><th>What the renderer does</th><th>Control you have</th></tr>
+      <tr><td>Image</td><td class="mono">og:image</td><td>WhatsApp/Telegram/X: 1.91:1 band, cropped to a square (~62px) if the app shows the small variant. LinkedIn: 104x60 thumb.</td><td>You own the pixels. Keep the focal point centred — edges and a centre-square get cropped.</td></tr>
+      <tr><td>Title</td><td class="mono">og:title</td><td>Bold, 1-2 lines, truncated around 60-74 chars depending on app. Shown on every platform.</td><td>Full control. This is the only line that survives everywhere, including LinkedIn.</td></tr>
+      <tr><td>Description</td><td class="mono">og:description</td><td>Two lines max, truncated. Hidden on LinkedIn entirely.</td><td>Full control. 110-160 chars so it fills exactly two lines.</td></tr>
+      <tr><td>Domain</td><td class="mono">og:url</td><td>Rendered by the app, not you. WhatsApp tints it green, X greys it.</td><td>None. It is your domain, so it reads as the brand.</td></tr>
+      <tr><td>Card background</td><td>App theme</td><td>Follows the reader's light or dark mode. Not controllable.</td><td>None — so the image carries its own background.</td></tr>
+    </table>
+  </div>
+</body>
+</html>
