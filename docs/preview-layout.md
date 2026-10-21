@@ -75,3 +75,37 @@ truncation.
 The image itself. `public/og.png` is still the old 1448x1184 screenshot. It must be replaced with a
 1200x630 art that follows the crop rule above, and `og:image:width` / `og:image:height` /
 `og:image:alt` updated in the same change.
+
+## Deployment notes (verified 2026-10-21)
+
+- Vercel auto-deploys `main` to production. Commits `c6b2b83` and `296c947` both reported
+  `success` on the GitHub Production deployment.
+- The live production HTML serves the new `og:title` and `og:description`. Confirmed by fetching
+  `https://hughscott.dev/` from an external reader: `og:title` is
+  `Hugh Scott — Building AI-enabled systems end to end` and `og:description` is the Agent Jae line.
+- `og:image` is still the old `public/og.png` at 1448x1184, and `og:image:width` / `og:image:height`
+  still read 1448 / 1184. The card looks unchanged until the art is swapped.
+
+### Vercel Deployment Protection is on
+
+The Vercel preview URL for a deployment redirects to a Vercel login page
+(`vercel.com/login?next=.../sso-api?url=...`). Only the preview deployments are protected — the
+production domain `hughscott.dev` serves the real page. If a preview deployment URL is ever shared,
+it will show a login page instead of the site, and it will not unfurl as a link preview.
+
+### FortiGuard blocks the domain on some networks
+
+Requests to `https://hughscott.dev/` from the local network are intercepted by a FortiGuard
+Intrusion Prevention web filter, which returns a 403 "Web Filter Violation" page in place of the
+site. Confirmed with a real browser, every user agent, and `HEAD` versus `GET` (HEAD passes, GET is
+blocked). The block is a network-side policy, not a problem with the deployment — the site is
+reachable from the public internet.
+
+Consequences worth knowing:
+
+- Testing the site or the preview image from a network behind the same filter fails locally, and
+  the failure looks like a broken site rather than a blocked one.
+- Any corporate, campus, or school network running FortiGuard with an unrated-domain policy will
+  show visitors a block page instead of the portfolio.
+- The block page carries a "re-evaluated" request link. Submitting it gets the domain categorised
+  and the block lifted for that network.
