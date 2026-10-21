@@ -79,12 +79,22 @@ function siteMetaPlugin(): Plugin {
   let root = process.cwd();
   let preview: PreviewConfig | undefined;
 
+  function readPreview() {
+    const site = JSON.parse(readFileSync(join(root, "config.json"), "utf8")) as SiteConfig;
+    preview = site.preview;
+  }
+
   return {
     name: "site-meta",
     configResolved(config) {
       root = config.root;
-      const site = JSON.parse(readFileSync(join(root, "config.json"), "utf8")) as SiteConfig;
-      preview = site.preview;
+      readPreview();
+    },
+    handleHotUpdate(context) {
+      if (!context.file.endsWith("config.json")) return;
+      readPreview();
+      // The preview tags are baked into the HTML shell, so the page has to reload.
+      context.server.ws.send({ type: "full-reload" });
     },
     transformIndexHtml: {
       order: "pre",
